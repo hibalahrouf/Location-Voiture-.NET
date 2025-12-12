@@ -1,0 +1,29 @@
+@page
+@model LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.VerifyEmailModel
+@{
+    ViewData["Title"] = "Verification Email";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    @if (Model.IsSuccess)
+                    {
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    }
+                    else
+                    {
+                        <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
+                    }
+                    <h4 class="mt-3">@Model.Message</h4>
+                    @if (Model.IsSuccess)
+                    {
+                        <a asp-page="./Login" class="btn btn-primary mt-3">Se connecter</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

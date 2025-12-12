@@ -231,6 +231,7 @@
                             <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*" />
                             <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" Width="*" />
+                            <DataGridCheckBoxColumn Header="Email Vérifié" Binding="{Binding IsEmailVerified}" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Grid.Column="1" Margin="20,0,0,0">

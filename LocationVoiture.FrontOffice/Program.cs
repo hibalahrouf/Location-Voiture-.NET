@@ -1,5 +1,5 @@
-// --- USINGS NÉCESSAIRES ---
-using LocationVoiture.Core.Data; // <-- MODIFIÉ : Pour trouver notre DbContext
+// --- USINGS NÃ‰CESSAIRES ---
+using LocationVoiture.Core.Data; // <-- MODIFIÃ‰ : Pour trouver notre DbContext
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -13,32 +13,34 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Dire à l'application d'utiliser Serilog
+// Dire Ã  l'application d'utiliser Serilog
 builder.Host.UseSerilog();
 // --- FIN DU REMPLACEMENT ---
 
 // --- CONFIGURATION DES SERVICES ---
 
-// 1. Récupérer la chaîne de connexion
+// 1. RÃ©cupÃ©rer la chaÃ®ne de connexion
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 // 2. Configurer le DbContext
 //    Nous pointons vers le DbContext dans 'LocationVoiture.Core'
-builder.Services.AddDbContext<ApplicationDbContext>(options => // <-- MODIFIÉ : Utilise notre DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options => // <-- MODIFIÃ‰ : Utilise notre DbContext
     options.UseSqlServer(connectionString,
         // Dites-lui de chercher les migrations dans le projet 'Core'
-        b => b.MigrationsAssembly("LocationVoiture.Core") // <-- MODIFIÉ
+        b => b.MigrationsAssembly("LocationVoiture.Core") // <-- MODIFIÃ‰
     ));
 
 // 3. Configurer Identity
 //    Nous lui disons d'utiliser notre 'ApplicationDbContext'
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>(); // <-- MODIFIÉ : Utilise notre DbContext
-// Injecte notre EmailSender personnalisé (en mode Singleton)
+    .AddEntityFrameworkStores<ApplicationDbContext>(); // <-- MODIFIÃ‰ : Utilise notre DbContext
+// Injecte notre EmailSender personnalisÃ© (en mode Singleton)
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
+// Email Verification Service
+builder.Services.AddScoped<IEmailVerificationService, EmailVerificationService>();
 // 4. Ajouter les services standards
 builder.Services.AddControllersWithViews();
-// Ajout des Razor Pages (nécessaire pour les pages de connexion/inscription par défaut d'Identity)
+// Ajout des Razor Pages (nÃ©cessaire pour les pages de connexion/inscription par dÃ©faut d'Identity)
 builder.Services.AddRazorPages();
 
 // ==========================================================
@@ -54,7 +56,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // Outil utile pour les migrations pendant le développement
+    // Outil utile pour les migrations pendant le dÃ©veloppement
     app.UseMigrationsEndPoint();
 }
 else
@@ -69,11 +71,11 @@ app.UseStaticFiles(); // Pour servir les fichiers CSS, JS, images
 
 app.UseRouting(); // Active le routage
 
-// IMPORTANT : L'authentification DOIT être avant l'autorisation
+// IMPORTANT : L'authentification DOIT Ãªtre avant l'autorisation
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Définit la route par défaut (ex: /Home/Index)
+// DÃ©finit la route par dÃ©faut (ex: /Home/Index)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -81,5 +83,5 @@ app.MapControllerRoute(
 // Mappe les pages Razor (pour les pages d'authentification)
 app.MapRazorPages();
 
-// Démarre l'application
+// DÃ©marre l'application
 app.Run();

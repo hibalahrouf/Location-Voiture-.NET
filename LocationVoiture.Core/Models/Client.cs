@@ -30,6 +30,10 @@ namespace LocationVoiture.Core.Models
 
         [Required]
         public string MotDePasseHash { get; set; }
+
+        // Email Verification
+        public bool IsEmailVerified { get; set; } = false;
+        public string? EmailVerificationToken { get; set; }
         [NotMapped] // Indique à EF Core de ne PAS créer cette colonne en BDD
         public string NomComplet
         {
