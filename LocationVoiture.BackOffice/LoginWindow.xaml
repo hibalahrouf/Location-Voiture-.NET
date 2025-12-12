@@ -127,7 +127,7 @@
                 <!-- Icon Placeholder -->
                 <Border Width="80" Height="80" CornerRadius="40" Background="#1e293b" Margin="0,0,0,20">
                     <Border.Effect>
-                        <DropShadowEffect Color="{StaticResource Gold}" BlurRadius="20" Opacity="0.2"/>
+                        <DropShadowEffect Color="#fbbf24" BlurRadius="20" Opacity="0.2"/>
                     </Border.Effect>
                     <TextBlock Text="🔒" FontSize="40" Foreground="{StaticResource Gold}" 
                                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,4"/>
