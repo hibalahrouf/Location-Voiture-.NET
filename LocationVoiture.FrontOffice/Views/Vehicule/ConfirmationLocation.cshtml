@@ -1,0 +1,59 @@
+﻿@model LocationVoiture.Core.Models.Location
+
+@{
+    ViewData["Title"] = "Demande de location reçue";
+}
+
+<!-- Fullscreen Background -->
+<div class="auth-root" style="background: url('/images/hero.png') center/cover no-repeat;">
+    <div class="auth-overlay"></div>
+    
+    <div class="auth-container">
+        <div class="auth-card p-5 text-center" style="max-width: 600px; margin: 0 auto;">
+            
+            <div class="mb-4">
+                <i class="fas fa-check-circle gold" style="font-size: 4rem;"></i>
+            </div>
+
+            <h2 class="mb-3 hero-title" style="font-size: 2.5rem;">Merci, @Model.Client.Prenom !</h2>
+            <p class="text-muted mb-4">Votre demande de location a bien été enregistrée.</p>
+
+            <div class="p-4 mb-4 rounded text-start shadow-sm" style="background: var(--input-bg); border: 1px solid var(--card-border);">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Référence</span>
+                    <span class="fw-bold detail-value">#@Model.LocationID</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Véhicule</span>
+                    <span class="fw-bold detail-value">@Model.Vehicule.Marque @Model.Vehicule.Modele</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Période</span>
+                    <span class="detail-value">@Model.DateDebut.ToShortDateString() au @Model.DateFin.ToShortDateString()</span>
+                </div>
+                <hr style="border-color: var(--card-border);">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Montant Total</span>
+                    <span class="gold fw-bold fs-4">@Model.MontantTotal.ToString("C")</span>
+                </div>
+            </div>
+
+            <p class="text-muted small mb-4">
+                Votre demande est en attente de validation par un administrateur. 
+                Vous recevrez une confirmation par email sous peu.
+            </p>
+
+            <a asp-action="Index" asp-controller="Home" class="btn btn-hero w-100">
+                Retour à l'accueil
+            </a>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Local Overrides for Detail Values */
+    .detail-value {
+        color: var(--text-light); /* Will be white in dark mode, dark in light mode */
+    }
+</style>

@@ -1,0 +1,517 @@
+﻿<Window x:Class="LocationVoiture.BackOffice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Back-Office Premium - Location de Voitures" Height="750" Width="1200"
+        Loaded="Window_Loaded"
+        Background="#0f172a"
+        WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:LocationVoiture.BackOffice">
+
+    <Window.Resources>
+        <!-- COLORS -->
+        <SolidColorBrush x:Key="PrimaryBackground" Color="#0f172a"/>
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#1e293b"/>
+        <SolidColorBrush x:Key="GoldColor" Color="#fbbf24"/>
+        <SolidColorBrush x:Key="TextWhite" Color="#f8fafc"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#94a3b8"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#334155"/>
+
+        <!-- STYLES -->
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Name="Border" BorderThickness="0,0,0,3" BorderBrush="Transparent" Background="{TemplateBinding Background}" Padding="15,10">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="0,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource GoldColor}"/>
+                                <Setter TargetName="Border" Property="Background" Value="#334155"/>
+                                <Setter Property="Foreground" Value="{StaticResource GoldColor}"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#334155"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="CaretBrush" Value="{StaticResource GoldColor}"/>
+        </Style>
+        
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="Black"/> 
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="RowBackground" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="AlternatingRowBackground" Value="#253248"/>
+            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#334155"/>
+                        <Setter Property="Foreground" Value="{StaticResource GoldColor}"/>
+                        <Setter Property="Padding" Value="10,8"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource GoldColor}"/>
+            <Setter Property="Foreground" Value="#0f172a"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <TabControl Background="Transparent" BorderThickness="0">
+
+            <!-- TAB 1: DASHBOARD -->
+            <TabItem Header="📊 Tableau de Bord">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Vue d'ensemble" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,20"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Chart 1 -->
+                        <Border Grid.Column="0" Background="{StaticResource SecondaryBackground}" CornerRadius="8" Padding="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Locations par Statut" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                                <TextBlock Text="Graphique indisponible temporairement" Foreground="Gray" HorizontalAlignment="Center" Margin="0,20"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Chart 2 -->
+                        <Border Grid.Column="2" Background="{StaticResource SecondaryBackground}" CornerRadius="8" Padding="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Véhicules par Type" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                                <TextBlock Text="Graphique indisponible temporairement" Foreground="Gray" HorizontalAlignment="Center" Margin="0,20"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <TextBlock Grid.Row="2" Text="🚨 Alertes d'entretien (Dernier entretien > 6 mois)" 
+                               HorizontalAlignment="Left" FontWeight="Bold" FontSize="18" 
+                               Foreground="#ef4444" Margin="0,30,0,10" />
+
+                    <DataGrid x:Name="AlertesEntretienGrid" Grid.Row="3" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding VehiculesAlerteEntretien}" BorderThickness="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="Auto" />
+                            <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*" />
+                            <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*" />
+                            <DataGridTextColumn Header="Dernier Entretien" Binding="{Binding DateDernierEntretien, StringFormat='d'}" Width="*" />
+                            <DataGridTextColumn Header="Jours depuis" Binding="{Binding JoursDepuisEntretien}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: MESSAGES (NEW) -->
+            <TabItem Header="✉️ Messages Contact">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Gestion des Messages Clients" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,20"/>
+
+                    <DataGrid x:Name="MessagesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="MessagesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateSent, StringFormat='g'}" Width="150"/>
+                            <DataGridTextColumn Header="Nom" Binding="{Binding Name}" Width="150"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                            <DataGridTextColumn Header="Sujet" Binding="{Binding Subject}" Width="200"/>
+                            <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                             <DataTemplate>
+                                <Border Background="#334155" Padding="10" Margin="5">
+                                    <StackPanel>
+                                        <TextBlock Text="Détails du message:" FontWeight="Bold" Foreground="{StaticResource GoldColor}"/>
+                                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: CLIENTS -->
+            <TabItem Header="Gestion des Clients">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="ClientsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="ClientsGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ClientID}" Width="Auto" />
+                            <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*" />
+                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*" />
+                            <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Prénom:" />
+                        <TextBox x:Name="txtPrenomClient" Margin="0,5" />
+                        <TextBlock Text="Nom:" />
+                        <TextBox x:Name="txtNomClient" Margin="0,5" />
+                        <TextBlock Text="Email:" />
+                        <TextBox x:Name="txtEmailClient" Margin="0,5" />
+                        <TextBlock Text="Téléphone:" />
+                        <TextBox x:Name="txtTelephoneClient" Margin="0,5" />
+                        <TextBlock Text="Adresse:" Margin="0,10,0,0" />
+                        <TextBox x:Name="txtAdresseClient" Margin="0,5" Height="80" TextWrapping="Wrap" />
+                        <Button Content="Ajouter Client" Margin="0,20,0,0" Click="btnAjouterClient_Click" />
+                        <Button Content="Mettre à jour Client" Margin="0,10,0,0" Click="btnMettreAJourClient_Click" />
+                        <Button Content="Supprimer Client" Margin="0,10,0,0" Click="btnSupprimerClient_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerClient_Click" Background="#334155"/>
+                        <Button Content="Exporter Clients (CSV)" Margin="0,20,0,0" Click="btnExportClientsCSV_Click" Background="#059669" Foreground="White" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+             <!-- TAB: VEHICULES -->
+            <TabItem Header="Gestion des Véhicules">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="VehiculesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="VehiculesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="Auto" />
+                            <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*" />
+                            <DataGridTextColumn Header="Marque" Binding="{Binding Marque}" Width="*" />
+                            <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding TypeVehicule.Nom}" Width="*" />
+                            <DataGridCheckBoxColumn Header="Disponible" Binding="{Binding Disponible}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Immatriculation:" />
+                        <TextBox x:Name="txtImmatriculation" Margin="0,5" />
+                        <TextBlock Text="Marque:" />
+                        <TextBox x:Name="txtMarque" Margin="0,5" />
+                        <TextBlock Text="Modèle:" />
+                        <TextBox x:Name="txtModele" Margin="0,5" />
+                        <TextBlock Text="Année:" />
+                        <TextBox x:Name="txtAnnee" Margin="0,5" />
+                        <TextBlock Text="URL de l'image:" />
+                        <TextBox x:Name="txtImageURL" Margin="0,5" />
+                        <TextBlock Text="Type de Véhicule:" />
+                        <ComboBox x:Name="cmbTypeVehicule" Margin="0,5" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID" />
+                        <CheckBox x:Name="chkDisponible" Content="Disponible" Foreground="White" Margin="0,10,0,0" />
+                        <Button Content="Ajouter Véhicule" Margin="0,20,0,0" Click="btnAjouterVehicule_Click" />
+                        <Button Content="Mettre à jour Véhicule" Margin="0,10,0,0" Click="btnMettreAJourVehicule_Click" />
+                        <Button Content="Supprimer Véhicule" Margin="0,10,0,0" Click="btnSupprimerVehicule_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerVehicule_Click" Background="#334155"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+             <!-- TAB: LOCATIONS -->
+            <TabItem Header="Gestion des Locations">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="LocationsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="Auto" />
+                            <DataGridTextColumn Header="Statut" Binding="{Binding Statut}" Width="*" />
+                            <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="1.5*" />
+                            <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Modele}" Width="1.5*" />
+                            <DataGridTextColumn Header="Début" Binding="{Binding DateDebut, StringFormat='d'}" Width="*" />
+                            <DataGridTextColumn Header="Fin" Binding="{Binding DateFin, StringFormat='d'}" Width="*" />
+                            <DataGridTextColumn Header="Montant" Binding="{Binding MontantTotal, StringFormat=C}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Détails de la Location" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,10"/>
+                        <TextBlock Text="Client:" Margin="0,10,0,0" />
+                        <TextBox x:Name="txtLocationClient" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
+                        <TextBlock Text="Véhicule:" Margin="0,5,0,0" />
+                        <TextBox x:Name="txtLocationVehicule" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
+                        <TextBlock Text="Montant:" Margin="0,5,0,0" />
+                        <TextBox x:Name="txtLocationMontant" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
+                        
+                        <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="0,20" />
+                        
+                        <TextBlock Text="Suivi de la Location" FontWeight="Bold" Foreground="{StaticResource GoldColor}" />
+                        <TextBlock Text="Statut de la location:" Margin="0,10,0,0" />
+                        <ComboBox x:Name="cmbLocationStatut" Margin="0,5" />
+                        <TextBlock Text="Date de retour réelle:" Margin="0,10,0,0" />
+                        <DatePicker x:Name="dpDateRetourReelle" Margin="0,5" />
+                        <Button Content="Mettre à jour" Margin="0,20,0,0" Click="btnMettreAJourLocation_Click" Background="#059669" Foreground="White" />
+                        <Button Content="Générer Bon de Location (PDF)" Margin="0,10,0,0" Click="btnGenererPDF_Click" Background="#3b82f6" Foreground="White" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: TYPES -->
+             <TabItem Header="Gestion des Types">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="TypesVehiculesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TypesVehiculesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding TypeVehiculeID}" Width="Auto" />
+                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Nom du Type:" />
+                        <TextBox x:Name="txtNom" Margin="0,5" />
+                        <TextBlock Text="Description:" Margin="0,10,0,0" />
+                        <TextBox x:Name="txtDescription" Margin="0,5" Height="80" TextWrapping="Wrap" />
+                        <Button Content="Ajouter Type" Margin="0,20,0,0" Click="btnAjouter_Click" />
+                        <Button Content="Mettre à jour Type" Margin="0,10,0,0" Click="btnMettreAJour_Click" />
+                        <Button Content="Supprimer Type" Margin="0,10,0,0" Click="btnSupprimer_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacer_Click" Background="#334155"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+
+
+            <!-- TAB: TARIFS -->
+             <TabItem Header="Gestion des Tarifs">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="TarifsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TarifsGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding TarifID}" Width="Auto" />
+                            <DataGridTextColumn Header="Type Véhicule" Binding="{Binding TypeVehicule.Nom}" Width="*" />
+                            <DataGridTextColumn Header="Prix/Jour" Binding="{Binding PrixParJour, StringFormat=C}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Type de Véhicule:" />
+                        <ComboBox x:Name="cmbTarifTypeVehicule" Margin="0,5" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID" />
+                        <TextBlock Text="Prix par Jour:" Margin="0,10,0,0" />
+                        <TextBox x:Name="txtTarifPrix" Margin="0,5" />
+                        <Button Content="Ajouter Tarif" Margin="0,20,0,0" Click="btnAjouterTarif_Click" />
+                        <Button Content="Mettre à jour Tarif" Margin="0,10,0,0" Click="btnMettreAJourTarif_Click" />
+                        <Button Content="Supprimer Tarif" Margin="0,10,0,0" Click="btnSupprimerTarif_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerTarif_Click" Background="#334155"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: EMPLOYES -->
+            <TabItem Header="Gestion des Employés">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="EmployesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EmployesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding EmployeID}" Width="Auto" />
+                            <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*" />
+                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*" />
+                            <DataGridTextColumn Header="Rôle" Binding="{Binding Role}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Prénom:" />
+                        <TextBox x:Name="txtPrenomEmploye" Margin="0,5" />
+                        <TextBlock Text="Nom:" />
+                        <TextBox x:Name="txtNomEmploye" Margin="0,5" />
+                        <TextBlock Text="Email:" />
+                        <TextBox x:Name="txtEmailEmploye" Margin="0,5" />
+                        <TextBlock Text="Rôle:" />
+                        <TextBox x:Name="txtRoleEmploye" Margin="0,5" />
+                        <TextBlock Text="Mot de Passe (Hash):" Margin="0,10,0,0"/>
+                        <TextBox x:Name="txtMotDePasseEmploye" Margin="0,5" />
+                        <Button Content="Ajouter Employé" Margin="0,20,0,0" Click="btnAjouterEmploye_Click" />
+                        <Button Content="Mettre à jour Employé" Margin="0,10,0,0" Click="btnMettreAJourEmploye_Click" />
+                        <Button Content="Supprimer Employé" Margin="0,10,0,0" Click="btnSupprimerEmploye_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerEmploye_Click" Background="#334155"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: ENTRETIENS -->
+            <TabItem Header="Gestion des Entretiens">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="EntretiensGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EntretiensGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding EntretienID}" Width="Auto" />
+                            <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateEntretien, StringFormat='d'}" Width="*" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
+                            <DataGridTextColumn Header="Coût" Binding="{Binding Cout, StringFormat=C}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <TextBlock Text="Véhicule concerné:" />
+                        <ComboBox x:Name="cmbEntretienVehicule" Margin="0,5" DisplayMemberPath="Immatriculation" SelectedValuePath="VehiculeID"/>
+                        <TextBlock Text="Date de l'entretien:" Margin="0,10,0,0"/>
+                        <DatePicker x:Name="dpEntretienDate" Margin="0,5"/>
+                        <TextBlock Text="Description:" Margin="0,10,0,0"/>
+                        <TextBox x:Name="txtEntretienDescription" Margin="0,5" Height="60" TextWrapping="Wrap"/>
+                        <TextBlock Text="Coût:" Margin="0,10,0,0"/>
+                        <TextBox x:Name="txtEntretienCout" Margin="0,5"/>
+
+                        <Button Content="Ajouter Entretien" Margin="0,20,0,0" Click="btnAjouterEntretien_Click" />
+                        <Button Content="Mettre à jour" Margin="0,10,0,0" Click="btnMettreAJourEntretien_Click" />
+                        <Button Content="Supprimer" Margin="0,10,0,0" Click="btnSupprimerEntretien_Click" Background="#7f1d1d" Foreground="White" />
+                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerEntretien_Click" Background="#334155"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB: PAIEMENTS -->
+            <TabItem Header="Gestion des Paiements">
+                <Grid Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Left: Locations List -->
+                    <DockPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock Text="1. Sélectionnez une Location (Confirmée/Terminée)" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,10" Foreground="{StaticResource GoldColor}"/>
+                        <DataGrid x:Name="LocationsPaiementGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsPaiementGrid_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="50" />
+                                <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="*" />
+                                <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*" />
+                                <DataGridTextColumn Header="Total Due" Binding="{Binding MontantTotal, StringFormat=C}" Width="Auto" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+
+                    <!-- Right: Payments List & Add Form -->
+                    <Grid Grid.Column="1" Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <DockPanel Grid.Row="0">
+                            <TextBlock Text="2. Historique des Paiements" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,10" Foreground="{StaticResource GoldColor}"/>
+                            <DataGrid x:Name="PaiementsGrid" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Date" Binding="{Binding DatePaiement, StringFormat='g'}" Width="*" />
+                                    <DataGridTextColumn Header="Montant" Binding="{Binding Montant, StringFormat=C}" Width="*" />
+                                    <DataGridTextColumn Header="Méthode" Binding="{Binding MethodePaiement}" Width="*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+
+                        <StackPanel x:Name="FormPaiement" Grid.Row="1" Margin="0,20,0,0" IsEnabled="False">
+                            <TextBlock Text="3. Enregistrer un Nouveau Paiement" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,10"/>
+                            <TextBlock Text="Montant:" />
+                            <TextBox x:Name="txtPaiementMontant" Margin="0,5" />
+                            <TextBlock Text="Méthode de Paiement:" Margin="0,10,0,0"/>
+                            <ComboBox x:Name="cmbMethodePaiement" Margin="0,5">
+                                <ComboBoxItem Content="Carte Bancaire" IsSelected="True"/>
+                                <ComboBoxItem Content="Espèces"/>
+                                <ComboBoxItem Content="Virement"/>
+                                <ComboBoxItem Content="Chèque"/>
+                            </ComboBox>
+                            <Button Content="Enregistrer Paiement" Margin="0,20,0,0" Click="btnAjouterPaiement_Click" Background="#059669" Foreground="White"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,129 @@
+﻿@model LocationVoiture.Core.Models.Vehicule
+
+@{
+    ViewData["Title"] = $"{Model.Marque} {Model.Modele}";
+}
+
+<!-- Fullscreen Background -->
+<div class="details-background" style="
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background: url('@(string.IsNullOrEmpty(Model.ImageURL) ? "/images/hero.png" : Model.ImageURL)') no-repeat center center/cover; 
+    z-index: -1;">
+    <div class="auth-overlay"></div>
+</div>
+
+<div class="container" style="min-height: 100vh; display: flex; align-items: center; padding-top: 120px; padding-bottom: 50px;">
+    <div class="row w-100 gy-4 justify-content-center">
+        
+        <!-- Header (Mobile/Top) -->
+        <div class="col-12 text-center mb-4">
+            <h1 class="display-4 fw-bold hero-title text-light-theme">@Model.Marque <span class="gold">@Model.Modele</span></h1>
+            <p class="lead text-light-theme opacity-75">@Model.TypeVehicule.Nom &bull; @Model.Annee &bull; @Model.PrixJournee.ToString("C0") / jour</p>
+        </div>
+
+        <!-- Left Column: Image & Specs -->
+        <div class="col-lg-7">
+            <div class="auth-card p-4 h-100 highlight-card">
+                <img src="@(string.IsNullOrEmpty(Model.ImageURL) ? "/images/car1.png" : Model.ImageURL)" alt="@Model.Modele" class="img-fluid rounded-3 mb-4 shadow-lg w-100" style="object-fit: cover; max-height: 400px;">
+                
+                <h4 class="mb-3 text-light-theme">Caractéristiques</h4>
+                <div class="row g-3 text-light-theme opacity-75">
+                    <div class="col-6 col-md-3">
+                        <i class="fas fa-gas-pump gold mb-2"></i><br> Essence
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="fas fa-cogs gold mb-2"></i><br> Auto
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="fas fa-users gold mb-2"></i><br> 5 Places
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <i class="fas fa-palette gold mb-2"></i><br> @Model.Couleur
+                    </div>
+                </div>
+                
+                <hr class="border-secondary my-4">
+                <h5 class="text-light-theme">Description</h5>
+                <p class="text-light-theme opacity-75 small">
+                    Profitez de cette @Model.Marque @Model.Modele pour vos déplacements. 
+                    Confort, sécurité et style sont au rendez-vous. Véhicule révisé et prêt à partir.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Column: Booking Form -->
+        <div class="col-lg-5">
+            <div class="auth-card p-4 sticky-top highlight-card" style="top: 100px;">
+                <h3 class="text-light-theme mb-4">Réserver ce véhicule</h3>
+                
+                <form asp-action="CreerLocation" method="post">
+                    <input type="hidden" name="VehiculeID" value="@Model.VehiculeID" />
+
+                    <div class="mb-3">
+                        <label class="form-label text-light-theme opacity-75">Date de début</label>
+                        <input type="date" class="form-control form-control-custom" id="DateDebut" name="DateDebut" required />
+                    </div>
+
+                    <div class="mb-4">
+                         <label class="form-label text-light-theme opacity-75">Date de fin</label>
+                         <input type="date" class="form-control form-control-custom" id="DateFin" name="DateFin" required />
+                    </div>
+
+                    <div class="d-flex justify-content-between text-light-theme mb-4 p-3 rounded shadow-sm" style="background: var(--input-bg);">
+                        <span>Tarif Journalier</span>
+                        <span class="gold fw-bold">@Model.PrixJournee.ToString("C0")</span>
+                    </div>
+
+                    @if (Model.Disponible)
+                    {
+                        <button type="submit" class="btn btn-hero w-100 py-3">
+                            Confirmer la réservation <i class="fas fa-check-circle ms-2"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary w-100 py-3" disabled>
+                            <i class="fas fa-ban me-2"></i> Non disponible
+                        </button>
+                    }
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* 
+       Theme-aware text helper.
+       In Dark Mode: Text is white (via --text-light variable).
+       In Light Mode: Text is dark blue/grey (via --text-light variable).
+       Wait! Default --text-light is actually for 'body', so standard text is already correct.
+       But here we are on a BACKGROUND IMAGE.
+       
+       PROBLEM: In Light Mode, if the background image is dark (which Hero is), dark text is invisible.
+       
+       SOLUTION: The Cards have a background.
+       Dark Mode Card Bg: rgba(30, 41, 59, 0.7) -> Dark Blue Glass -> Needs White Text.
+       Light Mode Card Bg: rgba(255, 255, 255, 0.8) -> White Glass -> Needs Dark Text.
+       
+       We should rely on the variable --text-light which toggles:
+       Dark Mode: #f8fafc (White-ish)
+       Light Mode: #1e293b (Dark Blue)
+    */
+    
+    .text-light-theme {
+        color: var(--text-light) !important;
+    }
+    
+    /* Ensure the cards use the variable background which changes with theme */
+    .highlight-card {
+        background: var(--card-bg) !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--card-border);
+    }
+</style>

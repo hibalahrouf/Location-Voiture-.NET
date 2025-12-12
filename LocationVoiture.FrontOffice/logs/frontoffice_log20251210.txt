@@ -1,0 +1,67 @@
+2025-12-10 23:12:09.717 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-10 23:12:10.061 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-10 23:12:10.062 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-10 23:12:10.062 +01:00 [INF] Hosting environment: Development
+2025-12-10 23:12:10.062 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-10 23:12:55.601 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-10 23:12:55.606 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-10 23:12:55.662 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-10 23:12:55.699 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-10 23:12:56.544 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-10 23:12:59.272 +01:00 [INF] Executed DbCommand (69ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-10 23:12:59.358 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-10 23:12:59.459 +01:00 [INF] Executed ViewResult - view Index executed in 104.0553ms.
+2025-12-10 23:12:59.460 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 3761.0737ms
+2025-12-10 23:12:59.461 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-10 23:12:59.478 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/car1.png - null null
+2025-12-10 23:12:59.478 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=cmjBCE3Ku45ROyB36LmvquGv2d5cHDV4UIzy7jhOYUs - null null
+2025-12-10 23:12:59.478 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/jquery/dist/jquery.min.js - null null
+2025-12-10 23:12:59.479 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 3884.5374ms
+2025-12-10 23:12:59.481 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/css/bootstrap.min.css - null null
+2025-12-10 23:12:59.616 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\css\site.css'
+2025-12-10 23:12:59.616 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=cmjBCE3Ku45ROyB36LmvquGv2d5cHDV4UIzy7jhOYUs - 200 9312 text/css 142.4953ms
+2025-12-10 23:12:59.616 +01:00 [INF] Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\jquery\dist\jquery.min.js'
+2025-12-10 23:12:59.616 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.min.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css'
+2025-12-10 23:12:59.617 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/jquery/dist/jquery.min.js - 200 87533 text/javascript 138.7099ms
+2025-12-10 23:12:59.617 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/css/bootstrap.min.css - 200 232803 text/css 135.6583ms
+2025-12-10 23:12:59.617 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2025-12-10 23:12:59.618 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM - null null
+2025-12-10 23:12:59.618 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2025-12-10 23:12:59.618 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 200 80721 text/javascript 1.486ms
+2025-12-10 23:12:59.619 +01:00 [INF] Sending file. Request path: '/js/site.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\js\site.js'
+2025-12-10 23:12:59.619 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM - 200 227 text/javascript 0.7663ms
+2025-12-10 23:12:59.619 +01:00 [INF] Sending file. Request path: '/images/car1.png'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\images\car1.png'
+2025-12-10 23:12:59.619 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/images/car1.png - 200 501005 image/png 145.5642ms
+2025-12-10 23:12:59.632 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/hero.png - null null
+2025-12-10 23:12:59.634 +01:00 [INF] Sending file. Request path: '/images/hero.png'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\images\hero.png'
+2025-12-10 23:12:59.634 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/images/hero.png - 200 378770 image/png 1.9577ms
+2025-12-10 23:13:14.463 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-10 23:13:14.464 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-10 23:13:14.464 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-10 23:13:14.475 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-10 23:13:14.477 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-10 23:13:14.480 +01:00 [INF] Executed ViewResult - view Index executed in 3.7169ms.
+2025-12-10 23:13:14.480 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 16.3504ms
+2025-12-10 23:13:14.480 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-10 23:13:14.481 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 17.9636ms
+2025-12-10 23:13:14.611 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico - null null
+2025-12-10 23:13:14.613 +01:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\favicon.ico'
+2025-12-10 23:13:14.613 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/favicon.ico - 200 5430 image/x-icon 2.3099ms

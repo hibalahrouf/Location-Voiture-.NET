@@ -1,0 +1,67 @@
+@page
+@model LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Connexion";
+}
+
+<div class="auth-root">
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header text-center mb-4">
+                <div class="icon-circle mb-3 mx-auto" style="width: 80px; height: 80px; background: rgba(251, 191, 36, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);">
+                    <i class="fas fa-user-circle fa-3x gold"></i>
+                </div>
+                <h2 class="fw-bold text-white">Connexion</h2>
+                <p class="text-muted mb-0">Accédez à votre espace privilège</p>
+            </div>
+            <div class="auth-body">
+                <form id="account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                    
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-transparent border-end-0" style="border-color: var(--input-border);"><i class="fas fa-envelope gold"></i></span>
+                        <div class="form-floating flex-grow-1">
+                            <input asp-for="Input.Email" class="form-control form-control-custom border-start-0" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                        </div>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-group mb-4">
+                        <span class="input-group-text bg-transparent border-end-0" style="border-color: var(--input-border);"><i class="fas fa-lock gold"></i></span>
+                        <div class="form-floating flex-grow-1">
+                            <input asp-for="Input.Password" class="form-control form-control-custom border-start-0" autocomplete="current-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password" class="form-label">Mot de passe</label>
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" asp-for="Input.RememberMe" style="background-color: var(--input-bg); border-color: var(--gold);" />
+                            <label class="form-check-label text-muted" asp-for="Input.RememberMe">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                        <a id="forgot-password" asp-page="./ForgotPassword" class="text-muted small hover-gold">Mot de passe oublié ?</a>
+                    </div>
+
+                    <button id="login-submit" type="submit" class="btn btn-hero w-100 py-3 mb-3 fw-bold" style="font-size: 1.1rem; letter-spacing: 1px;">
+                        SE CONNECTER <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <span class="text-muted">Pas encore de compte ? </span>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="gold fw-bold text-decoration-none">Créer un compte</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

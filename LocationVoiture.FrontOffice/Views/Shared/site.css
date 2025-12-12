@@ -1,0 +1,63 @@
+﻿/* ---------- BASE ---------- */
+body.luxury-bg {
+    background: #0d0d0d;
+    font-family: 'Poppins', sans-serif;
+    color: #e4e4e4;
+}
+
+/* ----------- GOLD COLOR ----------- */
+.gold {
+    color: #caa84b !important;
+}
+
+/* ----------- NAVBAR PREMIUM ----------- */
+.nav-luxury {
+    background: #111;
+    padding: 18px 25px;
+}
+
+.brand-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.nav-links .nav-link {
+    color: #ccc !important;
+    font-size: 1.05rem;
+    margin-right: 18px;
+    transition: 0.3s;
+}
+
+    .nav-links .nav-link:hover {
+        color: #caa84b !important;
+    }
+
+/* ----------- FOOTER ----------- */
+.footer-luxury {
+    background: #111;
+    color: #aaa;
+    border-top: 1px solid #333;
+}
+
+/* ----------- CARDS LUXE (pour la page Véhicules) ----------- */
+.card-luxury {
+    background: #141414;
+    border: 1px solid #242424;
+    border-radius: 14px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .card-luxury:hover {
+        transform: translateY(-6px);
+        box-shadow: 0px 10px 25px rgba(0,0,0,0.6);
+    }
+
+    .card-luxury .price {
+        color: #caa84b;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .card-luxury img {
+        border-radius: 14px 14px 0 0;
+    }

@@ -1,0 +1,58 @@
+﻿/* ---------- HERO ---------- */
+.hero-luxury {
+    background: url('/images/hero-car.jpg') center/cover no-repeat;
+    padding: 120px 40px;
+    border-radius: 14px;
+    position: relative;
+}
+
+    .hero-luxury::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        border-radius: 14px;
+    }
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+}
+
+/* ---------- BUTTON GOLD ---------- */
+.btn-gold {
+    background: #caa84b;
+    color: #000;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+    .btn-gold:hover {
+        background: #e5c46b;
+        color: #000;
+    }
+
+/* ---------- FEATURES ---------- */
+.feature-box {
+    background: #111;
+    border: 1px solid #222;
+    padding: 25px;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+    .feature-box:hover {
+        border-color: #caa84b;
+    }
+
+/* ---------- CONFIRMATION ---------- */
+.confirmation-box {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: auto;
+}

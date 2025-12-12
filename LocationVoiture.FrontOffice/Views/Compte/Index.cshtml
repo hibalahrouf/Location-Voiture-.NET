@@ -1,0 +1,159 @@
+﻿@model IEnumerable<LocationVoiture.Core.Models.Location>
+
+@{
+    ViewData["Title"] = "Mon Tableau de Bord";
+    var clientName = ViewData["ClientName"] as string ?? "Cher Client";
+    var activeRentals = Model.Count(l => l.Statut == LocationVoiture.Core.Models.LocationStatut.EnAttente || l.Statut == LocationVoiture.Core.Models.LocationStatut.Confirmee);
+    var totalRentals = Model.Count();
+}
+
+<div class="container py-5 fade-in">
+    <!-- Welcome Banner with User Info -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="position-relative overflow-hidden rounded-4 p-5 text-white shadow-lg" 
+                 style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(2, 6, 23, 0.98)); border: 1px solid var(--card-border);">
+                
+                <!-- Background Decoration -->
+                <div class="position-absolute top-0 end-0 p-5 opacity-10" style="transform: translate(30%, -30%);">
+                    <div style="width: 300px; height: 300px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; filter: blur(40px);"></div>
+                </div>
+
+                <div class="position-relative z-index-2">
+                    <h1 class="display-5 fw-bold mb-3">Ravi de vous revoir, <span class="gold">@clientName</span></h1>
+                    <p class="lead text-muted mb-4" style="max-width: 600px;">
+                        Bienvenue sur votre espace personnel. Suivez vos locations, découvrez de nouveaux véhicules et gérez vos préférences en toute simplicité.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a asp-controller="Vehicule" asp-action="Index" class="btn btn-hero shadow-lg">
+                            <i class="fas fa-plus me-2"></i> Nouvelle Location
+                        </a>
+                        <a asp-controller="Contact" asp-action="Index" class="btn btn-outline-light rounded-pill px-4 fw-bold" style="border-color: var(--card-border);">
+                            Contacter le Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats & Quick Actions Grid -->
+    <div class="row g-4 mb-5">
+        <!-- KPI: Active Rentals -->
+        <div class="col-md-6 col-lg-3">
+            <div class="feature-card h-100 d-flex flex-column justify-content-center align-items-center p-4">
+                <div class="mb-2 text-muted text-uppercase small fw-bold tracking-wider">Locations Actives</div>
+                <div class="display-4 fw-bold gold">@activeRentals</div>
+            </div>
+        </div>
+        
+        <!-- KPI: Total Rentals -->
+        <div class="col-md-6 col-lg-3">
+             <div class="feature-card h-100 d-flex flex-column justify-content-center align-items-center p-4">
+                <div class="mb-2 text-muted text-uppercase small fw-bold tracking-wider">Total Historique</div>
+                <div class="display-4 fw-bold text-white">@totalRentals</div>
+            </div>
+        </div>
+
+        <!-- Quick Action / Promo -->
+        <div class="col-lg-6">
+            <div class="h-100 p-4 rounded-4 d-flex align-items-center justify-content-between" 
+                 style="background: linear-gradient(to right, rgba(251, 191, 36, 0.05), transparent); border: 1px solid var(--card-border);">
+                 <div class="me-3">
+                     <h5 class="gold fw-bold mb-2">Envie de changer d'air ?</h5>
+                     <p class="text-muted small mb-0">Découvrez nos derniers modèles de luxe arrivés cette semaine.</p>
+                 </div>
+                 <a asp-controller="Vehicule" asp-action="Index" class="btn btn-sm btn-outline-warning rounded-pill px-3">
+                    Voir le catalogue
+                 </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Rentals Section -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h3 class="section-title mb-0">Vos Locations Récentes</h3>
+        @if(Model.Any()) {
+            <span class="badge bg-dark border border-secondary rounded-pill px-3 py-2 text-muted">@Model.Count() résultats</span>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 rounded-4" style="background: rgba(30, 41, 59, 0.3); border: 1px dashed var(--text-muted);">
+            <div class="mb-3 opacity-50">
+                <i class="fas fa-car fa-3x text-muted"></i>
+            </div>
+            <h4 class="text-white fw-light mb-2">Aucune location pour le moment</h4>
+            <p class="text-muted mb-4">Votre historique de location apparaîtra ici.</p>
+            <a asp-controller="Vehicule" asp-action="Index" class="btn btn-hero btn-sm">Explorer la collection</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var location in Model)
+            {
+               var statusClass = location.Statut == LocationVoiture.Core.Models.LocationStatut.Confirmee ? "bg-success" :
+                                 location.Statut == LocationVoiture.Core.Models.LocationStatut.EnAttente ? "bg-warning text-dark" :
+                                 location.Statut == LocationVoiture.Core.Models.LocationStatut.Terminee ? "bg-secondary" : "bg-danger";
+                
+               var statusLabel = location.Statut.ToString();
+               /* Optional: Translate status for display */
+               switch(location.Statut) {
+                   case LocationVoiture.Core.Models.LocationStatut.EnAttente: statusLabel = "En Attente"; break;
+                   case LocationVoiture.Core.Models.LocationStatut.Confirmee: statusLabel = "Confirmée"; break;
+                   case LocationVoiture.Core.Models.LocationStatut.Terminee: statusLabel = "Terminée"; break;
+                   case LocationVoiture.Core.Models.LocationStatut.Annulee: statusLabel = "Annulée"; break;
+               }
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="car-card h-100 position-relative group-hover-lift">
+                        <!-- Image Area -->
+                        <div class="car-img-wrapper position-relative bg-dark">
+                            @if (!string.IsNullOrEmpty(location.Vehicule.ImageURL))
+                            {
+                                <img src="@location.Vehicule.ImageURL" class="w-100 h-100 object-fit-cover transition-scale" alt="@location.Vehicule.Modele" 
+                                     onerror="this.onerror=null; this.src='/images/hero.png'">
+                            }
+                            else
+                            {
+                                <img src="/images/hero.png" class="w-100 h-100 object-fit-cover opacity-50" alt="Placeholder">
+                            }
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge @statusClass shadow-sm px-3 py-2 rounded-pill">@statusLabel</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h5 class="card-title fw-bold text-white mb-1">@location.Vehicule.Marque @location.Vehicule.Modele</h5>
+                            <p class="text-muted small mb-4">Année @location.Vehicule.Annee</p>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small">Début</span>
+                                <span class="text-light fw-medium">@location.DateDebut.ToShortDateString()</span>
+                            </div>
+                             <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted small">Fin</span>
+                                <span class="text-light fw-medium">@location.DateFin.ToShortDateString()</span>
+                            </div>
+                            
+                            <div class="mt-auto pt-3 border-top border-dark-subtle d-flex justify-content-between align-items-center">
+                                <span class="text-muted small">Montant Total</span>
+                                <span class="gold fw-bold fs-5">@location.MontantTotal.ToString("C")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .transition-scale { transition: transform 0.5s ease; }
+    .car-card:hover .transition-scale { transform: scale(1.05); }
+    .group-hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .group-hover-lift:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+</style>

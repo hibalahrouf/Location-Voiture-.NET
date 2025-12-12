@@ -1,0 +1,571 @@
+2025-12-12 19:46:52.433 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 19:46:52.690 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 19:46:52.692 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 19:46:52.693 +01:00 [INF] Hosting environment: Development
+2025-12-12 19:46:52.693 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 19:46:52.725 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 19:46:52.730 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 19:46:52.792 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:46:52.825 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 19:46:53.813 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 19:47:07.037 +01:00 [INF] Executed DbCommand (58ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:07.132 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:07.219 +01:00 [INF] Executed ViewResult - view Index executed in 88.816ms.
+2025-12-12 19:47:07.220 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 14394.7707ms
+2025-12-12 19:47:07.221 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:07.237 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 14514.4264ms
+2025-12-12 19:47:07.247 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=rNhgfF0IVM3t__AbrhlgKHPUNToYBKBkDmhXmY9naf8 - null null
+2025-12-12 19:47:07.247 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/car1.png - null null
+2025-12-12 19:47:07.247 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/css/bootstrap.min.css - null null
+2025-12-12 19:47:07.283 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2025-12-12 19:47:07.283 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM - null null
+2025-12-12 19:47:07.284 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/jquery/dist/jquery.min.js - null null
+2025-12-12 19:47:07.313 +01:00 [INF] The file /js/site.js was not modified
+2025-12-12 19:47:07.314 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM - 304 null text/javascript 30.3957ms
+2025-12-12 19:47:07.329 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\css\site.css'
+2025-12-12 19:47:07.329 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=rNhgfF0IVM3t__AbrhlgKHPUNToYBKBkDmhXmY9naf8 - 200 8292 text/css 83.7155ms
+2025-12-12 19:47:07.337 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2025-12-12 19:47:07.337 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 200 80721 text/javascript 54.4102ms
+2025-12-12 19:47:07.337 +01:00 [INF] Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\jquery\dist\jquery.min.js'
+2025-12-12 19:47:07.337 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/jquery/dist/jquery.min.js - 200 87533 text/javascript 53.3734ms
+2025-12-12 19:47:07.340 +01:00 [INF] Sending file. Request path: '/images/car1.png'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\images\car1.png'
+2025-12-12 19:47:07.340 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/images/car1.png - 200 501005 image/png 94.7181ms
+2025-12-12 19:47:07.342 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.min.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css'
+2025-12-12 19:47:07.342 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/bootstrap/dist/css/bootstrap.min.css - 200 232803 text/css 97.5112ms
+2025-12-12 19:47:07.577 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/images/hero.png - null null
+2025-12-12 19:47:07.578 +01:00 [INF] The file /images/hero.png was not modified
+2025-12-12 19:47:07.578 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/images/hero.png - 304 null image/png 0.708ms
+2025-12-12 19:47:16.970 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - null null
+2025-12-12 19:47:17.003 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 19:47:17.022 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 19:47:17.038 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 19:47:17.043 +01:00 [INF] AuthenticationScheme: Identity.External signed out.
+2025-12-12 19:47:17.044 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 19:47:17.048 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 19:47:17.048 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 19:47:17.096 +01:00 [INF] Executed page /Account/Login in 73.412ms
+2025-12-12 19:47:17.096 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 19:47:17.097 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 126.3017ms
+2025-12-12 19:47:17.155 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/lib/jquery-validation/dist/jquery.validate.js - null null
+2025-12-12 19:47:17.156 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js - null null
+2025-12-12 19:47:17.157 +01:00 [INF] Sending file. Request path: '/Identity/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js'. Physical path: 'C:\Users\Shidoux\.nuget\packages\microsoft.aspnetcore.identity.ui\9.0.10\staticwebassets\V5\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js'
+2025-12-12 19:47:17.157 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js - 200 19385 text/javascript 1.1092ms
+2025-12-12 19:47:17.157 +01:00 [INF] Sending file. Request path: '/Identity/lib/jquery-validation/dist/jquery.validate.js'. Physical path: 'C:\Users\Shidoux\.nuget\packages\microsoft.aspnetcore.identity.ui\9.0.10\staticwebassets\V5\lib\jquery-validation\dist\jquery.validate.js'
+2025-12-12 19:47:17.157 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/lib/jquery-validation/dist/jquery.validate.js - 200 52536 text/javascript 1.8245ms
+2025-12-12 19:47:18.645 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Register - null null
+2025-12-12 19:47:18.650 +01:00 [INF] Executing endpoint '/Account/Register'
+2025-12-12 19:47:18.656 +01:00 [INF] Route matched with {page = "/Account/Register", area = "Identity", action = "", controller = ""}. Executing page /Account/Register
+2025-12-12 19:47:18.665 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.RegisterModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 19:47:18.666 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 19:47:18.666 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 19:47:18.666 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 19:47:18.692 +01:00 [INF] Executed page /Account/Register in 36.0759ms
+2025-12-12 19:47:18.692 +01:00 [INF] Executed endpoint '/Account/Register'
+2025-12-12 19:47:18.692 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Register - 200 null text/html; charset=utf-8 47.1952ms
+2025-12-12 19:47:22.251 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - null null
+2025-12-12 19:47:22.252 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 19:47:22.252 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 19:47:22.253 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 19:47:22.253 +01:00 [INF] AuthenticationScheme: Identity.External signed out.
+2025-12-12 19:47:22.254 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 19:47:22.254 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 19:47:22.254 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 19:47:22.256 +01:00 [INF] Executed page /Account/Login in 3.7106ms
+2025-12-12 19:47:22.256 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 19:47:22.256 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 4.8233ms
+2025-12-12 19:47:24.452 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 19:47:24.452 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:24.453 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:24.461 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:24.463 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:24.465 +01:00 [INF] Executed ViewResult - view Index executed in 1.6882ms.
+2025-12-12 19:47:24.465 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 12.028ms
+2025-12-12 19:47:24.465 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:24.465 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 12.8789ms
+2025-12-12 19:47:24.957 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Vehicule - null null
+2025-12-12 19:47:24.958 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:24.961 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:25.069 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-12-12 19:47:25.135 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+ORDER BY [v].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:25.137 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:25.185 +01:00 [INF] Executed ViewResult - view Index executed in 48.6089ms.
+2025-12-12 19:47:25.186 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 224.7011ms
+2025-12-12 19:47:25.186 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:25.186 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Vehicule - 200 null text/html; charset=utf-8 228.7493ms
+2025-12-12 19:47:26.054 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Contact - null null
+2025-12-12 19:47:26.055 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:26.055 +01:00 [INF] Route matched with {action = "Index", controller = "Contact", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller LocationVoiture.FrontOffice.Controllers.ContactController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:26.057 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:26.097 +01:00 [INF] Executed ViewResult - view Index executed in 40.0515ms.
+2025-12-12 19:47:26.097 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice) in 41.0455ms
+2025-12-12 19:47:26.097 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:26.097 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Contact - 200 null text/html; charset=utf-8 42.3991ms
+2025-12-12 19:47:26.113 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/jquery-validation/dist/jquery.validate.min.js - null null
+2025-12-12 19:47:26.113 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js - null null
+2025-12-12 19:47:26.113 +01:00 [INF] Sending file. Request path: '/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js'
+2025-12-12 19:47:26.113 +01:00 [INF] Sending file. Request path: '/lib/jquery-validation/dist/jquery.validate.min.js'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js'
+2025-12-12 19:47:26.113 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/jquery-validation/dist/jquery.validate.min.js - 200 25308 text/javascript 0.9845ms
+2025-12-12 19:47:26.114 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js - 200 5824 text/javascript 0.7228ms
+2025-12-12 19:47:27.128 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Vehicule - null null
+2025-12-12 19:47:27.128 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:27.129 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:27.132 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-12-12 19:47:27.133 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+ORDER BY [v].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:27.133 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:27.134 +01:00 [INF] Executed ViewResult - view Index executed in 1.1199ms.
+2025-12-12 19:47:27.134 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 5.5234ms
+2025-12-12 19:47:27.134 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:27.134 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Vehicule - 200 null text/html; charset=utf-8 6.7468ms
+2025-12-12 19:47:30.169 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Contact - null null
+2025-12-12 19:47:30.169 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:30.169 +01:00 [INF] Route matched with {action = "Index", controller = "Contact", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller LocationVoiture.FrontOffice.Controllers.ContactController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:30.169 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:30.172 +01:00 [INF] Executed ViewResult - view Index executed in 2.5245ms.
+2025-12-12 19:47:30.172 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice) in 2.8845ms
+2025-12-12 19:47:30.172 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.ContactController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:30.172 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Contact - 200 null text/html; charset=utf-8 3.4763ms
+2025-12-12 19:47:31.729 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 19:47:31.730 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:31.730 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:31.732 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:31.733 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:31.734 +01:00 [INF] Executed ViewResult - view Index executed in 1.0661ms.
+2025-12-12 19:47:31.734 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 3.7531ms
+2025-12-12 19:47:31.734 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:31.734 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 5.2951ms
+2025-12-12 19:47:32.597 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 19:47:32.598 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:32.598 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:32.600 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:32.600 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:32.601 +01:00 [INF] Executed ViewResult - view Index executed in 0.6775ms.
+2025-12-12 19:47:32.601 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 3.3884ms
+2025-12-12 19:47:32.601 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:32.601 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 3.9885ms
+2025-12-12 19:47:47.984 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Vehicule - null null
+2025-12-12 19:47:47.984 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:47.985 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:47.990 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-12-12 19:47:47.992 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+ORDER BY [v].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:47:47.993 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:47:47.993 +01:00 [INF] Executed ViewResult - view Index executed in 0.8385ms.
+2025-12-12 19:47:47.994 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 9.0059ms
+2025-12-12 19:47:47.994 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:47.994 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Vehicule - 200 null text/html; charset=utf-8 9.9169ms
+2025-12-12 19:47:53.169 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Vehicule/Details/2 - null null
+2025-12-12 19:47:53.170 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Details (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:53.173 +01:00 [INF] Route matched with {action = "Details", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Details(Int32) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-12-12 19:47:53.431 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+WHERE [v].[VehiculeID] = @__id_0
+2025-12-12 19:47:53.433 +01:00 [INF] Executing ViewResult, running view Details.
+2025-12-12 19:47:53.437 +01:00 [INF] Executed ViewResult - view Details executed in 4.1213ms.
+2025-12-12 19:47:53.437 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Details (LocationVoiture.FrontOffice) in 264.5102ms
+2025-12-12 19:47:53.437 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Details (LocationVoiture.FrontOffice)'
+2025-12-12 19:47:53.437 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Vehicule/Details/2 - 200 null text/html; charset=utf-8 267.9592ms
+2025-12-12 19:48:04.081 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 19:48:04.083 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:48:04.083 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 19:48:04.088 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 19:48:04.089 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 19:48:04.091 +01:00 [INF] Executed ViewResult - view Index executed in 1.4308ms.
+2025-12-12 19:48:04.091 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 7.8226ms
+2025-12-12 19:48:04.091 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 19:48:04.091 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 10.3903ms
+2025-12-12 20:12:43.337 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:12:43.618 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:12:43.620 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:12:43.620 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:12:43.620 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:12:47.929 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:12:47.932 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:12:47.972 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:12:47.996 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:12:48.756 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:12:50.437 +01:00 [INF] Executed DbCommand (80ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:12:50.594 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:12:50.732 +01:00 [INF] Executed ViewResult - view Index executed in 150.58ms.
+2025-12-12 20:12:50.734 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 2737.2068ms
+2025-12-12 20:12:50.734 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:12:50.747 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 2821.7502ms
+2025-12-12 20:12:50.764 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=rNhgfF0IVM3t__AbrhlgKHPUNToYBKBkDmhXmY9naf8 - null null
+2025-12-12 20:12:50.770 +01:00 [INF] The file /css/site.css was not modified
+2025-12-12 20:12:50.771 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=rNhgfF0IVM3t__AbrhlgKHPUNToYBKBkDmhXmY9naf8 - 304 null text/css 8.6659ms
+2025-12-12 20:12:53.516 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:12:53.518 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:12:53.518 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:12:53.537 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:12:53.538 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:12:53.540 +01:00 [INF] Executed ViewResult - view Index executed in 3.0043ms.
+2025-12-12 20:12:53.541 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 22.6383ms
+2025-12-12 20:12:53.541 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:12:53.541 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 24.4755ms
+2025-12-12 20:15:04.043 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:15:04.275 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:15:04.276 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:15:04.277 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:15:04.277 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:15:05.776 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:15:05.780 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:15:05.815 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:15:05.837 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:15:06.629 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:15:07.145 +01:00 [INF] Executed DbCommand (57ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:15:07.238 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:15:07.328 +01:00 [INF] Executed ViewResult - view Index executed in 95.5059ms.
+2025-12-12 20:15:07.330 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 1492.3778ms
+2025-12-12 20:15:07.330 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:15:07.339 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 1566.3613ms
+2025-12-12 20:15:35.135 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:15:35.175 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:15:35.175 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:15:35.211 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:15:35.213 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:15:35.216 +01:00 [INF] Executed ViewResult - view Index executed in 3.308ms.
+2025-12-12 20:15:35.216 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 40.3728ms
+2025-12-12 20:15:35.216 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:15:35.216 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 82.2638ms
+2025-12-12 20:17:10.670 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:17:10.916 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:17:10.918 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:17:10.918 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:17:10.918 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:17:11.338 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:17:11.343 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:17:11.390 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:17:11.425 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:17:12.450 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:17:13.040 +01:00 [INF] Executed DbCommand (75ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:17:13.132 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:17:13.225 +01:00 [INF] Executed ViewResult - view Index executed in 97.4432ms.
+2025-12-12 20:17:13.226 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 1800.3222ms
+2025-12-12 20:17:13.227 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:17:13.237 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 1903.0409ms
+2025-12-12 20:21:22.988 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:21:23.308 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:21:23.310 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:21:23.310 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:21:23.310 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:21:25.284 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:21:25.288 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:21:25.332 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:21:25.360 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:21:26.186 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:21:26.668 +01:00 [INF] Executed DbCommand (59ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:21:26.766 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:21:26.847 +01:00 [INF] Executed ViewResult - view Index executed in 86.7484ms.
+2025-12-12 20:21:26.849 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 1488.0018ms
+2025-12-12 20:21:26.849 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:21:26.859 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 1580.5096ms
+2025-12-12 20:21:26.864 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=lFRXJYVkko1UA9kc_bdOZo5N5dM4KgN5apAxRyqoxXA - null null
+2025-12-12 20:21:26.873 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\css\site.css'
+2025-12-12 20:21:26.873 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=lFRXJYVkko1UA9kc_bdOZo5N5dM4KgN5apAxRyqoxXA - 200 7983 text/css 9.9761ms
+2025-12-12 20:21:37.367 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:21:37.368 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:21:37.369 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:21:37.439 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:21:37.440 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:21:37.444 +01:00 [INF] Executed ViewResult - view Index executed in 3.6917ms.
+2025-12-12 20:21:37.444 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 74.8441ms
+2025-12-12 20:21:37.444 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:21:37.444 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 77.1458ms
+2025-12-12 20:23:13.744 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:23:13.960 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:23:13.961 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:23:13.962 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:23:13.962 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:23:19.746 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:23:19.749 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:23:19.785 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:23:19.807 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:23:20.561 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:23:20.988 +01:00 [INF] Executed DbCommand (50ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:23:21.076 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:23:21.165 +01:00 [INF] Executed ViewResult - view Index executed in 94.5422ms.
+2025-12-12 20:23:21.168 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 1360.3691ms
+2025-12-12 20:23:21.169 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:23:21.179 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 1436.3606ms
+2025-12-12 20:23:21.182 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=lFRXJYVkko1UA9kc_bdOZo5N5dM4KgN5apAxRyqoxXA - null null
+2025-12-12 20:23:21.186 +01:00 [INF] The file /css/site.css was not modified
+2025-12-12 20:23:21.187 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=lFRXJYVkko1UA9kc_bdOZo5N5dM4KgN5apAxRyqoxXA - 304 null text/css 5.6058ms
+2025-12-12 20:25:37.075 +01:00 [INF] User profile is available. Using 'C:\Users\Shidoux\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 20:25:37.384 +01:00 [INF] Now listening on: http://localhost:5000
+2025-12-12 20:25:37.386 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 20:25:37.386 +01:00 [INF] Hosting environment: Development
+2025-12-12 20:25:37.386 +01:00 [INF] Content root path: C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice
+2025-12-12 20:25:40.066 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-12-12 20:25:40.069 +01:00 [WRN] Failed to determine the https port for redirect.
+2025-12-12 20:25:40.103 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:25:40.126 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-12-12 20:25:40.882 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-12-12 20:25:41.306 +01:00 [INF] Executed DbCommand (49ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v0].[VehiculeID], [v0].[Annee], [v0].[Couleur], [v0].[Disponible], [v0].[ImageURL], [v0].[Immatriculation], [v0].[Marque], [v0].[Modele], [v0].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom], [t0].[TarifID], [t0].[PrixParJour], [t0].[TypeVehiculeID]
+FROM (
+    SELECT TOP(@__p_0) [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+    FROM [Vehicules] AS [v]
+    WHERE [v].[Disponible] = CAST(1 AS bit)
+) AS [v0]
+INNER JOIN [TypesVehicules] AS [t] ON [v0].[TypeVehiculeID] = [t].[TypeVehiculeID]
+LEFT JOIN [Tarifs] AS [t0] ON [t].[TypeVehiculeID] = [t0].[TypeVehiculeID]
+ORDER BY [v0].[VehiculeID], [t].[TypeVehiculeID]
+2025-12-12 20:25:41.402 +01:00 [INF] Executing ViewResult, running view Index.
+2025-12-12 20:25:41.486 +01:00 [INF] Executed ViewResult - view Index executed in 89.3572ms.
+2025-12-12 20:25:41.488 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 1361.3733ms
+2025-12-12 20:25:41.488 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-12-12 20:25:41.499 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 1437.52ms
+2025-12-12 20:25:41.501 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - null null
+2025-12-12 20:25:41.509 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'C:\Users\Shidoux\Downloads\LocationVoitureSolution-master\LocationVoitureSolution-master\LocationVoiture.FrontOffice\wwwroot\css\site.css'
+2025-12-12 20:25:41.509 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - 200 8899 text/css 8.803ms
+2025-12-12 20:25:56.652 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - null null
+2025-12-12 20:25:56.685 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 20:25:56.792 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 20:25:56.803 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 20:25:56.806 +01:00 [INF] AuthenticationScheme: Identity.External signed out.
+2025-12-12 20:25:56.807 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 20:25:56.809 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 20:25:56.809 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:25:56.845 +01:00 [INF] Executed page /Account/Login in 53.3003ms
+2025-12-12 20:25:56.845 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 20:25:56.846 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 193.4805ms
+2025-12-12 20:25:56.866 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - null null
+2025-12-12 20:25:56.868 +01:00 [INF] The file /css/site.css was not modified
+2025-12-12 20:25:56.868 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - 304 null text/css 2.5328ms
+2025-12-12 20:26:03.260 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Register - null null
+2025-12-12 20:26:03.265 +01:00 [INF] Executing endpoint '/Account/Register'
+2025-12-12 20:26:03.271 +01:00 [INF] Route matched with {page = "/Account/Register", area = "Identity", action = "", controller = ""}. Executing page /Account/Register
+2025-12-12 20:26:03.279 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.RegisterModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 20:26:03.280 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 20:26:03.280 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 20:26:03.280 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:26:03.303 +01:00 [INF] Executed page /Account/Register in 32.0363ms
+2025-12-12 20:26:03.303 +01:00 [INF] Executed endpoint '/Account/Register'
+2025-12-12 20:26:03.303 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Register - 200 null text/html; charset=utf-8 43.0509ms
+2025-12-12 20:27:06.017 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/Identity/Account/Register - application/x-www-form-urlencoded 356
+2025-12-12 20:27:06.018 +01:00 [INF] Executing endpoint '/Account/Register'
+2025-12-12 20:27:06.018 +01:00 [INF] Route matched with {page = "/Account/Register", area = "Identity", action = "", controller = ""}. Executing page /Account/Register
+2025-12-12 20:27:06.037 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-12-12 20:27:06.046 +01:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:27:06.049 +01:00 [INF] Executed page /Account/Register in 31.236ms
+2025-12-12 20:27:06.049 +01:00 [INF] Executed endpoint '/Account/Register'
+2025-12-12 20:27:06.050 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5000/Identity/Account/Register - 200 null text/html; charset=utf-8 32.1749ms
+2025-12-12 20:27:06.066 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - null null
+2025-12-12 20:27:06.066 +01:00 [INF] The file /css/site.css was not modified
+2025-12-12 20:27:06.066 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - 304 null text/css 0.6173ms
+2025-12-12 20:27:12.480 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/Identity/Account/Register - application/x-www-form-urlencoded 378
+2025-12-12 20:27:12.480 +01:00 [INF] Executing endpoint '/Account/Register'
+2025-12-12 20:27:12.480 +01:00 [INF] Route matched with {page = "/Account/Register", area = "Identity", action = "", controller = ""}. Executing page /Account/Register
+2025-12-12 20:27:12.482 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-12-12 20:27:12.589 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2025-12-12 20:27:12.689 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (Size = 256), @p4='?' (DbType = Boolean), @p5='?' (DbType = Boolean), @p6='?' (DbType = DateTimeOffset), @p7='?' (Size = 256), @p8='?' (Size = 256), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (DbType = Boolean), @p12='?' (Size = 4000), @p13='?' (DbType = Boolean), @p14='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [Email], [EmailConfirmed], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-12-12 20:27:12.698 +01:00 [INF] L'utilisateur a créé un nouveau compte.
+2025-12-12 20:27:12.729 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 500), @p1='?' (Size = 200), @p2='?' (Size = 4000), @p3='?' (Size = 100), @p4='?' (Size = 100), @p5='?' (Size = 20)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Clients] ([Adresse], [Email], [MotDePasseHash], [Nom], [Prenom], [Telephone])
+OUTPUT INSERTED.[ClientID]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-12-12 20:27:12.914 +01:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RedirectToPageResult.
+2025-12-12 20:27:12.915 +01:00 [INF] Executing RedirectToPageResult, redirecting to RegisterConfirmation.
+2025-12-12 20:27:12.916 +01:00 [INF] Executed page /Account/Register in 435.3215ms
+2025-12-12 20:27:12.916 +01:00 [INF] Executed endpoint '/Account/Register'
+2025-12-12 20:27:12.916 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5000/Identity/Account/Register - 302 0 null 436.3582ms
+2025-12-12 20:27:12.919 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/RegisterConfirmation?email=lahhrouf@gmail.com&returnUrl=%2F - null null
+2025-12-12 20:27:12.919 +01:00 [INF] Executing endpoint '/Account/RegisterConfirmation'
+2025-12-12 20:27:12.922 +01:00 [INF] Route matched with {page = "/Account/RegisterConfirmation", area = "Identity", action = "", controller = ""}. Executing page /Account/RegisterConfirmation
+2025-12-12 20:27:12.927 +01:00 [INF] Executing handler method Microsoft.AspNetCore.Identity.UI.V5.Pages.Account.Internal.RegisterConfirmationModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 20:27:12.984 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-12-12 20:27:12.987 +01:00 [INF] Executed handler method OnGetAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:27:12.991 +01:00 [INF] Executed page /Account/RegisterConfirmation in 68.2705ms
+2025-12-12 20:27:12.991 +01:00 [INF] Executed endpoint '/Account/RegisterConfirmation'
+2025-12-12 20:27:12.991 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/RegisterConfirmation?email=lahhrouf@gmail.com&returnUrl=%2F - 200 null text/html; charset=utf-8 72.0648ms
+2025-12-12 20:27:18.496 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - null null
+2025-12-12 20:27:18.496 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 20:27:18.497 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 20:27:18.498 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2025-12-12 20:27:18.499 +01:00 [INF] AuthenticationScheme: Identity.External signed out.
+2025-12-12 20:27:18.499 +01:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-12-12 20:27:18.499 +01:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-12-12 20:27:18.499 +01:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:27:18.500 +01:00 [INF] Executed page /Account/Login in 3.6694ms
+2025-12-12 20:27:18.500 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 20:27:18.501 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 4.4494ms
+2025-12-12 20:27:19.932 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/Identity/Account/Login - application/x-www-form-urlencoded 275
+2025-12-12 20:27:19.932 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 20:27:19.933 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 20:27:19.935 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2025-12-12 20:27:19.939 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2025-12-12 20:27:19.943 +01:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:27:19.945 +01:00 [INF] Executed page /Account/Login in 12.574ms
+2025-12-12 20:27:19.945 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 20:27:19.946 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 13.5184ms
+2025-12-12 20:27:21.815 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/Identity/Account/Login - application/x-www-form-urlencoded 297
+2025-12-12 20:27:21.816 +01:00 [INF] Executing endpoint '/Account/Login'
+2025-12-12 20:27:21.816 +01:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2025-12-12 20:27:21.817 +01:00 [INF] Executing handler method LocationVoiture.FrontOffice.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2025-12-12 20:27:21.819 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2025-12-12 20:27:21.819 +01:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-12-12 20:27:21.821 +01:00 [INF] Executed page /Account/Login in 4.8961ms
+2025-12-12 20:27:21.821 +01:00 [INF] Executed endpoint '/Account/Login'
+2025-12-12 20:27:21.821 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5000/Identity/Account/Login - 200 null text/html; charset=utf-8 5.4824ms
+2025-12-12 20:27:21.836 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - null null
+2025-12-12 20:27:21.836 +01:00 [INF] The file /css/site.css was not modified
+2025-12-12 20:27:21.836 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/css/site.css?v=o8cdSdcPwXZRKP6tUP2BIC-C3Pw3d3Po51S4Ov68KXo - 304 null text/css 0.5026ms

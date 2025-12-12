@@ -1,0 +1,425 @@
+/* =========================================
+   LUXURY CAR RENTAL THEME - DUAL MODE (Light & Dark)
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* --- Light Mode (Default) --- */
+  --bg-body: #F9F9F9;
+  --bg-card: #FFFFFF;
+  --bg-nav: rgba(255, 255, 255, 0.95);
+  --bg-footer: #1A1A1A;
+
+  --c-text-main: #1A1A1A;
+  --c-text-nav: #1A1A1A;
+  --c-text-light: #F9F9F9;
+  /* Always light text */
+  --c-muted: #6c757d;
+
+  --c-gold: #FFD700;
+  --c-gold-hover: #E5C100;
+
+  --border-color: rgba(0, 0, 0, 0.05);
+
+  /* Shadows */
+  --shadow-soft: 0 5px 20px rgba(0, 0, 0, 0.05);
+  --shadow-deep: 0 15px 40px rgba(0, 0, 0, 0.12);
+  --shadow-gold: 0 5px 15px rgba(255, 215, 0, 0.3);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+
+  --font-main: 'Poppins', sans-serif;
+}
+
+/* --- Dark Mode Override --- */
+[data-theme="dark"] {
+  --bg-body: #0B1D3A;
+  /* Deep Night Blue */
+  --bg-card: rgba(255, 255, 255, 0.05);
+  /* Semi-transparent white for glass effect */
+  --bg-nav: rgba(11, 29, 58, 0.95);
+  --bg-footer: #061124;
+  /* Darker Blue */
+
+  --c-text-main: #FFFFFF;
+  --c-text-nav: #FFFFFF;
+  --c-muted: #B0B8C4;
+
+  --border-color: rgba(255, 215, 0, 0.15);
+  /* Gold tint borders */
+
+  --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.3);
+  --shadow-deep: 0 15px 35px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
+
+  --glass-bg: rgba(11, 29, 58, 0.85);
+}
+
+/* =========================================
+   BASE STYLES
+   ========================================= */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  background-color: var(--bg-body);
+  color: var(--c-text-main);
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  /* Smooth Transition */
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--c-text-main);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* =========================================
+   UTILITIES
+   ========================================= */
+.gold {
+  color: var(--c-gold) !important;
+}
+
+.text-muted {
+  color: var(--c-muted) !important;
+}
+
+.bg-dark-luxury {
+  background-color: var(--bg-footer) !important;
+  color: white !important;
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+.navbar {
+  background: var(--bg-nav);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+  box-shadow: var(--shadow-soft);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.brand-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--c-text-main);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  color: var(--c-text-nav) !important;
+  font-weight: 500;
+  margin: 0 10px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--c-gold) !important;
+}
+
+/* Underline effect */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--c-gold);
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Buttons in Nav */
+.btn-nav {
+  padding: 8px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.btn-login {
+  color: var(--c-text-main);
+  border: 1px solid var(--border-color);
+  margin-right: 10px;
+  background: var(--bg-card);
+}
+
+.btn-login:hover {
+  border-color: var(--c-gold);
+  color: var(--c-gold);
+  transform: translateY(-2px);
+}
+
+.btn-register {
+  background-color: var(--c-gold);
+  color: #1A1A1A;
+  /* Always dark text on gold button */
+  box-shadow: var(--shadow-gold);
+  border: none;
+}
+
+.btn-register:hover {
+  background-color: var(--c-gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--c-text-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.theme-toggle:hover {
+  background: var(--c-gold);
+  color: #1A1A1A;
+  border-color: var(--c-gold);
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+.btn-hero {
+  background: var(--c-gold);
+  color: #1A1A1A;
+  padding: 15px 40px;
+  font-weight: 700;
+  border-radius: 50px;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow-gold);
+  transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+  background: var(--c-gold-hover);
+}
+
+/* =========================================
+   CARDS
+   ========================================= */
+.card-luxury,
+.auth-card,
+.search-card,
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+  /* For glass feel in dark mode */
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.4s;
+}
+
+.card-luxury:hover,
+.auth-card:hover,
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-deep);
+  border-color: var(--c-gold);
+}
+
+/* --- Authentication --- */
+.auth-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Adaptive gradient */
+  background: radial-gradient(circle at center, var(--bg-card), var(--bg-body));
+  padding: 20px;
+}
+
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--c-gold);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+}
+
+/* --- Forms --- */
+.form-control-custom {
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  color: var(--c-text-main);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.form-control-custom:focus {
+  background: var(--bg-card);
+  border-color: var(--c-gold);
+  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+  color: var(--c-text-main);
+  outline: none;
+}
+
+.input-group-text {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-right: none;
+  color: var(--c-gold);
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero-section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  padding-top: 60px;
+  /* Default Light: Bright overlay */
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4)), url('/images/hero.png');
+}
+
+/* Dark Mode Hero Override */
+[data-theme="dark"] .hero-section {
+  background-image: linear-gradient(rgba(11, 29, 58, 0.85), rgba(11, 29, 58, 0.7)), url('/images/hero.png');
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--c-text-main);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: var(--c-muted);
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer-luxury {
+  background: var(--bg-footer);
+  color: white;
+  padding: 5rem 0 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-luxury h3,
+.footer-luxury h5 {
+  color: white;
+}
+
+.footer-luxury .text-muted {
+  color: #aaa !important;
+}
+
+.social-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 12px;
+  color: white;
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  background: var(--c-gold);
+  color: #0B1D3A;
+  transform: translateY(-5px);
+}
+
+/* =========================================
+   VEHICLE CARDS
+   ========================================= */
+.car-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: 0.3s;
+  border: 1px solid var(--border-color);
+}
+
+.car-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-deep);
+  border-color: var(--c-gold);
+}
+
+.car-img-wrapper {
+  height: 240px;
+  background: var(--bg-body);
+  overflow: hidden;
+}
+
+.car-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-gold);
+  /* Gold price looks good on both */
+}
+
+.car-price span {
+  font-size: 1rem;
+  color: var(--c-muted);
+}

@@ -1,0 +1,136 @@
+2025-11-09 00:21:55.340 +01:00 [INF] User profile is available. Using 'C:\Users\Mahmoud\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-11-09 00:21:56.490 +01:00 [INF] Now listening on: https://localhost:7062
+2025-11-09 00:21:56.491 +01:00 [INF] Now listening on: http://localhost:5076
+2025-11-09 00:21:56.575 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-09 00:21:56.575 +01:00 [INF] Hosting environment: Development
+2025-11-09 00:21:56.576 +01:00 [INF] Content root path: C:\Users\Mahmoud\source\repos\LocationVoitureSolution\LocationVoiture.FrontOffice
+2025-11-09 00:21:58.338 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/ - null null
+2025-11-09 00:22:04.342 +01:00 [INF] Executed DbCommand (574ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-11-09 00:22:04.665 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2025-11-09 00:22:04.684 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:04.702 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:04.724 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:05.078 +01:00 [INF] Executed ViewResult - view Index executed in 358.5281ms.
+2025-11-09 00:22:05.080 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 375.8375ms
+2025-11-09 00:22:05.080 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:05.094 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/ - 200 null text/html; charset=utf-8 6773.0233ms
+2025-11-09 00:22:05.131 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:05.131 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:05.217 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 86.7184ms
+2025-11-09 00:22:05.263 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 132.1462ms
+2025-11-09 00:22:34.994 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/Vehicule - null null
+2025-11-09 00:22:35.024 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:35.118 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:35.314 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-11-09 00:22:35.541 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+2025-11-09 00:22:35.652 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:35.778 +01:00 [INF] Executed ViewResult - view Index executed in 127.463ms.
+2025-11-09 00:22:35.782 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 663.4945ms
+2025-11-09 00:22:35.783 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:35.784 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/Vehicule - 200 null text/html; charset=utf-8 790.4346ms
+2025-11-09 00:22:35.811 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:35.811 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:35.812 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 1.2156ms
+2025-11-09 00:22:35.852 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 40.9253ms
+2025-11-09 00:22:43.846 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/Vehicule - null null
+2025-11-09 00:22:43.877 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:43.877 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:43.907 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-11-09 00:22:43.912 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+2025-11-09 00:22:43.914 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:43.917 +01:00 [INF] Executed ViewResult - view Index executed in 3.5944ms.
+2025-11-09 00:22:43.930 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 53.0109ms
+2025-11-09 00:22:43.930 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:43.931 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/Vehicule - 200 null text/html; charset=utf-8 84.9637ms
+2025-11-09 00:22:43.971 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:43.972 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:43.973 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 0.7602ms
+2025-11-09 00:22:43.983 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 11.8412ms
+2025-11-09 00:22:46.656 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/ - null null
+2025-11-09 00:22:46.659 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:46.660 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:46.660 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:46.662 +01:00 [INF] Executed ViewResult - view Index executed in 2.1495ms.
+2025-11-09 00:22:46.662 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 2.4653ms
+2025-11-09 00:22:46.662 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:46.662 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/ - 200 null text/html; charset=utf-8 8.0487ms
+2025-11-09 00:22:46.691 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:46.691 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:46.692 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 0.4477ms
+2025-11-09 00:22:46.707 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 15.0784ms
+2025-11-09 00:22:49.344 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/Compte - null null
+2025-11-09 00:22:49.358 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.CompteController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:49.365 +01:00 [INF] Route matched with {action = "Index", controller = "Compte", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index() on controller LocationVoiture.FrontOffice.Controllers.CompteController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:49.373 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2025-11-09 00:22:49.395 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__identityUser_Email_0='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[ClientID], [c].[Adresse], [c].[Email], [c].[MotDePasseHash], [c].[Nom], [c].[Prenom], [c].[Telephone]
+FROM [Clients] AS [c]
+WHERE [c].[Email] = @__identityUser_Email_0
+2025-11-09 00:22:49.482 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@__client_ClientID_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [l].[LocationID], [l].[ClientID], [l].[DateDebut], [l].[DateFin], [l].[DateRetourReelle], [l].[EmployeID], [l].[MontantTotal], [l].[Statut], [l].[VehiculeID], [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID]
+FROM [Locations] AS [l]
+INNER JOIN [Vehicules] AS [v] ON [l].[VehiculeID] = [v].[VehiculeID]
+WHERE [l].[ClientID] = @__client_ClientID_0
+ORDER BY [l].[DateDebut] DESC
+2025-11-09 00:22:49.571 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:49.596 +01:00 [INF] Executed ViewResult - view Index executed in 26.5936ms.
+2025-11-09 00:22:49.596 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.CompteController.Index (LocationVoiture.FrontOffice) in 231.662ms
+2025-11-09 00:22:49.597 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.CompteController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:49.597 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/Compte - 200 null text/html; charset=utf-8 253.1559ms
+2025-11-09 00:22:49.651 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:49.651 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:49.652 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 0.547ms
+2025-11-09 00:22:49.658 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 7.4031ms
+2025-11-09 00:22:53.297 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/ - null null
+2025-11-09 00:22:53.300 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:53.300 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller LocationVoiture.FrontOffice.Controllers.HomeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:53.300 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:53.302 +01:00 [INF] Executed ViewResult - view Index executed in 1.8874ms.
+2025-11-09 00:22:53.302 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice) in 2.0936ms
+2025-11-09 00:22:53.302 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.HomeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:53.302 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/ - 200 null text/html; charset=utf-8 5.1035ms
+2025-11-09 00:22:53.339 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:53.339 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:53.341 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 1.3972ms
+2025-11-09 00:22:53.349 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 9.5579ms
+2025-11-09 00:22:53.913 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/Vehicule - null null
+2025-11-09 00:22:53.917 +01:00 [INF] Executing endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:53.917 +01:00 [INF] Route matched with {action = "Index", controller = "Vehicule", page = "", area = ""}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Index(System.String, System.Nullable`1[System.Int32]) on controller LocationVoiture.FrontOffice.Controllers.VehiculeController (LocationVoiture.FrontOffice).
+2025-11-09 00:22:53.919 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [TypesVehicules] AS [t]
+2025-11-09 00:22:53.920 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[VehiculeID], [v].[Annee], [v].[Couleur], [v].[Disponible], [v].[ImageURL], [v].[Immatriculation], [v].[Marque], [v].[Modele], [v].[TypeVehiculeID], [t].[TypeVehiculeID], [t].[Description], [t].[Nom]
+FROM [Vehicules] AS [v]
+INNER JOIN [TypesVehicules] AS [t] ON [v].[TypeVehiculeID] = [t].[TypeVehiculeID]
+WHERE [v].[Disponible] = CAST(1 AS bit)
+2025-11-09 00:22:53.921 +01:00 [INF] Executing ViewResult, running view Index.
+2025-11-09 00:22:53.924 +01:00 [INF] Executed ViewResult - view Index executed in 3.1422ms.
+2025-11-09 00:22:53.924 +01:00 [INF] Executed action LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice) in 7.1375ms
+2025-11-09 00:22:53.924 +01:00 [INF] Executed endpoint 'LocationVoiture.FrontOffice.Controllers.VehiculeController.Index (LocationVoiture.FrontOffice)'
+2025-11-09 00:22:53.924 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/Vehicule - 200 null text/html; charset=utf-8 11.1469ms
+2025-11-09 00:22:53.962 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_vs/browserLink - null null
+2025-11-09 00:22:53.964 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - null null
+2025-11-09 00:22:53.964 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_framework/aspnetcore-browser-refresh.js - 200 16539 application/javascript; charset=utf-8 0.5974ms
+2025-11-09 00:22:53.971 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7062/_vs/browserLink - 200 null text/javascript; charset=UTF-8 8.5331ms
