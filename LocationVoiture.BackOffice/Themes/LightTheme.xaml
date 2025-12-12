@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ===== LIGHT THEME COLORS ===== -->
+    <SolidColorBrush x:Key="ThemeBackground" Color="#f4f6f8"/>
+    <SolidColorBrush x:Key="ThemeSecondary" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ThemeHeader" Color="#0B1F3F"/>
+    <SolidColorBrush x:Key="ThemeHeaderLight" Color="#1a3a5c"/>
+    <SolidColorBrush x:Key="ThemeGold" Color="#B8860B"/>
+    <SolidColorBrush x:Key="ThemeGoldLight" Color="#d4a528"/>
+    <SolidColorBrush x:Key="ThemeText" Color="#1a202c"/>
+    <SolidColorBrush x:Key="ThemeTextSecondary" Color="#64748b"/>
+    <SolidColorBrush x:Key="ThemeTextInverse" Color="#ffffff"/>
+    <SolidColorBrush x:Key="ThemeBorder" Color="#e2e8f0"/>
+    <SolidColorBrush x:Key="ThemeRowAlt" Color="#f8fafc"/>
+    <SolidColorBrush x:Key="ThemeRowHover" Color="#fef3c7"/>
+    <SolidColorBrush x:Key="ThemeMenuBar" Color="#ffffff"/>
+    
+</ResourceDictionary>

@@ -76,6 +76,30 @@ namespace LocationVoiture.BackOffice
             this.DataContext = this;
         }
 
+        private bool _isDarkMode = false;
+
+        private void ThemeToggle_Click(object sender, RoutedEventArgs e)
+        {
+            _isDarkMode = ThemeToggle.IsChecked == true;
+            ApplyTheme(_isDarkMode);
+        }
+
+        private void ApplyTheme(bool isDark)
+        {
+            if (isDark)
+            {
+                // Dark theme colors
+                MainGrid.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#121212"));
+            }
+            else
+            {
+                // Light theme colors  
+                MainGrid.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f4f6f8"));
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -129,10 +153,29 @@ namespace LocationVoiture.BackOffice
         // ======================================================================
         private void LoadDashboard()
         {
-            /* CHARTS LOGIC REMOVED FOR STABILITY */
+            // ==========================================================
+            // || STATISTIQUES DASHBOARD
+            // ==========================================================
+            try
+            {
+                txtTotalClients.Text = _context.Clients.Count().ToString();
+                txtTotalVehicules.Text = _context.Vehicules.Count().ToString();
+                txtTotalLocations.Text = _context.Locations.Count().ToString();
+                
+                var totalRevenu = _context.Locations.Sum(l => (decimal?)l.MontantTotal) ?? 0;
+                txtTotalRevenu.Text = totalRevenu.ToString("N0") + " €";
+            }
+            catch
+            {
+                // Fallback values if database not available
+                txtTotalClients.Text = "0";
+                txtTotalVehicules.Text = "0";
+                txtTotalLocations.Text = "0";
+                txtTotalRevenu.Text = "0 €";
+            }
 
             // ==========================================================
-            // || NOUVEAU : ALERTE ENTRETIEN
+            // || ALERTE ENTRETIEN
             // ==========================================================
 
             var dateLimite = DateTime.Now.AddMonths(-6); // 6 mois en arrière
@@ -379,6 +422,45 @@ namespace LocationVoiture.BackOffice
             chkDisponible.IsChecked = false;
             cmbTypeVehicule.SelectedValue = null; _selectedVehicule = null;
             VehiculesGrid.SelectedItem = null;
+        }
+
+        private void btnBrowseImage_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Images (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp|All files (*.*)|*.*",
+                Title = "Sélectionner une image pour le véhicule"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    // Copy to FrontOffice wwwroot/images folder
+                    var frontOfficeImages = System.IO.Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "..", "..", "..", "..", "LocationVoiture.FrontOffice", "wwwroot", "images", "vehicules"
+                    );
+                    frontOfficeImages = System.IO.Path.GetFullPath(frontOfficeImages);
+
+                    if (!System.IO.Directory.Exists(frontOfficeImages))
+                    {
+                        System.IO.Directory.CreateDirectory(frontOfficeImages);
+                    }
+
+                    var fileName = $"{Guid.NewGuid()}{System.IO.Path.GetExtension(openFileDialog.FileName)}";
+                    var destPath = System.IO.Path.Combine(frontOfficeImages, fileName);
+
+                    System.IO.File.Copy(openFileDialog.FileName, destPath, true);
+
+                    // Set relative URL for web access
+                    txtImageURL.Text = $"/images/vehicules/{fileName}";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la copie de l'image: {ex.Message}", "Erreur");
+                }
+            }
         }
 
         // ======================================================================

@@ -14,18 +14,19 @@ namespace LocationVoiture.FrontOffice.Areas.Identity.Pages.Account
     {
         private readonly ApplicationDbContext _context;
         private readonly IEmailVerificationService _emailService;
+        private readonly IConfiguration _configuration;
 
-        public RegisterModel(ApplicationDbContext context, IEmailVerificationService emailService)
+        public RegisterModel(ApplicationDbContext context, IEmailVerificationService emailService, IConfiguration configuration)
         {
             _context = context;
             _emailService = emailService;
+            _configuration = configuration;
         }
 
         [BindProperty]
         public InputModel Input { get; set; } = new();
 
         public string? ReturnUrl { get; set; }
-        public string? SuccessMessage { get; set; }
 
         public class InputModel
         {
@@ -91,6 +92,9 @@ namespace LocationVoiture.FrontOffice.Areas.Identity.Pages.Account
             // Hash password using SHA256
             var passwordHash = HashPassword(Input.Password);
 
+            // Check if email verification is enabled
+            var emailVerificationEnabled = _configuration.GetValue<bool>("Email:VerificationEnabled", false);
+            
             // Generate verification token
             var verificationToken = _emailService.GenerateVerificationToken();
 
@@ -102,14 +106,36 @@ namespace LocationVoiture.FrontOffice.Areas.Identity.Pages.Account
                 MotDePasseHash = passwordHash,
                 Telephone = Input.Telephone?.Trim(),
                 Adresse = Input.Adresse?.Trim(),
-                IsEmailVerified = true, // Auto-verify for now (no SMTP configured)
-                EmailVerificationToken = null
+                IsEmailVerified = !emailVerificationEnabled, // Auto-verify if email verification is disabled
+                EmailVerificationToken = emailVerificationEnabled ? verificationToken : null
             };
 
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
 
-            TempData["SuccessMessage"] = "Inscription reussie! Vous pouvez maintenant vous connecter.";
+            // Send verification email if enabled
+            if (emailVerificationEnabled)
+            {
+                try
+                {
+                    var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                    await _emailService.SendVerificationEmailAsync(normalizedEmail, verificationToken, baseUrl);
+                    TempData["SuccessMessage"] = "Inscription reussie! Veuillez verifier votre email avant de vous connecter.";
+                }
+                catch (Exception ex)
+                {
+                    // If email fails, auto-verify user so they can still login
+                    client.IsEmailVerified = true;
+                    client.EmailVerificationToken = null;
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Inscription reussie! Vous pouvez maintenant vous connecter.";
+                }
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Inscription reussie! Vous pouvez maintenant vous connecter.";
+            }
+
             return RedirectToPage("./Login", new { returnUrl });
         }
 

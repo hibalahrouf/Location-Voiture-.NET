@@ -34,8 +34,9 @@ namespace LocationVoiture.Core.Models
         [ForeignKey("TypeVehiculeID")]
         public virtual TypeVehicule TypeVehicule { get; set; }
 
-        public virtual ICollection<Location> Locations { get; set; }
-        public virtual ICollection<Entretien> Entretiens { get; set; }
+        public virtual ICollection<Location> Locations { get; set; } = new List<Location>();
+        public virtual ICollection<Entretien> Entretiens { get; set; } = new List<Entretien>();
+        public virtual ICollection<VehiculeImage> Images { get; set; } = new List<VehiculeImage>();
 
         [NotMapped]
         public decimal PrixJournee => TypeVehicule?.Tarifs?.FirstOrDefault()?.PrixParJour ?? 0;

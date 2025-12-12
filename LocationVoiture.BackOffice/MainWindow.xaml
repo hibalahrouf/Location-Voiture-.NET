@@ -6,41 +6,53 @@
         mc:Ignorable="d"
         Title="Back-Office Premium - Location de Voitures" Height="750" Width="1200"
         Loaded="Window_Loaded"
-        Background="#0f172a"
+        Background="#f4f6f8"
         WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:LocationVoiture.BackOffice">
 
     <Window.Resources>
-        <!-- COLORS -->
-        <SolidColorBrush x:Key="PrimaryBackground" Color="#0f172a"/>
-        <SolidColorBrush x:Key="SecondaryBackground" Color="#1e293b"/>
-        <SolidColorBrush x:Key="GoldColor" Color="#fbbf24"/>
-        <SolidColorBrush x:Key="TextWhite" Color="#f8fafc"/>
-        <SolidColorBrush x:Key="TextMuted" Color="#94a3b8"/>
-        <SolidColorBrush x:Key="BorderColor" Color="#334155"/>
+        <!-- ===== MODERN LIGHT THEME COLORS ===== -->
+        <SolidColorBrush x:Key="PrimaryBackground" Color="#f4f6f8"/>
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#ffffff"/>
+        <SolidColorBrush x:Key="NightBlue" Color="#0B1F3F"/>
+        <SolidColorBrush x:Key="NightBlueLight" Color="#1a3a5c"/>
+        <SolidColorBrush x:Key="GoldColor" Color="#B8860B"/>
+        <SolidColorBrush x:Key="GoldLight" Color="#d4a528"/>
+        <SolidColorBrush x:Key="TextDark" Color="#1a202c"/>
+        <SolidColorBrush x:Key="TextWhite" Color="#ffffff"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#64748b"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#e2e8f0"/>
+        <SolidColorBrush x:Key="RowAlt" Color="#f8fafc"/>
+        <SolidColorBrush x:Key="RowHover" Color="#fef3c7"/>
+        
+        <!-- ===== SHADOW EFFECT ===== -->
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="20" ShadowDepth="2" Opacity="0.08" Color="#0B1F3F"/>
+        <DropShadowEffect x:Key="ButtonShadow" BlurRadius="8" ShadowDepth="2" Opacity="0.15" Color="#0B1F3F"/>
 
-        <!-- STYLES -->
+        <!-- ===== TAB ITEM STYLE ===== -->
         <Style TargetType="TabItem">
-            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="15,10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI Semibold"/>
+            <Setter Property="Padding" Value="18,12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabItem">
-                        <Border Name="Border" BorderThickness="0,0,0,3" BorderBrush="Transparent" Background="{TemplateBinding Background}" Padding="15,10">
-                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="0,2"/>
+                        <Border Name="Border" BorderThickness="0,0,0,3" BorderBrush="Transparent" 
+                                Background="{TemplateBinding Background}" Padding="18,12" CornerRadius="8,8,0,0">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" 
+                                              HorizontalAlignment="Center" ContentSource="Header"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource GoldColor}"/>
-                                <Setter TargetName="Border" Property="Background" Value="#334155"/>
-                                <Setter Property="Foreground" Value="{StaticResource GoldColor}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBackground}"/>
+                                <Setter Property="Foreground" Value="{StaticResource NightBlue}"/>
                                 <Setter Property="FontWeight" Value="Bold"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#334155"/>
+                                <Setter TargetName="Border" Property="Background" Value="#f1f5f9"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -48,75 +60,232 @@
             </Setter>
         </Style>
 
+        <!-- ===== TEXTBLOCK STYLE ===== -->
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,6,0,2"/>
         </Style>
 
+        <!-- ===== TEXTBOX STYLE ===== -->
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
-            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="CaretBrush" Value="{StaticResource GoldColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GoldColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         
+        <!-- ===== COMBOBOX STYLE ===== -->
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="Foreground" Value="Black"/> 
-            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="13"/>
         </Style>
 
+        <!-- ===== DATAGRID STYLE ===== -->
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
             <Setter Property="RowBackground" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="AlternatingRowBackground" Value="#253248"/>
-            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="AlternatingRowBackground" Value="{StaticResource RowAlt}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="GridLinesVisibility" Value="Horizontal"/>
             <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource BorderColor}"/>
             <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="RowHeight" Value="42"/>
             <Setter Property="ColumnHeaderStyle">
                 <Setter.Value>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#334155"/>
-                        <Setter Property="Foreground" Value="{StaticResource GoldColor}"/>
-                        <Setter Property="Padding" Value="10,8"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Background" Value="{StaticResource NightBlue}"/>
+                        <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+                        <Setter Property="Padding" Value="12,10"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="12"/>
                         <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource NightBlueLight}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource RowHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#dbeafe"/>
+                                <Setter Property="Foreground" Value="{StaticResource NightBlue}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="{StaticResource NightBlue}"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
                 </Setter.Value>
             </Setter>
         </Style>
 
+        <!-- ===== BUTTON STYLE ===== -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource GoldColor}"/>
-            <Setter Property="Foreground" Value="#0f172a"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="16,10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect" Value="{StaticResource ButtonShadow}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="8" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource GoldLight}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#a67c00"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.9"/>
-                </Trigger>
-            </Style.Triggers>
+        </Style>
+
+        <!-- ===== CHECKBOX STYLE ===== -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+
+        <!-- ===== DATEPICKER STYLE ===== -->
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Padding" Value="8,6"/>
+        </Style>
+
+        <!-- ===== LISTBOX STYLE ===== -->
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
         </Style>
 
     </Window.Resources>
 
-    <Grid>
-        <TabControl Background="Transparent" BorderThickness="0">
+    <Grid x:Name="MainGrid" Background="#f4f6f8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- ===== TOP HEADER BAR ===== -->
+        <Border Grid.Row="0" Background="#ffffff" BorderThickness="0,0,0,1" BorderBrush="#e2e8f0">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.08" Color="#0B1F3F"/>
+            </Border.Effect>
+            <Grid Margin="25,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Logo / Brand -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{StaticResource NightBlue}" CornerRadius="8" Padding="8,6" Margin="0,0,12,0">
+                        <TextBlock Text="🚗" FontSize="20" Foreground="White"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Location Voiture" FontSize="18" FontWeight="Bold" 
+                                   Foreground="{StaticResource NightBlue}" Margin="0"/>
+                        <TextBlock Text="Back-Office Administration" FontSize="11" 
+                                   Foreground="{StaticResource TextMuted}" Margin="0,-2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Theme Toggle + Status -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Theme Toggle -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <TextBlock Text="☀️" FontSize="14" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <ToggleButton x:Name="ThemeToggle" Click="ThemeToggle_Click" Width="44" Height="24" Cursor="Hand">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="track" Background="#e0e0e0" CornerRadius="12" Width="44" Height="24">
+                                        <Border x:Name="thumb" Background="{StaticResource GoldColor}" 
+                                                Width="20" Height="20" CornerRadius="10" 
+                                                HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="track" Property="Background" Value="{StaticResource NightBlue}"/>
+                                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
+                                            <Setter TargetName="thumb" Property="Margin" Value="0,0,2,0"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <TextBlock Text="🌙" FontSize="14" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- Status Badge -->
+                    <Border Background="#dcfce7" CornerRadius="12" Padding="12,6">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Fill="#22c55e" Margin="0,0,8,0"/>
+                            <TextBlock Text="Connecté" FontSize="12" Foreground="#166534" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- ===== MAIN CONTENT AREA ===== -->
+        <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0" Margin="15,15,15,15">
 
             <!-- TAB 1: DASHBOARD -->
             <TabItem Header="📊 Tableau de Bord">
@@ -133,32 +302,61 @@
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Chart 1 -->
-                        <Border Grid.Column="0" Background="{StaticResource SecondaryBackground}" CornerRadius="8" Padding="15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Locations par Statut" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" />
-                                <TextBlock Text="Graphique indisponible temporairement" Foreground="Gray" HorizontalAlignment="Center" Margin="0,20"/>
-                            </Grid>
+                        <!-- Stat Card 1: Total Clients -->
+                        <Border Grid.Column="0" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="0,0,10,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+                            </Border.Effect>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="👥" FontSize="32" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtTotalClients" Text="0" FontSize="36" FontWeight="Bold" 
+                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+                                <TextBlock Text="Clients" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                            </StackPanel>
                         </Border>
 
-                        <!-- Chart 2 -->
-                        <Border Grid.Column="2" Background="{StaticResource SecondaryBackground}" CornerRadius="8" Padding="15">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="Véhicules par Type" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" />
-                                <TextBlock Text="Graphique indisponible temporairement" Foreground="Gray" HorizontalAlignment="Center" Margin="0,20"/>
-                            </Grid>
+                        <!-- Stat Card 2: Total Vehicles -->
+                        <Border Grid.Column="1" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+                            </Border.Effect>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="🚗" FontSize="32" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtTotalVehicules" Text="0" FontSize="36" FontWeight="Bold" 
+                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+                                <TextBlock Text="Véhicules" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Stat Card 3: Active Locations -->
+                        <Border Grid.Column="2" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+                            </Border.Effect>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="📋" FontSize="32" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtTotalLocations" Text="0" FontSize="36" FontWeight="Bold" 
+                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+                                <TextBlock Text="Locations" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Stat Card 4: Revenue -->
+                        <Border Grid.Column="3" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="10,0,0,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+                            </Border.Effect>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="💰" FontSize="32" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtTotalRevenu" Text="0 €" FontSize="28" FontWeight="Bold" 
+                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
+                                <TextBlock Text="Revenu Total" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                            </StackPanel>
                         </Border>
                     </Grid>
 
@@ -280,8 +478,15 @@
                         <TextBox x:Name="txtModele" Margin="0,5" />
                         <TextBlock Text="Année:" />
                         <TextBox x:Name="txtAnnee" Margin="0,5" />
-                        <TextBlock Text="URL de l'image:" />
-                        <TextBox x:Name="txtImageURL" Margin="0,5" />
+                        <TextBlock Text="Image:" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="txtImageURL" Grid.Column="0" Margin="0,5" IsReadOnly="True"/>
+                            <Button Content="📁" Grid.Column="1" Width="35" Margin="5,5,0,5" Click="btnBrowseImage_Click" ToolTip="Sélectionner une image"/>
+                        </Grid>
                         <TextBlock Text="Type de Véhicule:" />
                         <ComboBox x:Name="cmbTypeVehicule" Margin="0,5" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID" />
                         <CheckBox x:Name="chkDisponible" Content="Disponible" Foreground="White" Margin="0,10,0,0" />

@@ -106,13 +106,14 @@ namespace LocationVoiture.FrontOffice.Controllers
                 return RedirectToAction("Index");
             }
 
-            var identityUser = await _userManager.GetUserAsync(User);
-            if (identityUser == null)
+            // Get ClientID from claims (set during login)
+            var clientIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(clientIdClaim) || !int.TryParse(clientIdClaim, out int clientId))
             {
                 return Challenge();
             }
 
-            var client = _context.Clients.FirstOrDefault(c => c.Email == identityUser.Email);
+            var client = _context.Clients.FirstOrDefault(c => c.ClientID == clientId);
             if (client == null)
             {
                 TempData["Error"] = "Erreur de compte client. Veuillez contacter le support.";

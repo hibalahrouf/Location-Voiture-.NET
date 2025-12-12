@@ -27,6 +27,9 @@
 		<None Update="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+		<!-- Theme resource dictionaries -->
+		<Resource Include="Themes\LightTheme.xaml"/>
+		<Resource Include="Themes\DarkTheme.xaml"/>
 	</ItemGroup>
 
 	<ItemGroup>

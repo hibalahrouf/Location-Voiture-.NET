@@ -21,5 +21,6 @@ namespace LocationVoiture.Core.Data
         public DbSet<Tarif> Tarifs { get; set; }
         public DbSet<Entretien> Entretiens { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
+        public DbSet<VehiculeImage> VehiculeImages { get; set; }
     }
 }
