@@ -55,6 +55,7 @@ namespace LocationVoiture.BackOffice
             var mainWindow = _host!.Services.GetRequiredService<MainWindow>(); // MainWindow est Singleton
             
             // Instancier LoginWindow
+            DataSeeder.SeedAdmin(context);
             var loginWindow = new LoginWindow(context, mainWindow);
             loginWindow.Show();
 

@@ -1,60 +1,66 @@
 /* =========================================
-   LUXURY CAR RENTAL THEME - DUAL MODE (Light & Dark)
+   LUXURY CAR RENTAL THEME - PREMIUM EDITION
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+  /* --- Color Palette --- */
+  /* Metallic Gold */
+  --c-gold: #D4AF37;
+  --c-gold-hover: #B5952F;
+  --c-gold-light: rgba(212, 175, 55, 0.1);
+
+  /* Deep Night Blue / Black */
+  --c-night: #0B1D3A;
+  --c-night-dark: #061124;
+
   /* --- Light Mode (Default) --- */
-  --bg-body: #F9F9F9;
+  --bg-body: #F5F7FA;
+  /* Premium subtle gray/white */
   --bg-card: #FFFFFF;
   --bg-nav: rgba(255, 255, 255, 0.95);
-  --bg-footer: #1A1A1A;
+  --bg-footer: #061124;
 
   --c-text-main: #1A1A1A;
-  --c-text-nav: #1A1A1A;
+  --c-text-nav: #2C3E50;
   --c-text-light: #F9F9F9;
-  /* Always light text */
-  --c-muted: #6c757d;
+  --c-muted: #64748B;
 
-  --c-gold: #FFD700;
-  --c-gold-hover: #E5C100;
+  --border-color: rgba(11, 29, 58, 0.08);
 
-  --border-color: rgba(0, 0, 0, 0.05);
+  /* --- Premium Shadows (Blue-tinted for richness) --- */
+  --shadow-soft: 0 10px 30px -10px rgba(11, 29, 58, 0.1);
+  --shadow-deep: 0 20px 40px -12px rgba(11, 29, 58, 0.25);
+  --shadow-gold: 0 8px 25px -8px rgba(212, 175, 55, 0.5);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 
-  /* Shadows */
-  --shadow-soft: 0 5px 20px rgba(0, 0, 0, 0.05);
-  --shadow-deep: 0 15px 40px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 5px 15px rgba(255, 215, 0, 0.3);
+  /* --- Transitions --- */
+  --trans-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --trans-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-
-  --font-main: 'Poppins', sans-serif;
+  --font-main: 'Outfit', sans-serif;
 }
 
 /* --- Dark Mode Override --- */
 [data-theme="dark"] {
   --bg-body: #0B1D3A;
-  /* Deep Night Blue */
-  --bg-card: rgba(255, 255, 255, 0.05);
-  /* Semi-transparent white for glass effect */
+  /* Deep Night Blue Background */
+  --bg-card: #112B52;
+  /* Slightly Lighter Blue for Cards */
   --bg-nav: rgba(11, 29, 58, 0.95);
-  --bg-footer: #061124;
-  /* Darker Blue */
+  --bg-footer: #050E1D;
 
-  --c-text-main: #FFFFFF;
-  --c-text-nav: #FFFFFF;
-  --c-muted: #B0B8C4;
+  --c-text-main: #F1F5F9;
+  --c-text-nav: #E2E8F0;
+  --c-muted: #94A3B8;
 
-  --border-color: rgba(255, 215, 0, 0.15);
+  --border-color: rgba(212, 175, 55, 0.15);
   /* Gold tint borders */
 
-  --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.3);
-  --shadow-deep: 0 15px 35px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
-
-  --glass-bg: rgba(11, 29, 58, 0.85);
+  --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-deep: 0 20px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.3);
 }
 
 /* =========================================
@@ -69,13 +75,12 @@ body {
   color: var(--c-text-main);
   overflow-x: hidden;
   line-height: 1.6;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  /* Smooth Transition */
+  transition: background-color 0.5s var(--trans-smooth), color 0.5s var(--trans-smooth);
 }
 
 a {
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s var(--trans-smooth);
   color: inherit;
 }
 
@@ -87,7 +92,7 @@ h5,
 h6 {
   color: var(--c-text-main);
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 
 /* =========================================
@@ -101,37 +106,51 @@ h6 {
   color: var(--c-muted) !important;
 }
 
-.bg-dark-luxury {
-  background-color: var(--bg-footer) !important;
-  color: white !important;
-}
-
 /* =========================================
    NAVBAR
    ========================================= */
 .navbar {
   background: var(--bg-nav);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  padding: 1rem 0;
+  padding: 1.2rem 0;
   box-shadow: var(--shadow-soft);
-  transition: background 0.4s ease, border-color 0.4s ease;
+  transition: all 0.4s var(--trans-smooth);
 }
 
 .brand-title {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--c-text-main);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .nav-link {
   color: var(--c-text-nav) !important;
   font-weight: 500;
-  margin: 0 10px;
+  margin: 0 15px;
   position: relative;
   padding-bottom: 5px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--c-gold);
+  transition: width 0.3s var(--trans-smooth);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
 }
 
 .nav-link:hover,
@@ -139,99 +158,83 @@ h6 {
   color: var(--c-gold) !important;
 }
 
-/* Underline effect */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--c-gold);
-  transition: width 0.3s;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
 /* Buttons in Nav */
-.btn-nav {
-  padding: 8px 25px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
 .btn-login {
   color: var(--c-text-main);
   border: 1px solid var(--border-color);
-  margin-right: 10px;
-  background: var(--bg-card);
+  margin-right: 15px;
+  background: transparent;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s var(--trans-smooth);
 }
 
 .btn-login:hover {
   border-color: var(--c-gold);
   color: var(--c-gold);
+  background: var(--c-gold-light);
   transform: translateY(-2px);
 }
 
-.btn-register {
-  background-color: var(--c-gold);
-  color: #1A1A1A;
-  /* Always dark text on gold button */
-  box-shadow: var(--shadow-gold);
-  border: none;
-}
-
-.btn-register:hover {
-  background-color: var(--c-gold-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
-}
-
-/* Theme Toggle Button */
 .theme-toggle {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--c-text-main);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s var(--trans-spring);
 }
 
 .theme-toggle:hover {
-  background: var(--c-gold);
-  color: #1A1A1A;
+  background: var(--bg-card);
+  color: var(--c-gold);
   border-color: var(--c-gold);
+  transform: rotate(15deg) scale(1.1);
+  box-shadow: var(--shadow-gold);
 }
 
 /* =========================================
    BUTTONS
    ========================================= */
-.btn-hero {
-  background: var(--c-gold);
-  color: #1A1A1A;
-  padding: 15px 40px;
+.btn-hero,
+.btn-primary,
+.btn-register {
+  background: linear-gradient(135deg, var(--c-gold), var(--c-gold-hover));
+  color: #FFFFFF;
+  /* White text on Gold for better contrast if gold is dark enough, else dark */
+  color: #061124;
+  /* Dark Night text matches Luxury vibes */
+  padding: 16px 45px;
   font-weight: 700;
   border-radius: 50px;
   border: none;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  font-size: 0.9rem;
   box-shadow: var(--shadow-gold);
-  transition: all 0.3s ease;
+  transition: all 0.4s var(--trans-spring);
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
 }
 
-.btn-hero:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
-  background: var(--c-gold-hover);
+.btn-hero:hover,
+.btn-primary:hover,
+.btn-register:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.6);
+  background: linear-gradient(135deg, #E5C100, #C5A028);
+}
+
+.btn-hero:active {
+  transform: translateY(-1px);
 }
 
 /* =========================================
@@ -240,33 +243,34 @@ h6 {
 .card-luxury,
 .auth-card,
 .search-card,
-.feature-card {
+.feature-card,
+.car-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 2.5rem;
+  border-radius: 24px;
+  padding: 3rem;
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(10px);
-  /* For glass feel in dark mode */
-  transition: transform 0.3s, box-shadow 0.3s, background-color 0.4s;
+  transition: all 0.5s var(--trans-smooth);
 }
 
 .card-luxury:hover,
 .auth-card:hover,
-.feature-card:hover {
-  transform: translateY(-8px);
+.feature-card:hover,
+.car-card:hover {
+  transform: translateY(-10px);
   box-shadow: var(--shadow-deep);
-  border-color: var(--c-gold);
+  border-color: rgba(212, 175, 55, 0.3);
 }
 
-/* --- Authentication --- */
+/* Authentication Specifics */
 .auth-root {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Adaptive gradient */
-  background: radial-gradient(circle at center, var(--bg-card), var(--bg-body));
+  background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.1), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(11, 29, 58, 0.05), transparent 40%),
+    var(--bg-body);
   padding: 20px;
 }
 
@@ -274,39 +278,45 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 215, 0, 0.15);
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.2));
   color: var(--c-gold);
   border-radius: 50%;
-  margin: 0 auto 1.5rem;
-  font-size: 2rem;
+  margin: 0 auto 2rem;
+  font-size: 2.2rem;
+  box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.1);
 }
 
 /* --- Forms --- */
 .form-control-custom {
   background: var(--bg-body);
-  border: 1px solid var(--border-color);
+  border: 2px solid transparent;
+  /* Prepare for border transition */
+  background-clip: padding-box;
+  box-shadow: var(--shadow-inner);
   color: var(--c-text-main);
-  border-radius: 12px;
-  padding: 15px 20px;
+  border-radius: 16px;
+  padding: 18px 25px;
   font-size: 1rem;
-  transition: 0.3s;
+  transition: all 0.3s var(--trans-smooth);
 }
 
 .form-control-custom:focus {
   background: var(--bg-card);
   border-color: var(--c-gold);
-  box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.15);
   color: var(--c-text-main);
   outline: none;
+  transform: translateY(-2px);
 }
 
 .input-group-text {
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-right: none;
+  border: none;
+  border-radius: 16px 0 0 16px;
   color: var(--c-gold);
+  padding-left: 20px;
 }
 
 /* =========================================
@@ -314,34 +324,87 @@ h6 {
    ========================================= */
 .hero-section {
   position: relative;
-  min-height: 90vh;
+  min-height: 95vh;
   display: flex;
   align-items: center;
   background-size: cover;
   background-position: center;
-  padding-top: 60px;
-  /* Default Light: Bright overlay */
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4)), url('/images/hero.png');
+  background-attachment: fixed;
+  /* Parallax effect */
+  padding-top: 80px;
+  background-image: linear-gradient(90deg, rgba(245, 247, 250, 0.9) 0%, rgba(245, 247, 250, 0.6) 50%, rgba(245, 247, 250, 0.2) 100%), url('/images/hero.png');
 }
 
-/* Dark Mode Hero Override */
 [data-theme="dark"] .hero-section {
-  background-image: linear-gradient(rgba(11, 29, 58, 0.85), rgba(11, 29, 58, 0.7)), url('/images/hero.png');
+  background-image: linear-gradient(90deg, rgba(11, 29, 58, 0.95) 0%, rgba(11, 29, 58, 0.7) 60%, rgba(11, 29, 58, 0.4) 100%), url('/images/hero.png');
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: var(--c-text-main);
+  background: linear-gradient(135deg, var(--c-text-main) 30%, var(--c-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: var(--c-muted);
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
   font-weight: 400;
+  max-width: 600px;
+}
+
+/* =========================================
+   VEHICLE CARDS
+   ========================================= */
+.car-card {
+  padding: 0;
+  /* Remove default card padding for image bleed */
+  overflow: hidden;
+  border: none;
+}
+
+.car-img-wrapper {
+  height: 260px;
+  background: var(--bg-body);
+  overflow: hidden;
+  position: relative;
+}
+
+.car-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--trans-smooth);
+}
+
+.car-card:hover .car-img-wrapper img {
+  transform: scale(1.08);
+  /* Slow zoom effect */
+}
+
+.car-details {
+  padding: 1.5rem 2rem;
+}
+
+.car-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--c-gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.car-price span {
+  font-size: 0.9rem;
+  color: var(--c-muted);
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 /* =========================================
@@ -350,76 +413,50 @@ h6 {
 .footer-luxury {
   background: var(--bg-footer);
   color: white;
-  padding: 5rem 0 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 6rem 0 3rem;
+  position: relative;
 }
 
-.footer-luxury h3,
-.footer-luxury h5 {
-  color: white;
+.footer-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+  opacity: 0.3;
 }
 
-.footer-luxury .text-muted {
-  color: #aaa !important;
+.footer-link {
+  display: block;
+  color: #94A3B8;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--c-gold);
+  transform: translateX(5px);
 }
 
 .social-icon {
-  width: 45px;
-  height: 45px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  margin-right: 12px;
+  margin-right: 15px;
   color: white;
-  transition: 0.3s;
+  transition: all 0.4s var(--trans-spring);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .social-icon:hover {
   background: var(--c-gold);
-  color: #0B1D3A;
-  transform: translateY(-5px);
-}
-
-/* =========================================
-   VEHICLE CARDS
-   ========================================= */
-.car-card {
-  background: var(--bg-card);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  transition: 0.3s;
-  border: 1px solid var(--border-color);
-}
-
-.car-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-deep);
+  color: var(--c-night);
+  transform: translateY(-5px) rotate(360deg);
   border-color: var(--c-gold);
-}
-
-.car-img-wrapper {
-  height: 240px;
-  background: var(--bg-body);
-  overflow: hidden;
-}
-
-.car-img-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.car-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--c-gold);
-  /* Gold price looks good on both */
-}
-
-.car-price span {
-  font-size: 1rem;
-  color: var(--c-muted);
 }
