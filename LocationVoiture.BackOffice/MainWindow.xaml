@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Back-Office Premium - Location de Voitures" Height="750" Width="1200"
+        Title="Back-Office Premium - Location de Voitures" 
+        Height="750" Width="1200"
+        MinHeight="600" MinWidth="900"
         Loaded="Window_Loaded"
         Background="#f4f6f8"
         WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        ResizeMode="CanResize"
         xmlns:local="clr-namespace:LocationVoiture.BackOffice">
 
     <Window.Resources>
@@ -118,6 +122,9 @@
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="RowHeight" Value="42"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="CanUserResizeColumns" Value="True"/>
             <Setter Property="ColumnHeaderStyle">
                 <Setter.Value>
                     <Style TargetType="DataGridColumnHeader">
@@ -222,10 +229,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <!-- ===== TOP HEADER BAR ===== -->
-        <Border Grid.Row="0" Background="#ffffff" BorderThickness="0,0,0,1" BorderBrush="#e2e8f0">
+        <!-- ===== TOP HEADER BAR WITH GRADIENT ===== -->
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#e2e8f0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#ffffff" Offset="0"/>
+                    <GradientStop Color="#f8fafc" Offset="0.5"/>
+                    <GradientStop Color="#f1f5f9" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <Border.Effect>
-                <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.08" Color="#0B1F3F"/>
+                <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.1" Color="#0B1F3F"/>
             </Border.Effect>
             <Grid Margin="25,0">
                 <Grid.ColumnDefinitions>
@@ -289,6 +303,7 @@
 
             <!-- TAB 1: DASHBOARD -->
             <TabItem Header="📊 Tableau de Bord">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -375,10 +390,12 @@
                     </DataGrid>
 
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: MESSAGES (NEW) -->
             <TabItem Header="✉️ Messages Contact">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -413,10 +430,12 @@
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: CLIENTS -->
             <TabItem Header="Gestion des Clients">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -450,10 +469,12 @@
                         <Button Content="Exporter Clients (CSV)" Margin="0,20,0,0" Click="btnExportClientsCSV_Click" Background="#059669" Foreground="White" />
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
              <!-- TAB: VEHICULES -->
             <TabItem Header="Gestion des Véhicules">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*" />
@@ -496,10 +517,12 @@
                         <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerVehicule_Click" Background="#334155"/>
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
              <!-- TAB: LOCATIONS -->
             <TabItem Header="Gestion des Locations">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*" />
@@ -536,10 +559,12 @@
                         <Button Content="Générer Bon de Location (PDF)" Margin="0,10,0,0" Click="btnGenererPDF_Click" Background="#3b82f6" Foreground="White" />
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: TYPES -->
              <TabItem Header="Gestion des Types">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -563,12 +588,14 @@
                         <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacer_Click" Background="#334155"/>
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
 
 
             <!-- TAB: TARIFS -->
              <TabItem Header="Gestion des Tarifs">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -592,10 +619,12 @@
                         <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerTarif_Click" Background="#334155"/>
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: EMPLOYES -->
             <TabItem Header="Gestion des Employés">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -627,10 +656,12 @@
                         <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerEmploye_Click" Background="#334155"/>
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: ENTRETIENS -->
             <TabItem Header="Gestion des Entretiens">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -661,10 +692,12 @@
                         <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerEntretien_Click" Background="#334155"/>
                     </StackPanel>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <!-- TAB: PAIEMENTS -->
             <TabItem Header="Gestion des Paiements">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -717,6 +750,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>

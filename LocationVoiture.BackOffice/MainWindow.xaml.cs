@@ -807,8 +807,8 @@ namespace LocationVoiture.BackOffice
         private void LoadLocationsForPaiementTab()
         {
             LocationsPaiementGrid.ItemsSource = _context.Locations
-                .Where(l => l.Statut == LocationStatut.Confirmee || l.Statut == LocationStatut.Terminee)
                 .Include(l => l.Client)
+                .Include(l => l.Vehicule)
                 .AsNoTracking()
                 .OrderByDescending(l => l.DateDebut)
                 .ToList();
