@@ -31,6 +31,8 @@ namespace LocationVoiture.Core.Models
         public int QuantiteTotal { get; set; } = 1; // Total units of this vehicle model
         public int QuantiteDisponible { get; set; } = 1; // Available units for rent
 
+        public DateTime? DateProchainEntretien { get; set; } // Next scheduled maintenance date
+
         // Computed property - true if any units available
         [NotMapped]
         public bool Disponible => QuantiteDisponible > 0;

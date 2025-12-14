@@ -535,8 +535,8 @@
                                     <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="50"/>
                                     <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*"/>
                                     <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*"/>
-                                    <DataGridTextColumn Header="Dernier Entretien" Binding="{Binding DateDernierEntretien, StringFormat='d'}" Width="*"/>
-                                    <DataGridTextColumn Header="Jours" Binding="{Binding JoursDepuisEntretien}" Width="70"/>
+                                    <DataGridTextColumn Header="Prochain Entretien" Binding="{Binding DateProchainEntretien, StringFormat='d'}" Width="*"/>
+                                    <DataGridTextColumn Header="Jours Restants" Binding="{Binding JoursRestantsEntretien}" Width="100"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -729,7 +729,10 @@
                                     <TextBlock Text="Type:" FontWeight="SemiBold"/>
                                     <ComboBox x:Name="cmbTypeVehicule" Margin="0,5,0,10" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID"/>
                                     <TextBlock Text="Stock Total:" FontWeight="SemiBold"/>
-                                    <TextBox x:Name="txtQuantiteTotal" Margin="0,5,0,15"/>
+                                    <TextBox x:Name="txtQuantiteTotal" Margin="0,5,0,10"/>
+                                    
+                                    <TextBlock Text="Prochain Entretien:" FontWeight="SemiBold" Foreground="{StaticResource NightBlue}"/>
+                                    <DatePicker x:Name="dpProchainEntretien" Margin="0,5,0,15"/>
                                     
                                     <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterVehicule_Click"/>
                                     <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourVehicule_Click" Background="{StaticResource NightBlue}"/>

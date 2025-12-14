@@ -290,26 +290,28 @@ namespace LocationVoiture.BackOffice
             }
 
             // ==========================================================
-            // || ALERTE ENTRETIEN
+            // || ALERTE ENTRETIEN (PROCHAINEMENT ou DÉPASSÉ)
             // ==========================================================
 
-            var dateLimite = DateTime.Now.AddMonths(-6); // 6 mois en arrière
-
-            // 1. Récupérer tous les véhicules avec leur dernier entretien
-            var vehiculesAvecEntretien = _context.Vehicules
+            // 1. Récupérer tous les véhicules où la date prochain entretien est définie
+            var vehiculesAvecAlerte = _context.Vehicules
+                .Where(v => v.DateProchainEntretien != null)
                 .Select(v => new AlerteEntretienViewModel
                 {
                     VehiculeID = v.VehiculeID,
                     Immatriculation = v.Immatriculation,
                     Modele = v.Modele,
-                    // Récupère la date la plus récente, ou 'null' s'il n'y en a pas
-                    DateDernierEntretien = v.Entretiens.Any() ? v.Entretiens.Max(e => e.DateEntretien) : (DateTime?)null
+                    DateProchainEntretien = v.DateProchainEntretien
                 })
-                .ToList(); // Exécute la requête
+                .ToList();
 
-            // 2. Filtrer en C#
-            VehiculesAlerteEntretien = vehiculesAvecEntretien
-                .Where(v => v.DateDernierEntretien == null || v.DateDernierEntretien < dateLimite) // 6 mois
+            // 2. Filtrer : Uniquement ceux dont la date est passée ou arrive dans les 30 jours
+            // (Les autres sont considérés comme "OK" pour le moment)
+            var alerteLimit = DateTime.Now.AddDays(30);
+
+            VehiculesAlerteEntretien = vehiculesAvecAlerte
+                .Where(v => v.DateProchainEntretien <= alerteLimit)
+                .OrderBy(v => v.DateProchainEntretien) // Les plus urgents en premier
                 .ToList();
 
             // 3. Mettre à jour la grille
@@ -468,6 +470,7 @@ namespace LocationVoiture.BackOffice
                 txtAnnee.Text = _selectedVehicule.Annee.ToString();
                 txtImageURL.Text = _selectedVehicule.ImageURL;
                 txtQuantiteTotal.Text = _selectedVehicule.QuantiteTotal.ToString();
+                dpProchainEntretien.SelectedDate = _selectedVehicule.DateProchainEntretien;
                 cmbTypeVehicule.SelectedValue = _selectedVehicule.TypeVehiculeID;
                 
                 // Load images for this vehicle
@@ -499,8 +502,10 @@ namespace LocationVoiture.BackOffice
                     Modele = txtModele.Text,
                     Annee = int.Parse(txtAnnee.Text),
                     ImageURL = txtImageURL.Text,
+
                     QuantiteTotal = int.TryParse(txtQuantiteTotal.Text, out int q) ? q : 1,
                     QuantiteDisponible = int.TryParse(txtQuantiteTotal.Text, out int qd) ? qd : 1,
+                    DateProchainEntretien = dpProchainEntretien.SelectedDate,
                     TypeVehiculeID = (int)cmbTypeVehicule.SelectedValue
                 };
                 _context.Vehicules.Add(newVehicule);
@@ -533,6 +538,7 @@ namespace LocationVoiture.BackOffice
                          vehiculeToUpdate.QuantiteDisponible = Math.Max(0, vehiculeToUpdate.QuantiteDisponible + diff);
                     }
                     
+                    vehiculeToUpdate.DateProchainEntretien = dpProchainEntretien.SelectedDate;
                     vehiculeToUpdate.TypeVehiculeID = (int)cmbTypeVehicule.SelectedValue;
                     _context.SaveChanges();
                     LoadVehicules(); LoadDashboard();
@@ -559,7 +565,7 @@ namespace LocationVoiture.BackOffice
         {
             txtImmatriculation.Text = ""; txtMarque.Text = ""; txtModele.Text = "";
             txtAnnee.Text = ""; txtImageURL.Text = "";
-            txtQuantiteTotal.Text = "";
+            txtQuantiteTotal.Text = ""; dpProchainEntretien.SelectedDate = null;
             cmbTypeVehicule.SelectedValue = null; _selectedVehicule = null;
             VehiculesGrid.SelectedItem = null;
         }
@@ -1665,18 +1671,22 @@ namespace LocationVoiture.BackOffice
         public int VehiculeID { get; set; }
         public string Immatriculation { get; set; }
         public string Modele { get; set; }
-        public DateTime? DateDernierEntretien { get; set; }
+        public DateTime? DateProchainEntretien { get; set; }
 
-        // Propriété calculée pour la grille
-        public string JoursDepuisEntretien
+        // Propriété calculée pour la grille - Affiche le statut
+        public string JoursRestantsEntretien
         {
             get
             {
-                if (DateDernierEntretien == null)
-                {
-                    return "Jamais";
-                }
-                return (DateTime.Now - DateDernierEntretien.Value).Days.ToString();
+                if (DateProchainEntretien == null) return "Non planifié";
+                
+                var timeLeft = DateProchainEntretien.Value - DateTime.Today;
+                int days = (int)Math.Ceiling(timeLeft.TotalDays);
+
+                if (days < 0) return $"⚠️ RETARD : {Math.Abs(days)} j";
+                if (days == 0) return "⚠️ AUJOURD'HUI";
+                if (days <= 7) return $"⚠️ Bientôt : {days} j";
+                return $"{days} jours";
             }
         }
     }
