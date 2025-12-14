@@ -3,58 +3,104 @@
 
 @{
     ViewData["Title"] = "Connexion";
+    Layout = null;
 }
 
-<div class="auth-root">
-    <div class="auth-overlay"></div>
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header text-center mb-4">
-                <div class="icon-circle mb-3 mx-auto" style="width: 80px; height: 80px; background: rgba(251, 191, 36, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);">
-                    <i class="fas fa-user-circle fa-3x gold"></i>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Premium Auto</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body data-theme="dark">
+
+<div class="auth-page">
+    <!-- Left: Brand Section -->
+    <div class="auth-brand-section">
+        <div class="auth-brand-content">
+            <a href="/" class="text-decoration-none">
+                <h1 class="mb-3">Location<span class="gold">Voiture</span></h1>
+            </a>
+            <p class="mb-5">Accédez à la collection la plus exclusive de véhicules de luxe.</p>
+            
+            <div class="d-flex justify-content-center gap-4 mt-4">
+                <div class="text-center">
+                    <div class="display-4 gold fw-bold">150+</div>
+                    <small class="text-white-50">Véhicules</small>
                 </div>
-                <h2 class="fw-bold text-white">Connexion</h2>
-                <p class="text-muted mb-0">Accédez à votre espace privilège</p>
+                <div class="text-center">
+                    <div class="display-4 gold fw-bold">50K+</div>
+                    <small class="text-white-50">Clients</small>
+                </div>
+                <div class="text-center">
+                    <div class="display-4 gold fw-bold">4.9</div>
+                    <small class="text-white-50">Note</small>
+                </div>
             </div>
-            <div class="auth-body">
+        </div>
+    </div>
+
+    <!-- Right: Form Section -->
+    <div class="auth-form-section">
+        <div class="auth-form-container">
+            <!-- Back to Home -->
+            <a href="/" class="d-inline-flex align-items-center text-muted mb-4 hover-gold">
+                <i class="fas fa-arrow-left me-2"></i> Retour à l'accueil
+            </a>
+
+            <div class="auth-form-card">
+                <div class="auth-form-header">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2>Bienvenue</h2>
+                    <p>Connectez-vous à votre espace privilège</p>
+                </div>
+
                 <form id="account" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
                     
-                    <div class="input-group mb-3">
-                        <span class="input-group-text bg-transparent border-end-0" style="border-color: var(--input-border);"><i class="fas fa-envelope gold"></i></span>
-                        <div class="form-floating flex-grow-1">
-                            <input asp-for="Input.Email" class="form-control form-control-custom border-start-0" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                            <label asp-for="Input.Email" class="form-label">Email</label>
+                    <div class="mb-3">
+                        <label asp-for="Input.Email" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope gold"></i></span>
+                            <input asp-for="Input.Email" class="form-control form-control-custom" 
+                                   autocomplete="username" aria-required="true" placeholder="votre@email.com" />
                         </div>
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        <span asp-validation-for="Input.Email" class="text-danger small"></span>
                     </div>
 
-                    <div class="input-group mb-4">
-                        <span class="input-group-text bg-transparent border-end-0" style="border-color: var(--input-border);"><i class="fas fa-lock gold"></i></span>
-                        <div class="form-floating flex-grow-1">
-                            <input asp-for="Input.Password" class="form-control form-control-custom border-start-0" autocomplete="current-password" aria-required="true" placeholder="password" />
-                            <label asp-for="Input.Password" class="form-label">Mot de passe</label>
+                    <div class="mb-4">
+                        <label asp-for="Input.Password" class="form-label">Mot de passe</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock gold"></i></span>
+                            <input asp-for="Input.Password" class="form-control form-control-custom" 
+                                   autocomplete="current-password" aria-required="true" placeholder="••••••••" type="password" />
                         </div>
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="form-check">
-                            <input class="form-check-input" asp-for="Input.RememberMe" style="background-color: var(--input-bg); border-color: var(--gold);" />
-                            <label class="form-check-label text-muted" asp-for="Input.RememberMe">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label text-muted small" asp-for="Input.RememberMe">
                                 Se souvenir de moi
                             </label>
                         </div>
-                        <a id="forgot-password" asp-page="./ForgotPassword" class="text-muted small hover-gold">Mot de passe oublié ?</a>
+                        <a asp-page="./ForgotPassword" class="text-muted small hover-gold">Mot de passe oublié ?</a>
                     </div>
 
-                    <button id="login-submit" type="submit" class="btn btn-hero w-100 py-3 mb-3 fw-bold" style="font-size: 1.1rem; letter-spacing: 1px;">
+                    <button id="login-submit" type="submit" class="btn btn-hero w-100 py-3 mb-3">
                         SE CONNECTER <i class="fas fa-arrow-right ms-2"></i>
                     </button>
 
                     <div class="text-center mt-4">
                         <span class="text-muted">Pas encore de compte ? </span>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="gold fw-bold text-decoration-none">Créer un compte</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="gold fw-bold">Créer un compte</a>
                     </div>
                 </form>
             </div>
@@ -62,6 +108,9 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

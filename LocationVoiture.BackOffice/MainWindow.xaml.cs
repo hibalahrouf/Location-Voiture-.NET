@@ -86,19 +86,92 @@ namespace LocationVoiture.BackOffice
 
         private void ApplyTheme(bool isDark)
         {
+            var nightBlue = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#0A1A2F");
+            var nightBlueDark = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#051222");
+            var nightBlueLight = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#132B4A");
+            var gold = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#C9A44C");
+            var textLight = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#F8FAFC");
+            var mutedDark = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#94A3B8");
+            
             if (isDark)
             {
-                // Dark theme colors
-                MainGrid.Background = new System.Windows.Media.SolidColorBrush(
-                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#121212"));
+                // Dark theme - FrontOffice Style
+                MainGrid.Background = new System.Windows.Media.SolidColorBrush(nightBlue);
+                ContentGrid.Background = new System.Windows.Media.SolidColorBrush(nightBlue);
+                HeaderBar.Background = new System.Windows.Media.SolidColorBrush(nightBlueLight);
+                HeaderBar.BorderBrush = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#1e3a5f"));
+                PageTitle.Foreground = new System.Windows.Media.SolidColorBrush(textLight);
+                ToggleSidebarBtn.Foreground = new System.Windows.Media.SolidColorBrush(textLight);
+                
+                // Update Resources for dark mode
+                Resources["PrimaryBackground"] = new System.Windows.Media.SolidColorBrush(nightBlue);
+                Resources["SecondaryBackground"] = new System.Windows.Media.SolidColorBrush(nightBlueLight);
+                Resources["TextDark"] = new System.Windows.Media.SolidColorBrush(textLight);
+                Resources["TextMuted"] = new System.Windows.Media.SolidColorBrush(mutedDark);
+                Resources["BorderColor"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#1e3a5f"));
+                Resources["RowAlt"] = new System.Windows.Media.SolidColorBrush(nightBlueDark);
+                Resources["RowHover"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#1a3a5c"));
             }
             else
             {
-                // Light theme colors  
+                // Light theme - Default
                 MainGrid.Background = new System.Windows.Media.SolidColorBrush(
                     (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f4f6f8"));
+                ContentGrid.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f4f6f8"));
+                HeaderBar.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#ffffff"));
+                HeaderBar.BorderBrush = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#e2e8f0"));
+                PageTitle.Foreground = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#0B1F3F"));
+                ToggleSidebarBtn.Foreground = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#0B1F3F"));
+                    
+                // Update Resources for light mode
+                Resources["PrimaryBackground"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f4f6f8"));
+                Resources["SecondaryBackground"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#ffffff"));
+                Resources["TextDark"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#1a202c"));
+                Resources["TextMuted"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#64748b"));
+                Resources["BorderColor"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#e2e8f0"));
+                Resources["RowAlt"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f8fafc"));
+                Resources["RowHover"] = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#fef3c7"));
             }
         }
+
+
+        // ======================================================================
+        // || NAVIGATION SIDEBAR
+        // ======================================================================
+        private bool _sidebarCollapsed = false;
+        
+        private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
+        {
+            _sidebarCollapsed = !_sidebarCollapsed;
+            SidebarColumn.Width = _sidebarCollapsed ? new GridLength(0) : new GridLength(260);
+            SidebarBorder.Visibility = _sidebarCollapsed ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void NavDashboard_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 0; PageTitle.Text = "Tableau de Bord"; }
+        private void NavMessages_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 1; PageTitle.Text = "Messages Contact"; }
+        private void NavClients_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 2; PageTitle.Text = "Gestion des Clients"; }
+        private void NavVehicules_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 3; PageTitle.Text = "Gestion des Véhicules"; }
+        private void NavLocations_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 4; PageTitle.Text = "Gestion des Locations"; }
+        private void NavTypes_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 5; PageTitle.Text = "Gestion des Types"; }
+        private void NavTarifs_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 6; PageTitle.Text = "Gestion des Tarifs"; }
+        private void NavEmployes_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 7; PageTitle.Text = "Gestion des Employés"; }
+        private void NavEntretiens_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 8; PageTitle.Text = "Gestion des Entretiens"; }
+        private void NavPaiements_Click(object sender, RoutedEventArgs e) { MainTabControl.SelectedIndex = 9; PageTitle.Text = "Gestion des Paiements"; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -158,12 +231,43 @@ namespace LocationVoiture.BackOffice
             // ==========================================================
             try
             {
-                txtTotalClients.Text = _context.Clients.Count().ToString();
-                txtTotalVehicules.Text = _context.Vehicules.Count().ToString();
-                txtTotalLocations.Text = _context.Locations.Count().ToString();
-                
+                // Basic counts
+                var totalClients = _context.Clients.Count();
+                var totalVehicules = _context.Vehicules.Count();
+                var totalLocations = _context.Locations.Count();
                 var totalRevenu = _context.Locations.Sum(l => (decimal?)l.MontantTotal) ?? 0;
+                
+                txtTotalClients.Text = totalClients.ToString();
+                txtTotalVehicules.Text = totalVehicules.ToString();
+                txtTotalLocations.Text = totalLocations.ToString();
                 txtTotalRevenu.Text = totalRevenu.ToString("N0") + " €";
+                
+                // Circular Charts Data
+                // Active reservations (Confirmee status)
+                var activeReservations = _context.Locations.Count(l => l.Statut == LocationStatut.Confirmee);
+                var pendingReservations = _context.Locations.Count(l => l.Statut == LocationStatut.EnAttente);
+                txtActiveReservations.Text = activeReservations.ToString();
+                txtReservationsPending.Text = pendingReservations + " en attente";
+                
+                // Available vehicles (not currently rented)
+                var rentedVehicleIds = _context.Locations
+                    .Where(l => l.Statut == LocationStatut.Confirmee)
+                    .Select(l => l.VehiculeID)
+                    .Distinct()
+                    .ToList();
+                var availableVehicles = totalVehicules - rentedVehicleIds.Count;
+                txtVehiclesAvailable.Text = availableVehicles.ToString();
+                txtVehiclesRented.Text = rentedVehicleIds.Count + " en location";
+                
+                // Monthly revenue
+                var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var monthlyRevenue = _context.Paiements
+                    .Where(p => p.DatePaiement >= startOfMonth)
+                    .Sum(p => (decimal?)p.Montant) ?? 0;
+                var monthlyPaymentsCount = _context.Paiements
+                    .Count(p => p.DatePaiement >= startOfMonth);
+                txtMonthlyRevenue.Text = monthlyRevenue.ToString("N0") + "€";
+                txtPaymentsPending.Text = monthlyPaymentsCount + " paiements";
             }
             catch
             {
@@ -172,6 +276,12 @@ namespace LocationVoiture.BackOffice
                 txtTotalVehicules.Text = "0";
                 txtTotalLocations.Text = "0";
                 txtTotalRevenu.Text = "0 €";
+                txtActiveReservations.Text = "0";
+                txtReservationsPending.Text = "0 en attente";
+                txtVehiclesAvailable.Text = "0";
+                txtVehiclesRented.Text = "0 en location";
+                txtMonthlyRevenue.Text = "0€";
+                txtPaymentsPending.Text = "0 paiements";
             }
 
             // ==========================================================
@@ -200,6 +310,7 @@ namespace LocationVoiture.BackOffice
             // 3. Mettre à jour la grille
             AlertesEntretienGrid.ItemsSource = VehiculesAlerteEntretien;
         }
+
 
 
         // ======================================================================
@@ -555,6 +666,469 @@ namespace LocationVoiture.BackOffice
                         csv.WriteRecords(clients);
                     }
                     MessageBox.Show($"Exportation réussie !\nFichier sauvegardé : {saveFileDialog.FileName}", "Export CSV", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}", "Erreur d'exportation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || EXPORT EXCEL - CLIENTS
+        // ======================================================================
+        private void btnExportClientsExcel_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichier Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = $"Export_Clients_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var clients = _context.Clients.AsNoTracking().ToList();
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Clients");
+                        
+                        // Headers
+                        worksheet.Cell(1, 1).Value = "ID";
+                        worksheet.Cell(1, 2).Value = "Prénom";
+                        worksheet.Cell(1, 3).Value = "Nom";
+                        worksheet.Cell(1, 4).Value = "Email";
+                        worksheet.Cell(1, 5).Value = "Téléphone";
+                        worksheet.Cell(1, 6).Value = "Adresse";
+                        
+                        // Style headers
+                        var headerRange = worksheet.Range(1, 1, 1, 6);
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.FromHtml("#0B1F3F");
+                        headerRange.Style.Font.FontColor = ClosedXML.Excel.XLColor.White;
+                        
+                        // Data
+                        int row = 2;
+                        foreach (var client in clients)
+                        {
+                            worksheet.Cell(row, 1).Value = client.ClientID;
+                            worksheet.Cell(row, 2).Value = client.Prenom;
+                            worksheet.Cell(row, 3).Value = client.Nom;
+                            worksheet.Cell(row, 4).Value = client.Email;
+                            worksheet.Cell(row, 5).Value = client.Telephone;
+                            worksheet.Cell(row, 6).Value = client.Adresse;
+                            row++;
+                        }
+                        
+                        worksheet.Columns().AdjustToContents();
+                        workbook.SaveAs(saveFileDialog.FileName);
+                    }
+                    MessageBox.Show($"Exportation réussie !\nFichier sauvegardé : {saveFileDialog.FileName}", "Export Excel", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}", "Erreur d'exportation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || IMPORT CSV - CLIENTS
+        // ======================================================================
+        private void btnImportClientsCSV_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Fichier CSV (*.csv)|*.csv";
+            openFileDialog.Title = "Sélectionner un fichier CSV à importer";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    int imported = 0;
+                    int skipped = 0;
+                    var existingEmails = _context.Clients.Select(c => c.Email.ToLower()).ToHashSet();
+
+                    using (var reader = new StreamReader(openFileDialog.FileName))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<dynamic>().ToList();
+                        foreach (var record in records)
+                        {
+                            var dict = (IDictionary<string, object>)record;
+                            string email = dict.ContainsKey("Email") ? dict["Email"]?.ToString() ?? "" : "";
+                            
+                            if (string.IsNullOrWhiteSpace(email) || existingEmails.Contains(email.ToLower()))
+                            {
+                                skipped++;
+                                continue;
+                            }
+
+                            var newClient = new Client
+                            {
+                                Prenom = dict.ContainsKey("Prenom") ? dict["Prenom"]?.ToString() ?? "" : "",
+                                Nom = dict.ContainsKey("Nom") ? dict["Nom"]?.ToString() ?? "" : "",
+                                Email = email,
+                                Telephone = dict.ContainsKey("Telephone") ? dict["Telephone"]?.ToString() : null,
+                                Adresse = dict.ContainsKey("Adresse") ? dict["Adresse"]?.ToString() : null,
+                                MotDePasseHash = Guid.NewGuid().ToString()
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(newClient.Email) && !string.IsNullOrWhiteSpace(newClient.Nom))
+                            {
+                                _context.Clients.Add(newClient);
+                                existingEmails.Add(email.ToLower());
+                                imported++;
+                            }
+                            else
+                            {
+                                skipped++;
+                            }
+                        }
+                    }
+                    _context.SaveChanges();
+                    LoadClients();
+                    MessageBox.Show($"Importation terminée !\n{imported} clients importés\n{skipped} ignorés (duplicates ou invalides)", "Import CSV", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'importation : {ex.Message}", "Erreur d'importation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || IMPORT EXCEL - CLIENTS
+        // ======================================================================
+        private void btnImportClientsExcel_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Fichier Excel (*.xlsx)|*.xlsx";
+            openFileDialog.Title = "Sélectionner un fichier Excel à importer";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    int imported = 0;
+                    int skipped = 0;
+                    var existingEmails = _context.Clients.Select(c => c.Email.ToLower()).ToHashSet();
+
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook(openFileDialog.FileName))
+                    {
+                        var worksheet = workbook.Worksheet(1);
+                        var rows = worksheet.RangeUsed()?.RowsUsed().Skip(1); // Skip header row
+                        
+                        if (rows != null)
+                        {
+                            foreach (var row in rows)
+                            {
+                                string email = row.Cell(4).GetString(); // Column D = Email
+                                
+                                if (string.IsNullOrWhiteSpace(email) || existingEmails.Contains(email.ToLower()))
+                                {
+                                    skipped++;
+                                    continue;
+                                }
+
+                                var newClient = new Client
+                                {
+                                    Prenom = row.Cell(2).GetString(),  // Column B
+                                    Nom = row.Cell(3).GetString(),     // Column C
+                                    Email = email,
+                                    Telephone = row.Cell(5).GetString(), // Column E
+                                    Adresse = row.Cell(6).GetString(),   // Column F
+                                    MotDePasseHash = Guid.NewGuid().ToString()
+                                };
+
+                                if (!string.IsNullOrWhiteSpace(newClient.Email) && !string.IsNullOrWhiteSpace(newClient.Nom))
+                                {
+                                    _context.Clients.Add(newClient);
+                                    existingEmails.Add(email.ToLower());
+                                    imported++;
+                                }
+                                else
+                                {
+                                    skipped++;
+                                }
+                            }
+                        }
+                    }
+                    _context.SaveChanges();
+                    LoadClients();
+                    MessageBox.Show($"Importation terminée !\n{imported} clients importés\n{skipped} ignorés (duplicates ou invalides)", "Import Excel", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'importation : {ex.Message}", "Erreur d'importation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || EXPORT EXCEL - VEHICULES
+        // ======================================================================
+        private void btnExportVehiculesExcel_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichier Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = $"Export_Vehicules_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var vehicules = _context.Vehicules.Include(v => v.TypeVehicule).AsNoTracking().ToList();
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Vehicules");
+                        
+                        // Headers
+                        worksheet.Cell(1, 1).Value = "ID";
+                        worksheet.Cell(1, 2).Value = "Immatriculation";
+                        worksheet.Cell(1, 3).Value = "Marque";
+                        worksheet.Cell(1, 4).Value = "Modèle";
+                        worksheet.Cell(1, 5).Value = "Année";
+                        worksheet.Cell(1, 6).Value = "Type";
+                        worksheet.Cell(1, 7).Value = "Disponible";
+                        worksheet.Cell(1, 8).Value = "Prix/Jour";
+                        
+                        // Style headers
+                        var headerRange = worksheet.Range(1, 1, 1, 8);
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.FromHtml("#0B1F3F");
+                        headerRange.Style.Font.FontColor = ClosedXML.Excel.XLColor.White;
+                        
+                        // Data
+                        int row = 2;
+                        foreach (var v in vehicules)
+                        {
+                            worksheet.Cell(row, 1).Value = v.VehiculeID;
+                            worksheet.Cell(row, 2).Value = v.Immatriculation;
+                            worksheet.Cell(row, 3).Value = v.Marque;
+                            worksheet.Cell(row, 4).Value = v.Modele;
+                            worksheet.Cell(row, 5).Value = v.Annee;
+                            worksheet.Cell(row, 6).Value = v.TypeVehicule?.Nom ?? "";
+                            worksheet.Cell(row, 7).Value = v.Disponible ? "Oui" : "Non";
+                            worksheet.Cell(row, 8).Value = v.PrixJournee;
+                            row++;
+                        }
+                        
+                        worksheet.Columns().AdjustToContents();
+                        workbook.SaveAs(saveFileDialog.FileName);
+                    }
+                    MessageBox.Show($"Exportation réussie !\nFichier sauvegardé : {saveFileDialog.FileName}", "Export Excel", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'exportation : {ex.Message}", "Erreur d'exportation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || IMPORT CSV - VEHICULES
+        // ======================================================================
+        private void btnImportVehiculesCSV_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Fichier CSV (*.csv)|*.csv";
+            openFileDialog.Title = "Sélectionner un fichier CSV à importer";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    int imported = 0;
+                    int skipped = 0;
+                    var existingImmat = _context.Vehicules.Select(v => v.Immatriculation.ToUpper()).ToHashSet();
+                    var types = _context.TypesVehicules.ToList();
+
+                    using (var reader = new StreamReader(openFileDialog.FileName))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<dynamic>().ToList();
+                        foreach (var record in records)
+                        {
+                            var dict = (IDictionary<string, object>)record;
+                            string immat = dict.ContainsKey("Immatriculation") ? dict["Immatriculation"]?.ToString()?.ToUpper() ?? "" : "";
+                            
+                            if (string.IsNullOrWhiteSpace(immat) || existingImmat.Contains(immat))
+                            {
+                                skipped++;
+                                continue;
+                            }
+
+                            int typeId = types.FirstOrDefault()?.TypeVehiculeID ?? 1;
+                            if (dict.ContainsKey("TypeVehiculeID") && int.TryParse(dict["TypeVehiculeID"]?.ToString(), out int parsedTypeId))
+                            {
+                                if (types.Any(t => t.TypeVehiculeID == parsedTypeId))
+                                    typeId = parsedTypeId;
+                            }
+
+                            var newVehicule = new Vehicule
+                            {
+                                Immatriculation = immat,
+                                Marque = dict.ContainsKey("Marque") ? dict["Marque"]?.ToString() ?? "" : "",
+                                Modele = dict.ContainsKey("Modele") ? dict["Modele"]?.ToString() ?? "" : "",
+                                Annee = dict.ContainsKey("Annee") && int.TryParse(dict["Annee"]?.ToString(), out int annee) ? annee : DateTime.Now.Year,
+                                Disponible = true,
+                                TypeVehiculeID = typeId
+                            };
+
+                            if (!string.IsNullOrWhiteSpace(newVehicule.Marque) && !string.IsNullOrWhiteSpace(newVehicule.Modele))
+                            {
+                                _context.Vehicules.Add(newVehicule);
+                                existingImmat.Add(immat);
+                                imported++;
+                            }
+                            else
+                            {
+                                skipped++;
+                            }
+                        }
+                    }
+                    _context.SaveChanges();
+                    LoadVehicules();
+                    LoadDashboard();
+                    MessageBox.Show($"Importation terminée !\n{imported} véhicules importés\n{skipped} ignorés (duplicates ou invalides)", "Import CSV", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'importation : {ex.Message}", "Erreur d'importation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || IMPORT EXCEL - VEHICULES
+        // ======================================================================
+        private void btnImportVehiculesExcel_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Fichier Excel (*.xlsx)|*.xlsx";
+            openFileDialog.Title = "Sélectionner un fichier Excel à importer";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    int imported = 0;
+                    int skipped = 0;
+                    var existingImmat = _context.Vehicules.Select(v => v.Immatriculation.ToUpper()).ToHashSet();
+                    var types = _context.TypesVehicules.ToList();
+
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook(openFileDialog.FileName))
+                    {
+                        var worksheet = workbook.Worksheet(1);
+                        var rows = worksheet.RangeUsed()?.RowsUsed().Skip(1); // Skip header
+                        
+                        if (rows != null)
+                        {
+                            foreach (var row in rows)
+                            {
+                                string immat = row.Cell(2).GetString().ToUpper(); // Column B
+                                
+                                if (string.IsNullOrWhiteSpace(immat) || existingImmat.Contains(immat))
+                                {
+                                    skipped++;
+                                    continue;
+                                }
+
+                                int typeId = types.FirstOrDefault()?.TypeVehiculeID ?? 1;
+
+                                var newVehicule = new Vehicule
+                                {
+                                    Immatriculation = immat,
+                                    Marque = row.Cell(3).GetString(),  // Column C
+                                    Modele = row.Cell(4).GetString(),  // Column D
+                                    Annee = int.TryParse(row.Cell(5).GetString(), out int annee) ? annee : DateTime.Now.Year,
+                                    Disponible = true,
+                                    TypeVehiculeID = typeId
+                                };
+
+                                if (!string.IsNullOrWhiteSpace(newVehicule.Marque) && !string.IsNullOrWhiteSpace(newVehicule.Modele))
+                                {
+                                    _context.Vehicules.Add(newVehicule);
+                                    existingImmat.Add(immat);
+                                    imported++;
+                                }
+                                else
+                                {
+                                    skipped++;
+                                }
+                            }
+                        }
+                    }
+                    _context.SaveChanges();
+                    LoadVehicules();
+                    LoadDashboard();
+                    MessageBox.Show($"Importation terminée !\n{imported} véhicules importés\n{skipped} ignorés (duplicates ou invalides)", "Import Excel", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'importation : {ex.Message}", "Erreur d'importation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // ======================================================================
+        // || EXPORT EXCEL - LOCATIONS
+        // ======================================================================
+        private void btnExportLocationsExcel_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Fichier Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = $"Export_Locations_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var locations = _context.Locations
+                        .Include(l => l.Client)
+                        .Include(l => l.Vehicule)
+                        .AsNoTracking()
+                        .ToList();
+                        
+                    using (var workbook = new ClosedXML.Excel.XLWorkbook())
+                    {
+                        var worksheet = workbook.Worksheets.Add("Locations");
+                        
+                        // Headers
+                        worksheet.Cell(1, 1).Value = "ID";
+                        worksheet.Cell(1, 2).Value = "Client";
+                        worksheet.Cell(1, 3).Value = "Véhicule";
+                        worksheet.Cell(1, 4).Value = "Date Début";
+                        worksheet.Cell(1, 5).Value = "Date Fin";
+                        worksheet.Cell(1, 6).Value = "Montant Total";
+                        worksheet.Cell(1, 7).Value = "Statut";
+                        worksheet.Cell(1, 8).Value = "Date Retour Réelle";
+                        
+                        // Style headers
+                        var headerRange = worksheet.Range(1, 1, 1, 8);
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Fill.BackgroundColor = ClosedXML.Excel.XLColor.FromHtml("#0B1F3F");
+                        headerRange.Style.Font.FontColor = ClosedXML.Excel.XLColor.White;
+                        
+                        // Data
+                        int row = 2;
+                        foreach (var loc in locations)
+                        {
+                            worksheet.Cell(row, 1).Value = loc.LocationID;
+                            worksheet.Cell(row, 2).Value = loc.Client?.NomComplet ?? "";
+                            worksheet.Cell(row, 3).Value = $"{loc.Vehicule?.Marque} {loc.Vehicule?.Modele}";
+                            worksheet.Cell(row, 4).Value = loc.DateDebut.ToString("dd/MM/yyyy");
+                            worksheet.Cell(row, 5).Value = loc.DateFin.ToString("dd/MM/yyyy");
+                            worksheet.Cell(row, 6).Value = loc.MontantTotal;
+                            worksheet.Cell(row, 7).Value = loc.Statut.ToString();
+                            worksheet.Cell(row, 8).Value = loc.DateRetourReelle?.ToString("dd/MM/yyyy") ?? "";
+                            row++;
+                        }
+                        
+                        worksheet.Columns().AdjustToContents();
+                        workbook.SaveAs(saveFileDialog.FileName);
+                    }
+                    MessageBox.Show($"Exportation réussie !\nFichier sauvegardé : {saveFileDialog.FileName}", "Export Excel", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {

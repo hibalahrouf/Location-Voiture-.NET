@@ -3,41 +3,46 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq; // Important pour .Where() et .ToList()
+using System.Linq;
 using System.Threading.Tasks;
-using LocationVoiture.Core.Models; // Pour Location
-using Serilog; // (On le laisse pour plus tard)
-using System.Collections.Generic; // Pour List<>
-using Microsoft.AspNetCore.Mvc.Rendering; // Pour SelectList
-using Serilog; // <-- AJOUTER
+using LocationVoiture.Core.Models;
+using Serilog;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using LocationVoiture.FrontOffice.Services;
+
 namespace LocationVoiture.FrontOffice.Controllers
 {
     public class VehiculeController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IEmailSender _emailSender;
+        private readonly IPdfService _pdfService;
 
-        public VehiculeController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public VehiculeController(
+            ApplicationDbContext context, 
+            UserManager<IdentityUser> userManager,
+            IEmailSender emailSender,
+            IPdfService pdfService)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
+            _pdfService = pdfService;
         }
 
         // ==========================================================
-        // || ACTION "INDEX" (MISE À JOUR AVEC FILTRES)
+        // || ACTION "INDEX" (WITH FILTERS)
         // ==========================================================
-        // string? searchString -> pour la barre de recherche
-        // int? typeId -> pour le filtre par type
         public async Task<IActionResult> Index(string? searchString, int? typeId)
         {
-            // --- 1. Préparer la requête de base ---
-            // On récupère les véhicules, mais on n'exécute pas la requête tout de suite (IQueryable)
             var vehiculesQuery = _context.Vehicules
                                     .Include(v => v.TypeVehicule)
                                     .ThenInclude(t => t.Tarifs)
                                     .Where(v => v.Disponible == true);
 
-            // --- 2. Appliquer le filtre de recherche (Marque/Modèle) ---
             if (!string.IsNullOrEmpty(searchString))
             {
                 vehiculesQuery = vehiculesQuery.Where(v =>
@@ -46,29 +51,21 @@ namespace LocationVoiture.FrontOffice.Controllers
                 );
             }
 
-            // --- 3. Appliquer le filtre par Type ---
             if (typeId.HasValue)
             {
                 vehiculesQuery = vehiculesQuery.Where(v => v.TypeVehiculeID == typeId.Value);
             }
 
-            // --- 4. Préparer les données pour les filtres (le menu déroulant) ---
-
-            // Récupérer tous les types pour le menu déroulant
             var types = await _context.TypesVehicules.AsNoTracking().ToListAsync();
+            ViewBag.Types = new SelectList(types, "TypeVehiculeID", "Nom", typeId);
+            ViewBag.CurrentSearch = searchString;
 
-            // "ViewBag" permet d'envoyer des données temporaires à la Vue
-            ViewBag.Types = new SelectList(types, "TypeVehiculeID", "Nom", typeId); // typeId est la valeur sélectionnée
-            ViewBag.CurrentSearch = searchString; // Garder le texte dans la barre de recherche
-
-            // --- 5. Exécuter la requête finale et envoyer à la Vue ---
             var vehicules = await vehiculesQuery.ToListAsync();
-
             return View(vehicules);
         }
 
         // ==========================================================
-        // || ACTION "DETAILS" (Existante)
+        // || ACTION "DETAILS"
         // ==========================================================
         public IActionResult Details(int id)
         {
@@ -83,7 +80,7 @@ namespace LocationVoiture.FrontOffice.Controllers
         }
 
         // ==========================================================
-        // || ACTION "CREERLOCATION" (Existante)
+        // || ACTION "CREERLOCATION" (CREATE RESERVATION)
         // ==========================================================
         [HttpPost]
         [Authorize]
@@ -106,7 +103,6 @@ namespace LocationVoiture.FrontOffice.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Get ClientID from claims (set during login)
             var clientIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(clientIdClaim) || !int.TryParse(clientIdClaim, out int clientId))
             {
@@ -148,11 +144,30 @@ namespace LocationVoiture.FrontOffice.Controllers
 
             Log.Information("Nouvelle location créée : ID {LocationID} par Client ID {ClientID}", newLocation.LocationID, client.ClientID);
 
+            // Send confirmation email asynchronously
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    var emailHtml = GenerateConfirmationEmailHtml(newLocation, vehicule, client);
+                    await _emailSender.SendEmailAsync(
+                        client.Email,
+                        $"Confirmation de réservation #{newLocation.LocationID}",
+                        emailHtml
+                    );
+                    Log.Information("Email de confirmation envoyé à {Email} pour la location {LocationID}", client.Email, newLocation.LocationID);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Erreur lors de l'envoi de l'email de confirmation pour la location {LocationID}", newLocation.LocationID);
+                }
+            });
+
             return RedirectToAction("ConfirmationLocation", new { id = newLocation.LocationID });
         }
 
         // ==========================================================
-        // || ACTION "CONFIRMATION" (Existante)
+        // || ACTION "CONFIRMATIONLOCATION"
         // ==========================================================
         [Authorize]
         public IActionResult ConfirmationLocation(int id)
@@ -169,6 +184,103 @@ namespace LocationVoiture.FrontOffice.Controllers
             }
 
             return View(location);
+        }
+
+        // ==========================================================
+        // || ACTION "DOWNLOADPDF" (NEW)
+        // ==========================================================
+        [Authorize]
+        public IActionResult DownloadPdf(int id)
+        {
+            var location = _context.Locations
+                                    .Include(l => l.Client)
+                                    .Include(l => l.Vehicule)
+                                    .ThenInclude(v => v.TypeVehicule)
+                                    .FirstOrDefault(l => l.LocationID == id);
+
+            if (location == null)
+            {
+                return NotFound();
+            }
+
+            var pdfBytes = _pdfService.GenerateReservationPdf(location);
+            var fileName = $"Reservation_{location.LocationID}_{DateTime.Now:yyyyMMdd}.html";
+            
+            return File(pdfBytes, "text/html", fileName);
+        }
+
+        // ==========================================================
+        // || HELPER: Generate Confirmation Email HTML
+        // ==========================================================
+        private string GenerateConfirmationEmailHtml(
+            LocationVoiture.Core.Models.Location location, 
+            Vehicule vehicule, 
+            Client client)
+        {
+            return $@"
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; padding: 20px; }}
+        .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }}
+        .header {{ background: linear-gradient(135deg, #0A1A2F, #132B4A); color: white; padding: 30px; text-align: center; }}
+        .header h1 {{ margin: 0; font-size: 1.5rem; }}
+        .gold {{ color: #C9A44C; }}
+        .content {{ padding: 30px; }}
+        .info {{ background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; }}
+        .row {{ display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e9ecef; }}
+        .row:last-child {{ border: none; }}
+        .total {{ background: #0A1A2F; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px; }}
+        .total-amount {{ font-size: 2rem; color: #C9A44C; font-weight: bold; }}
+        .footer {{ padding: 20px; text-align: center; color: #6c757d; font-size: 0.9rem; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>Location<span class='gold'>Voiture</span></h1>
+            <p style='margin: 10px 0 0; opacity: 0.8;'>Confirmation de Réservation</p>
+        </div>
+        <div class='content'>
+            <p>Bonjour <strong>{client.Prenom}</strong>,</p>
+            <p>Nous avons bien reçu votre demande de réservation. Voici les détails :</p>
+            
+            <div class='info'>
+                <div class='row'>
+                    <span>Référence</span>
+                    <strong>#{location.LocationID}</strong>
+                </div>
+                <div class='row'>
+                    <span>Véhicule</span>
+                    <strong>{vehicule.Marque} {vehicule.Modele}</strong>
+                </div>
+                <div class='row'>
+                    <span>Du</span>
+                    <strong>{location.DateDebut:dd/MM/yyyy}</strong>
+                </div>
+                <div class='row'>
+                    <span>Au</span>
+                    <strong>{location.DateFin:dd/MM/yyyy}</strong>
+                </div>
+            </div>
+            
+            <div class='total'>
+                <p style='margin: 0 0 10px; opacity: 0.8;'>Montant Total</p>
+                <div class='total-amount'>{location.MontantTotal:C}</div>
+            </div>
+            
+            <p style='margin-top: 20px; color: #6c757d; font-size: 0.9rem;'>
+                Votre réservation est en attente de confirmation. Vous recevrez un email dès qu'elle sera validée.
+            </p>
+        </div>
+        <div class='footer'>
+            <p>© 2025 LocationVoiture Premium</p>
+            <p>Contact: +33 1 23 45 67 89</p>
+        </div>
+    </div>
+</body>
+</html>";
         }
     }
 }

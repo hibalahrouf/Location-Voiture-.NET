@@ -66,7 +66,7 @@
 
         <!-- ===== TEXTBLOCK STYLE ===== -->
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDark}"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="0,6,0,2"/>
@@ -74,9 +74,9 @@
 
         <!-- ===== TEXTBOX STYLE ===== -->
         <Style TargetType="TextBox">
-            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="10,8"/>
             <Setter Property="FontSize" Value="13"/>
@@ -102,23 +102,23 @@
         
         <!-- ===== COMBOBOX STYLE ===== -->
         <Style TargetType="ComboBox">
-            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
             <Setter Property="Padding" Value="10,8"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
 
         <!-- ===== DATAGRID STYLE ===== -->
         <Style TargetType="DataGrid">
-            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="RowBackground" Value="{StaticResource SecondaryBackground}"/>
-            <Setter Property="AlternatingRowBackground" Value="{StaticResource RowAlt}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+            <Setter Property="RowBackground" Value="{DynamicResource SecondaryBackground}"/>
+            <Setter Property="AlternatingRowBackground" Value="{DynamicResource RowAlt}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDark}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource BorderColor}"/>
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="RowHeight" Value="42"/>
@@ -224,534 +224,925 @@
     </Window.Resources>
 
     <Grid x:Name="MainGrid" Background="#f4f6f8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="65"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
-        <!-- ===== TOP HEADER BAR WITH GRADIENT ===== -->
-        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="#e2e8f0">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#ffffff" Offset="0"/>
-                    <GradientStop Color="#f8fafc" Offset="0.5"/>
-                    <GradientStop Color="#f1f5f9" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <!-- ===== LEFT SIDEBAR ===== -->
+        <Border x:Name="SidebarBorder" Grid.Column="0" Background="{StaticResource NightBlue}">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.1" Color="#0B1F3F"/>
+                <DropShadowEffect BlurRadius="20" ShadowDepth="3" Opacity="0.15" Color="#000" Direction="0"/>
             </Border.Effect>
-            <Grid Margin="25,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 
-                <!-- Logo / Brand -->
-                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Background="{StaticResource NightBlue}" CornerRadius="8" Padding="8,6" Margin="0,0,12,0">
-                        <TextBlock Text="🚗" FontSize="20" Foreground="White"/>
-                    </Border>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Location Voiture" FontSize="18" FontWeight="Bold" 
-                                   Foreground="{StaticResource NightBlue}" Margin="0"/>
-                        <TextBlock Text="Back-Office Administration" FontSize="11" 
-                                   Foreground="{StaticResource TextMuted}" Margin="0,-2,0,0"/>
-                    </StackPanel>
-                </StackPanel>
-                
-                <!-- Theme Toggle + Status -->
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <!-- Theme Toggle -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
-                        <TextBlock Text="☀️" FontSize="14" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <ToggleButton x:Name="ThemeToggle" Click="ThemeToggle_Click" Width="44" Height="24" Cursor="Hand">
-                            <ToggleButton.Template>
-                                <ControlTemplate TargetType="ToggleButton">
-                                    <Border x:Name="track" Background="#e0e0e0" CornerRadius="12" Width="44" Height="24">
-                                        <Border x:Name="thumb" Background="{StaticResource GoldColor}" 
-                                                Width="20" Height="20" CornerRadius="10" 
-                                                HorizontalAlignment="Left" Margin="2,0,0,0"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsChecked" Value="True">
-                                            <Setter TargetName="track" Property="Background" Value="{StaticResource NightBlue}"/>
-                                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
-                                            <Setter TargetName="thumb" Property="Margin" Value="0,0,2,0"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
-                        </ToggleButton>
-                        <TextBlock Text="🌙" FontSize="14" VerticalAlignment="Center" Margin="6,0,0,0"/>
-                    </StackPanel>
-                    
-                    <!-- Status Badge -->
-                    <Border Background="#dcfce7" CornerRadius="12" Padding="12,6">
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Width="8" Height="8" Fill="#22c55e" Margin="0,0,8,0"/>
-                            <TextBlock Text="Connecté" FontSize="12" Foreground="#166534" FontWeight="SemiBold"/>
+                <!-- Logo Section -->
+                <Border Grid.Row="0" Padding="16,15">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Background="{StaticResource GoldColor}" CornerRadius="8" Padding="8,6" Margin="0,0,10,0">
+                            <TextBlock Text="🚗" FontSize="18" Foreground="White"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="LuxeCar" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0"/>
+                            <TextBlock Text="Back-Office" FontSize="10" Foreground="#94a3b8" Margin="0,-2,0,0"/>
                         </StackPanel>
-                    </Border>
-                </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Navigation Menu -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="8,0">
+                    <StackPanel>
+                        <TextBlock Text="NAVIGATION" FontSize="9" Foreground="#64748b" FontWeight="Bold" Margin="12,8,0,8"/>
+                        
+                        <Button x:Name="NavDashboard" Content="📊  Tableau de Bord" Click="NavDashboard_Click" Style="{x:Null}" Background="Transparent" Foreground="White" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavMessages" Content="✉️  Messages Contact" Click="NavMessages_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavClients" Content="👥  Clients" Click="NavClients_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavVehicules" Content="🚗  Véhicules" Click="NavVehicules_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavLocations" Content="📋  Locations" Click="NavLocations_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavTypes" Content="🏷️  Types" Click="NavTypes_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavTarifs" Content="💰  Tarifs" Click="NavTarifs_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavEmployes" Content="👔  Employés" Click="NavEmployes_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavEntretiens" Content="🔧  Entretiens" Click="NavEntretiens_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                        <Button x:Name="NavPaiements" Content="💳  Paiements" Click="NavPaiements_Click" Style="{x:Null}" Background="Transparent" Foreground="#94a3b8" HorizontalContentAlignment="Left" Padding="14,10" Margin="4,2" FontSize="13" Cursor="Hand" BorderThickness="0"/>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <!-- Footer -->
+                <Border Grid.Row="2" Padding="16,12" BorderThickness="0,1,0,0" BorderBrush="#1e3a5f">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="8" Height="8" Fill="#22c55e" Margin="0,0,8,0"/>
+                            <TextBlock Text="Connecté" FontSize="11" Foreground="#94a3b8"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="☀️" FontSize="11" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <ToggleButton x:Name="ThemeToggle" Click="ThemeToggle_Click" Width="36" Height="18" Cursor="Hand">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="track" Background="#334155" CornerRadius="9" Width="36" Height="18">
+                                            <Border x:Name="thumb" Background="{StaticResource GoldColor}" Width="14" Height="14" CornerRadius="7" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="track" Property="Background" Value="{StaticResource GoldColor}"/>
+                                                <Setter TargetName="thumb" Property="Background" Value="White"/>
+                                                <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
+                                                <Setter TargetName="thumb" Property="Margin" Value="0,0,2,0"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <TextBlock Text="🌙" FontSize="11" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Border>
         
         <!-- ===== MAIN CONTENT AREA ===== -->
-        <TabControl Grid.Row="1" Background="Transparent" BorderThickness="0" Margin="15,15,15,15">
+        <Grid x:Name="ContentGrid" Grid.Column="1" Background="#f4f6f8">
+            <!-- Header Bar -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Border x:Name="HeaderBar" Grid.Row="0" Background="White" BorderThickness="0,0,0,1" BorderBrush="#e2e8f0" Padding="20,0">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="ToggleSidebarBtn" Content="☰" Click="ToggleSidebar_Click" Style="{x:Null}" Background="Transparent" Foreground="{StaticResource NightBlue}" FontSize="18" Padding="8,4" Margin="0,0,15,0" Cursor="Hand" BorderThickness="0" ToolTip="Masquer/Afficher le menu"/>
+                        <TextBlock x:Name="PageTitle" Text="Tableau de Bord" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource NightBlue}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='dddd dd MMMM yyyy'}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{StaticResource TextMuted}" FontSize="12" xmlns:sys="clr-namespace:System;assembly=mscorlib"/>
+                </Grid>
+            </Border>
+            
+            <TabControl x:Name="MainTabControl" Grid.Row="1" Background="Transparent" BorderThickness="0" Margin="0" SelectedIndex="0">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+
 
             <!-- TAB 1: DASHBOARD -->
             <TabItem Header="📊 Tableau de Bord">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="2*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Vue d'ensemble" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,20"/>
-
-                    <Grid Grid.Row="1">
+                    <!-- Stats Cards Row 1 -->
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Stat Card 1: Total Clients -->
-                        <Border Grid.Column="0" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="0,0,10,0">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
-                            </Border.Effect>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="👥" FontSize="32" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="txtTotalClients" Text="0" FontSize="36" FontWeight="Bold" 
-                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
-                                <TextBlock Text="Clients" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                        <!-- Stat Card 1: Total Clients with Circle -->
+                        <Border Grid.Column="0" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="0,0,10,0" Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Circle Progress -->
+                                <Grid Grid.Column="0" Width="70" Height="70" Margin="0,0,15,0">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="6" Fill="Transparent"/>
+                                    <Ellipse x:Name="CircleClients" Stroke="{StaticResource GoldColor}" StrokeThickness="6" Fill="Transparent" StrokeDashArray="1 1" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <TextBlock Text="👥" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Name="txtTotalClients" Text="0" FontSize="32" FontWeight="Bold" Foreground="{StaticResource GoldColor}"/>
+                                    <TextBlock Text="Clients inscrits" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Stat Card 2: Total Vehicles with Circle -->
+                        <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0" Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Width="70" Height="70" Margin="0,0,15,0">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="6" Fill="Transparent"/>
+                                    <Ellipse x:Name="CircleVehicules" Stroke="#22c55e" StrokeThickness="6" Fill="Transparent" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <TextBlock Text="🚗" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Name="txtTotalVehicules" Text="0" FontSize="32" FontWeight="Bold" Foreground="#22c55e"/>
+                                    <TextBlock Text="Véhicules" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Stat Card 3: Active Locations with Circle -->
+                        <Border Grid.Column="2" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0" Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Width="70" Height="70" Margin="0,0,15,0">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="6" Fill="Transparent"/>
+                                    <Ellipse x:Name="CircleLocations" Stroke="#3b82f6" StrokeThickness="6" Fill="Transparent" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <TextBlock Text="📋" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Name="txtTotalLocations" Text="0" FontSize="32" FontWeight="Bold" Foreground="#3b82f6"/>
+                                    <TextBlock Text="Locations" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Stat Card 4: Revenue with Circle -->
+                        <Border Grid.Column="3" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="10,0,0,0" Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Width="70" Height="70" Margin="0,0,15,0">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="6" Fill="Transparent"/>
+                                    <Ellipse x:Name="CircleRevenu" Stroke="#f59e0b" StrokeThickness="6" Fill="Transparent" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <TextBlock Text="💰" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock x:Name="txtTotalRevenu" Text="0 €" FontSize="26" FontWeight="Bold" Foreground="#f59e0b"/>
+                                    <TextBlock Text="Chiffre d'affaires" FontSize="12" Foreground="{DynamicResource TextMuted}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!-- Circular Charts Row -->
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Active Reservations Chart -->
+                        <Border Grid.Column="0" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="25" Margin="0,0,10,0" Effect="{StaticResource CardShadow}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Grid Width="120" Height="120" Margin="0,0,0,15">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="10" Fill="Transparent"/>
+                                    <Ellipse x:Name="ChartReservations" Stroke="{StaticResource GoldColor}" StrokeThickness="10" Fill="Transparent" 
+                                             StrokeDashArray="2.5 10" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="txtActiveReservations" Text="0" FontSize="28" FontWeight="Bold" 
+                                                   Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="actives" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock Text="📅 Réservations" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtReservationsPending" Text="0 en attente" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- Stat Card 2: Total Vehicles -->
-                        <Border Grid.Column="1" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
-                            </Border.Effect>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="🚗" FontSize="32" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="txtTotalVehicules" Text="0" FontSize="36" FontWeight="Bold" 
-                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
-                                <TextBlock Text="Véhicules" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                        <!-- Available Vehicles Chart -->
+                        <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="25" Margin="5,0" Effect="{StaticResource CardShadow}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Grid Width="120" Height="120" Margin="0,0,0,15">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="10" Fill="Transparent"/>
+                                    <Ellipse x:Name="ChartVehiclesAvailable" Stroke="#22c55e" StrokeThickness="10" Fill="Transparent" 
+                                             StrokeDashArray="3 10" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="txtVehiclesAvailable" Text="0" FontSize="28" FontWeight="Bold" 
+                                                   Foreground="#22c55e" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="dispo" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock Text="🚗 Véhicules Dispo" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtVehiclesRented" Text="0 en location" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
 
-                        <!-- Stat Card 3: Active Locations -->
-                        <Border Grid.Column="2" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="5,0">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
-                            </Border.Effect>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="📋" FontSize="32" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="txtTotalLocations" Text="0" FontSize="36" FontWeight="Bold" 
-                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
-                                <TextBlock Text="Locations" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Stat Card 4: Revenue -->
-                        <Border Grid.Column="3" Background="{StaticResource SecondaryBackground}" CornerRadius="12" Padding="20" Margin="10,0,0,0">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
-                            </Border.Effect>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="💰" FontSize="32" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="txtTotalRevenu" Text="0 €" FontSize="28" FontWeight="Bold" 
-                                           Foreground="{StaticResource GoldColor}" HorizontalAlignment="Center" Margin="0,10,0,5"/>
-                                <TextBlock Text="Revenu Total" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center"/>
+                        <!-- Monthly Revenue Chart -->
+                        <Border Grid.Column="2" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Padding="25" Margin="10,0,0,0" Effect="{StaticResource CardShadow}">
+                            <StackPanel HorizontalAlignment="Center">
+                                <Grid Width="120" Height="120" Margin="0,0,0,15">
+                                    <Ellipse Stroke="#e2e8f0" StrokeThickness="10" Fill="Transparent"/>
+                                    <Ellipse x:Name="ChartMonthlyRevenue" Stroke="#8b5cf6" StrokeThickness="10" Fill="Transparent" 
+                                             StrokeDashArray="2 10" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="txtMonthlyRevenue" Text="0€" FontSize="22" FontWeight="Bold" 
+                                                   Foreground="#8b5cf6" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="ce mois" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock Text="💵 Revenu Mensuel" FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="txtPaymentsPending" Text="0 paiements" FontSize="11" Foreground="{DynamicResource TextMuted}" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                     </Grid>
 
-                    <TextBlock Grid.Row="2" Text="🚨 Alertes d'entretien (Dernier entretien > 6 mois)" 
-                               HorizontalAlignment="Left" FontWeight="Bold" FontSize="18" 
-                               Foreground="#ef4444" Margin="0,30,0,10" />
-
-                    <DataGrid x:Name="AlertesEntretienGrid" Grid.Row="3" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding VehiculesAlerteEntretien}" BorderThickness="0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="Auto" />
-                            <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*" />
-                            <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*" />
-                            <DataGridTextColumn Header="Dernier Entretien" Binding="{Binding DateDernierEntretien, StringFormat='d'}" Width="*" />
-                            <DataGridTextColumn Header="Jours depuis" Binding="{Binding JoursDepuisEntretien}" Width="Auto" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <!-- Alerts Section -->
+                    <Border Grid.Row="2" Background="{DynamicResource SecondaryBackground}" CornerRadius="12" Effect="{StaticResource CardShadow}" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="#ef4444" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="🚨 Alertes Entretien (dernier entretien > 6 mois)" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="AlertesEntretienGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding VehiculesAlerteEntretien}" BorderThickness="0" MinHeight="150">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="50"/>
+                                    <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*"/>
+                                    <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*"/>
+                                    <DataGridTextColumn Header="Dernier Entretien" Binding="{Binding DateDernierEntretien, StringFormat='d'}" Width="*"/>
+                                    <DataGridTextColumn Header="Jours" Binding="{Binding JoursDepuisEntretien}" Width="70"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
 
                 </Grid>
                 </ScrollViewer>
             </TabItem>
+
+
 
             <!-- TAB: MESSAGES (NEW) -->
             <TabItem Header="✉️ Messages Contact">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <TextBlock Text="Gestion des Messages Clients" FontSize="24" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,20"/>
-
-                    <DataGrid x:Name="MessagesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="MessagesGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date" Binding="{Binding DateSent, StringFormat='g'}" Width="150"/>
-                            <DataGridTextColumn Header="Nom" Binding="{Binding Name}" Width="150"/>
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
-                            <DataGridTextColumn Header="Sujet" Binding="{Binding Subject}" Width="200"/>
-                            <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="TextWrapping" Value="Wrap"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                        <DataGrid.RowDetailsTemplate>
-                             <DataTemplate>
-                                <Border Background="#334155" Padding="10" Margin="5">
-                                    <StackPanel>
-                                        <TextBlock Text="Détails du message:" FontWeight="Bold" Foreground="{StaticResource GoldColor}"/>
-                                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,5,0,0"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </DataGrid.RowDetailsTemplate>
-                    </DataGrid>
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Border Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                            <TextBlock Text="✉️ Messages des Clients" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </Border>
+                        <DataGrid x:Name="MessagesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="MessagesGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Date" Binding="{Binding DateSent, StringFormat='g'}" Width="130"/>
+                                <DataGridTextColumn Header="Nom" Binding="{Binding Name}" Width="120"/>
+                                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="180"/>
+                                <DataGridTextColumn Header="Sujet" Binding="{Binding Subject}" Width="180"/>
+                                <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <Border Background="#f0f9ff" Padding="15" Margin="5" CornerRadius="8">
+                                        <StackPanel>
+                                            <TextBlock Text="Message complet:" FontWeight="Bold" Foreground="{StaticResource NightBlue}"/>
+                                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,8,0,0" Foreground="{StaticResource TextDark}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
+                        </DataGrid>
+                    </Grid>
+                </Border>
                 </ScrollViewer>
             </TabItem>
 
+
             <!-- TAB: CLIENTS -->
             <TabItem Header="Gestion des Clients">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="400"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="ClientsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="ClientsGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ClientID}" Width="Auto" />
-                            <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*" />
-                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*" />
-                            <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" Width="*" />
-                            <DataGridCheckBoxColumn Header="Email Vérifié" Binding="{Binding IsEmailVerified}" Width="Auto" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Prénom:" />
-                        <TextBox x:Name="txtPrenomClient" Margin="0,5" />
-                        <TextBlock Text="Nom:" />
-                        <TextBox x:Name="txtNomClient" Margin="0,5" />
-                        <TextBlock Text="Email:" />
-                        <TextBox x:Name="txtEmailClient" Margin="0,5" />
-                        <TextBlock Text="Téléphone:" />
-                        <TextBox x:Name="txtTelephoneClient" Margin="0,5" />
-                        <TextBlock Text="Adresse:" Margin="0,10,0,0" />
-                        <TextBox x:Name="txtAdresseClient" Margin="0,5" Height="80" TextWrapping="Wrap" />
-                        <Button Content="Ajouter Client" Margin="0,20,0,0" Click="btnAjouterClient_Click" />
-                        <Button Content="Mettre à jour Client" Margin="0,10,0,0" Click="btnMettreAJourClient_Click" />
-                        <Button Content="Supprimer Client" Margin="0,10,0,0" Click="btnSupprimerClient_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerClient_Click" Background="#334155"/>
-                        <Button Content="Exporter Clients (CSV)" Margin="0,20,0,0" Click="btnExportClientsCSV_Click" Background="#059669" Foreground="White" />
-                    </StackPanel>
+                    
+                    <!-- Data Grid Card -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Padding="0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="👥 Liste des Clients" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="ClientsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="ClientsGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding ClientID}" Width="50"/>
+                                    <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*"/>
+                                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*"/>
+                                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*"/>
+                                    <DataGridTextColumn Header="Téléphone" Binding="{Binding Telephone}" Width="*"/>
+                                    <DataGridCheckBoxColumn Header="Vérifié" Binding="{Binding IsEmailVerified}" Width="60"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Form Card -->
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Client" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Prénom:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtPrenomClient" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Nom:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtNomClient" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Email:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtEmailClient" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Téléphone:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtTelephoneClient" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Adresse:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtAdresseClient" Margin="0,5,0,15" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterClient_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourClient_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerClient_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerClient_Click" Background="#6b7280"/>
+                                    
+                                    <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,15,0,10"/>
+                                    <TextBlock Text="Import/Export" FontWeight="Bold" FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,0,0,8"/>
+                                    <Button Content="📤 CSV" Margin="0,3" Click="btnExportClientsCSV_Click" Background="#059669" FontSize="11" Padding="10,6"/>
+                                    <Button Content="📤 Excel" Margin="0,3" Click="btnExportClientsExcel_Click" Background="#2563eb" FontSize="11" Padding="10,6"/>
+                                    <Button Content="📥 Import CSV" Margin="0,3" Click="btnImportClientsCSV_Click" Background="#7c3aed" FontSize="11" Padding="10,6"/>
+                                    <Button Content="📥 Import Excel" Margin="0,3" Click="btnImportClientsExcel_Click" Background="#7c3aed" FontSize="11" Padding="10,6"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
              <!-- TAB: VEHICULES -->
             <TabItem Header="Gestion des Véhicules">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="400"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="VehiculesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="VehiculesGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="Auto" />
-                            <DataGridTextColumn Header="Immatriculation" Binding="{Binding Immatriculation}" Width="*" />
-                            <DataGridTextColumn Header="Marque" Binding="{Binding Marque}" Width="*" />
-                            <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding TypeVehicule.Nom}" Width="*" />
-                            <DataGridCheckBoxColumn Header="Disponible" Binding="{Binding Disponible}" Width="Auto" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Immatriculation:" />
-                        <TextBox x:Name="txtImmatriculation" Margin="0,5" />
-                        <TextBlock Text="Marque:" />
-                        <TextBox x:Name="txtMarque" Margin="0,5" />
-                        <TextBlock Text="Modèle:" />
-                        <TextBox x:Name="txtModele" Margin="0,5" />
-                        <TextBlock Text="Année:" />
-                        <TextBox x:Name="txtAnnee" Margin="0,5" />
-                        <TextBlock Text="Image:" />
+                    
+                    <!-- Data Grid Card -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="txtImageURL" Grid.Column="0" Margin="0,5" IsReadOnly="True"/>
-                            <Button Content="📁" Grid.Column="1" Width="35" Margin="5,5,0,5" Click="btnBrowseImage_Click" ToolTip="Sélectionner une image"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="🚗 Parc Automobile" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="VehiculesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="VehiculesGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding VehiculeID}" Width="50"/>
+                                    <DataGridTextColumn Header="Immat." Binding="{Binding Immatriculation}" Width="*"/>
+                                    <DataGridTextColumn Header="Marque" Binding="{Binding Marque}" Width="*"/>
+                                    <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*"/>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding TypeVehicule.Nom}" Width="*"/>
+                                    <DataGridCheckBoxColumn Header="Dispo" Binding="{Binding Disponible}" Width="50"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
-                        <TextBlock Text="Type de Véhicule:" />
-                        <ComboBox x:Name="cmbTypeVehicule" Margin="0,5" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID" />
-                        <CheckBox x:Name="chkDisponible" Content="Disponible" Foreground="White" Margin="0,10,0,0" />
-                        <Button Content="Ajouter Véhicule" Margin="0,20,0,0" Click="btnAjouterVehicule_Click" />
-                        <Button Content="Mettre à jour Véhicule" Margin="0,10,0,0" Click="btnMettreAJourVehicule_Click" />
-                        <Button Content="Supprimer Véhicule" Margin="0,10,0,0" Click="btnSupprimerVehicule_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerVehicule_Click" Background="#334155"/>
-                    </StackPanel>
+                    </Border>
+                    
+                    <!-- Form Card -->
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Véhicule" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Immatriculation:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtImmatriculation" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Marque:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtMarque" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Modèle:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtModele" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Année:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtAnnee" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Image:" FontWeight="SemiBold"/>
+                                    <Grid Margin="0,5,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="txtImageURL" Grid.Column="0" IsReadOnly="True"/>
+                                        <Button Content="📁" Grid.Column="1" Width="35" Margin="5,0,0,0" Click="btnBrowseImage_Click"/>
+                                    </Grid>
+                                    <TextBlock Text="Type:" FontWeight="SemiBold"/>
+                                    <ComboBox x:Name="cmbTypeVehicule" Margin="0,5,0,10" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID"/>
+                                    <CheckBox x:Name="chkDisponible" Content="Disponible" Foreground="{StaticResource TextDark}" Margin="0,5,0,15"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterVehicule_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourVehicule_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerVehicule_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerVehicule_Click" Background="#6b7280"/>
+                                    
+                                    <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,15,0,10"/>
+                                    <TextBlock Text="Import/Export" FontWeight="Bold" FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,0,0,8"/>
+                                    <Button Content="📤 Excel" Margin="0,3" Click="btnExportVehiculesExcel_Click" Background="#2563eb" FontSize="11" Padding="10,6"/>
+                                    <Button Content="📥 Import CSV" Margin="0,3" Click="btnImportVehiculesCSV_Click" Background="#7c3aed" FontSize="11" Padding="10,6"/>
+                                    <Button Content="📥 Import Excel" Margin="0,3" Click="btnImportVehiculesExcel_Click" Background="#7c3aed" FontSize="11" Padding="10,6"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
              <!-- TAB: LOCATIONS -->
             <TabItem Header="Gestion des Locations">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="400"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="LocationsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="Auto" />
-                            <DataGridTextColumn Header="Statut" Binding="{Binding Statut}" Width="*" />
-                            <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="1.5*" />
-                            <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Modele}" Width="1.5*" />
-                            <DataGridTextColumn Header="Début" Binding="{Binding DateDebut, StringFormat='d'}" Width="*" />
-                            <DataGridTextColumn Header="Fin" Binding="{Binding DateFin, StringFormat='d'}" Width="*" />
-                            <DataGridTextColumn Header="Montant" Binding="{Binding MontantTotal, StringFormat=C}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Détails de la Location" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,10"/>
-                        <TextBlock Text="Client:" Margin="0,10,0,0" />
-                        <TextBox x:Name="txtLocationClient" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
-                        <TextBlock Text="Véhicule:" Margin="0,5,0,0" />
-                        <TextBox x:Name="txtLocationVehicule" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
-                        <TextBlock Text="Montant:" Margin="0,5,0,0" />
-                        <TextBox x:Name="txtLocationMontant" Margin="0,5" IsReadOnly="True" Opacity="0.7"/>
-                        
-                        <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="0,20" />
-                        
-                        <TextBlock Text="Suivi de la Location" FontWeight="Bold" Foreground="{StaticResource GoldColor}" />
-                        <TextBlock Text="Statut de la location:" Margin="0,10,0,0" />
-                        <ComboBox x:Name="cmbLocationStatut" Margin="0,5" />
-                        <TextBlock Text="Date de retour réelle:" Margin="0,10,0,0" />
-                        <DatePicker x:Name="dpDateRetourReelle" Margin="0,5" />
-                        <Button Content="Mettre à jour" Margin="0,20,0,0" Click="btnMettreAJourLocation_Click" Background="#059669" Foreground="White" />
-                        <Button Content="Générer Bon de Location (PDF)" Margin="0,10,0,0" Click="btnGenererPDF_Click" Background="#3b82f6" Foreground="White" />
-                    </StackPanel>
+                    
+                    <!-- Data Grid Card -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="📋 Suivi des Locations" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="LocationsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="50"/>
+                                    <DataGridTextColumn Header="Statut" Binding="{Binding Statut}" Width="80"/>
+                                    <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="*"/>
+                                    <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Modele}" Width="*"/>
+                                    <DataGridTextColumn Header="Début" Binding="{Binding DateDebut, StringFormat='d'}" Width="80"/>
+                                    <DataGridTextColumn Header="Fin" Binding="{Binding DateFin, StringFormat='d'}" Width="80"/>
+                                    <DataGridTextColumn Header="Montant" Binding="{Binding MontantTotal, StringFormat=C}" Width="80"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Form Card -->
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="📝 Détails Location" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Client:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtLocationClient" Margin="0,5,0,10" IsReadOnly="True" Background="#f8fafc"/>
+                                    <TextBlock Text="Véhicule:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtLocationVehicule" Margin="0,5,0,10" IsReadOnly="True" Background="#f8fafc"/>
+                                    <TextBlock Text="Montant:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtLocationMontant" Margin="0,5,0,15" IsReadOnly="True" Background="#f8fafc"/>
+                                    
+                                    <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,5,0,15"/>
+                                    <TextBlock Text="Mise à jour Statut" FontWeight="Bold" FontSize="12" Foreground="{StaticResource NightBlue}" Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="Statut:" FontWeight="SemiBold"/>
+                                    <ComboBox x:Name="cmbLocationStatut" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Date retour réelle:" FontWeight="SemiBold"/>
+                                    <DatePicker x:Name="dpDateRetourReelle" Margin="0,5,0,15"/>
+                                    
+                                    <Button Content="✅ Mettre à jour" Margin="0,5" Click="btnMettreAJourLocation_Click" Background="#059669"/>
+                                    <Button Content="📄 Générer PDF" Margin="0,5" Click="btnGenererPDF_Click" Background="#3b82f6"/>
+                                    
+                                    <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,15,0,10"/>
+                                    <Button Content="📤 Export Excel" Margin="0,3" Click="btnExportLocationsExcel_Click" Background="#2563eb" FontSize="11" Padding="10,6"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
             <!-- TAB: TYPES -->
-             <TabItem Header="Gestion des Types">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+            <TabItem Header="Gestion des Types">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="300"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="TypesVehiculesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TypesVehiculesGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding TypeVehiculeID}" Width="Auto" />
-                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Nom du Type:" />
-                        <TextBox x:Name="txtNom" Margin="0,5" />
-                        <TextBlock Text="Description:" Margin="0,10,0,0" />
-                        <TextBox x:Name="txtDescription" Margin="0,5" Height="80" TextWrapping="Wrap" />
-                        <Button Content="Ajouter Type" Margin="0,20,0,0" Click="btnAjouter_Click" />
-                        <Button Content="Mettre à jour Type" Margin="0,10,0,0" Click="btnMettreAJour_Click" />
-                        <Button Content="Supprimer Type" Margin="0,10,0,0" Click="btnSupprimer_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacer_Click" Background="#334155"/>
-                    </StackPanel>
+                    
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="🏷️ Types de Véhicules" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="TypesVehiculesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TypesVehiculesGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding TypeVehiculeID}" Width="50"/>
+                                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Type" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Nom:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtNom" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Description:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtDescription" Margin="0,5,0,15" Height="80" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouter_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJour_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimer_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacer_Click" Background="#6b7280"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
-
-
             <!-- TAB: TARIFS -->
-             <TabItem Header="Gestion des Tarifs">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+            <TabItem Header="Gestion des Tarifs">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="300"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="TarifsGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TarifsGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding TarifID}" Width="Auto" />
-                            <DataGridTextColumn Header="Type Véhicule" Binding="{Binding TypeVehicule.Nom}" Width="*" />
-                            <DataGridTextColumn Header="Prix/Jour" Binding="{Binding PrixParJour, StringFormat=C}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Type de Véhicule:" />
-                        <ComboBox x:Name="cmbTarifTypeVehicule" Margin="0,5" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID" />
-                        <TextBlock Text="Prix par Jour:" Margin="0,10,0,0" />
-                        <TextBox x:Name="txtTarifPrix" Margin="0,5" />
-                        <Button Content="Ajouter Tarif" Margin="0,20,0,0" Click="btnAjouterTarif_Click" />
-                        <Button Content="Mettre à jour Tarif" Margin="0,10,0,0" Click="btnMettreAJourTarif_Click" />
-                        <Button Content="Supprimer Tarif" Margin="0,10,0,0" Click="btnSupprimerTarif_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerTarif_Click" Background="#334155"/>
-                    </StackPanel>
+                    
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="💰 Grille Tarifaire" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="TarifsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TarifsGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding TarifID}" Width="50"/>
+                                    <DataGridTextColumn Header="Type Véhicule" Binding="{Binding TypeVehicule.Nom}" Width="*"/>
+                                    <DataGridTextColumn Header="Prix/Jour" Binding="{Binding PrixParJour, StringFormat=C}" Width="100"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Tarif" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Type de Véhicule:" FontWeight="SemiBold"/>
+                                    <ComboBox x:Name="cmbTarifTypeVehicule" Margin="0,5,0,10" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID"/>
+                                    <TextBlock Text="Prix par Jour (€):" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtTarifPrix" Margin="0,5,0,15"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterTarif_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourTarif_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerTarif_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerTarif_Click" Background="#6b7280"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
             <!-- TAB: EMPLOYES -->
             <TabItem Header="Gestion des Employés">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="400"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="EmployesGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EmployesGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding EmployeID}" Width="Auto" />
-                            <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*" />
-                            <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*" />
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*" />
-                            <DataGridTextColumn Header="Rôle" Binding="{Binding Role}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Prénom:" />
-                        <TextBox x:Name="txtPrenomEmploye" Margin="0,5" />
-                        <TextBlock Text="Nom:" />
-                        <TextBox x:Name="txtNomEmploye" Margin="0,5" />
-                        <TextBlock Text="Email:" />
-                        <TextBox x:Name="txtEmailEmploye" Margin="0,5" />
-                        <TextBlock Text="Rôle:" />
-                        <TextBox x:Name="txtRoleEmploye" Margin="0,5" />
-                        <TextBlock Text="Mot de Passe (Hash):" Margin="0,10,0,0"/>
-                        <TextBox x:Name="txtMotDePasseEmploye" Margin="0,5" />
-                        <Button Content="Ajouter Employé" Margin="0,20,0,0" Click="btnAjouterEmploye_Click" />
-                        <Button Content="Mettre à jour Employé" Margin="0,10,0,0" Click="btnMettreAJourEmploye_Click" />
-                        <Button Content="Supprimer Employé" Margin="0,10,0,0" Click="btnSupprimerEmploye_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer (Nouveau)" Margin="0,10,0,0" Click="btnEffacerEmploye_Click" Background="#334155"/>
-                    </StackPanel>
+                    
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="👔 Équipe" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="EmployesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EmployesGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding EmployeID}" Width="50"/>
+                                    <DataGridTextColumn Header="Prénom" Binding="{Binding Prenom}" Width="*"/>
+                                    <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="*"/>
+                                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.5*"/>
+                                    <DataGridTextColumn Header="Rôle" Binding="{Binding Role}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Employé" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Prénom:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtPrenomEmploye" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Nom:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtNomEmploye" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Email:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtEmailEmploye" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Rôle:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtRoleEmploye" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Mot de Passe:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtMotDePasseEmploye" Margin="0,5,0,15"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterEmploye_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourEmploye_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerEmploye_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerEmploye_Click" Background="#6b7280"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
             <!-- TAB: ENTRETIENS -->
             <TabItem Header="Gestion des Entretiens">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*" MinWidth="400"/>
+                        <ColumnDefinition Width="320"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="EntretiensGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EntretiensGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding EntretienID}" Width="Auto" />
-                            <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*" />
-                            <DataGridTextColumn Header="Date" Binding="{Binding DateEntretien, StringFormat='d'}" Width="*" />
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
-                            <DataGridTextColumn Header="Coût" Binding="{Binding Cout, StringFormat=C}" Width="*" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                        <TextBlock Text="Véhicule concerné:" />
-                        <ComboBox x:Name="cmbEntretienVehicule" Margin="0,5" DisplayMemberPath="Immatriculation" SelectedValuePath="VehiculeID"/>
-                        <TextBlock Text="Date de l'entretien:" Margin="0,10,0,0"/>
-                        <DatePicker x:Name="dpEntretienDate" Margin="0,5"/>
-                        <TextBlock Text="Description:" Margin="0,10,0,0"/>
-                        <TextBox x:Name="txtEntretienDescription" Margin="0,5" Height="60" TextWrapping="Wrap"/>
-                        <TextBlock Text="Coût:" Margin="0,10,0,0"/>
-                        <TextBox x:Name="txtEntretienCout" Margin="0,5"/>
-
-                        <Button Content="Ajouter Entretien" Margin="0,20,0,0" Click="btnAjouterEntretien_Click" />
-                        <Button Content="Mettre à jour" Margin="0,10,0,0" Click="btnMettreAJourEntretien_Click" />
-                        <Button Content="Supprimer" Margin="0,10,0,0" Click="btnSupprimerEntretien_Click" Background="#7f1d1d" Foreground="White" />
-                        <Button Content="Effacer" Margin="0,10,0,0" Click="btnEffacerEntretien_Click" Background="#334155"/>
-                    </StackPanel>
+                    
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,15,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="🔧 Historique Entretiens" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="EntretiensGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="EntretiensGrid_SelectionChanged" MinHeight="300" BorderThickness="0">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding EntretienID}" Width="50"/>
+                                    <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*"/>
+                                    <DataGridTextColumn Header="Date" Binding="{Binding DateEntretien, StringFormat='d'}" Width="80"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>
+                                    <DataGridTextColumn Header="Coût" Binding="{Binding Cout, StringFormat=C}" Width="80"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="✏️ Formulaire Entretien" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15">
+                                <StackPanel>
+                                    <TextBlock Text="Véhicule:" FontWeight="SemiBold"/>
+                                    <ComboBox x:Name="cmbEntretienVehicule" Margin="0,5,0,10" DisplayMemberPath="Immatriculation" SelectedValuePath="VehiculeID"/>
+                                    <TextBlock Text="Date entretien:" FontWeight="SemiBold"/>
+                                    <DatePicker x:Name="dpEntretienDate" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Description:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtEntretienDescription" Margin="0,5,0,10" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                                    <TextBlock Text="Coût (€):" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtEntretienCout" Margin="0,5,0,15"/>
+                                    
+                                    <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterEntretien_Click"/>
+                                    <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourEntretien_Click" Background="{StaticResource NightBlue}"/>
+                                    <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerEntretien_Click" Background="#dc2626"/>
+                                    <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerEntretien_Click" Background="#6b7280"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
 
             <!-- TAB: PAIEMENTS -->
             <TabItem Header="Gestion des Paiements">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid Margin="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!-- Left: Locations List -->
-                    <DockPanel Grid.Column="0" Margin="0,0,10,0">
-                        <TextBlock Text="1. Sélectionnez une Location (Confirmée/Terminée)" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,10" Foreground="{StaticResource GoldColor}"/>
-                        <DataGrid x:Name="LocationsPaiementGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsPaiementGrid_SelectionChanged">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="50" />
-                                <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="*" />
-                                <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*" />
-                                <DataGridTextColumn Header="Total Due" Binding="{Binding MontantTotal, StringFormat=C}" Width="Auto" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DockPanel>
-
-                    <!-- Right: Payments List & Add Form -->
-                    <Grid Grid.Column="1" Margin="10,0,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        
-                        <DockPanel Grid.Row="0">
-                            <TextBlock Text="2. Historique des Paiements" DockPanel.Dock="Top" FontWeight="Bold" Margin="0,0,0,10" Foreground="{StaticResource GoldColor}"/>
-                            <DataGrid x:Name="PaiementsGrid" AutoGenerateColumns="False" IsReadOnly="True">
+                    <!-- Left: Locations Card -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Margin="0,0,10,0" Effect="{StaticResource CardShadow}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                <TextBlock Text="📋 Locations à payer" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </Border>
+                            <DataGrid x:Name="LocationsPaiementGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="LocationsPaiementGrid_SelectionChanged" MinHeight="250" BorderThickness="0">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Date" Binding="{Binding DatePaiement, StringFormat='g'}" Width="*" />
-                                    <DataGridTextColumn Header="Montant" Binding="{Binding Montant, StringFormat=C}" Width="*" />
-                                    <DataGridTextColumn Header="Méthode" Binding="{Binding MethodePaiement}" Width="*" />
+                                    <DataGridTextColumn Header="ID" Binding="{Binding LocationID}" Width="50"/>
+                                    <DataGridTextColumn Header="Client" Binding="{Binding Client.NomComplet}" Width="*"/>
+                                    <DataGridTextColumn Header="Véhicule" Binding="{Binding Vehicule.Immatriculation}" Width="*"/>
+                                    <DataGridTextColumn Header="Total" Binding="{Binding MontantTotal, StringFormat=C}" Width="80"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </DockPanel>
-
-                        <StackPanel x:Name="FormPaiement" Grid.Row="1" Margin="0,20,0,0" IsEnabled="False">
-                            <TextBlock Text="3. Enregistrer un Nouveau Paiement" FontWeight="Bold" Foreground="{StaticResource GoldColor}" Margin="0,0,0,10"/>
-                            <TextBlock Text="Montant:" />
-                            <TextBox x:Name="txtPaiementMontant" Margin="0,5" />
-                            <TextBlock Text="Méthode de Paiement:" Margin="0,10,0,0"/>
-                            <ComboBox x:Name="cmbMethodePaiement" Margin="0,5">
-                                <ComboBoxItem Content="Carte Bancaire" IsSelected="True"/>
-                                <ComboBoxItem Content="Espèces"/>
-                                <ComboBoxItem Content="Virement"/>
-                                <ComboBoxItem Content="Chèque"/>
-                            </ComboBox>
-                            <Button Content="Enregistrer Paiement" Margin="0,20,0,0" Click="btnAjouterPaiement_Click" Background="#059669" Foreground="White"/>
-                        </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Right: Payments & Form -->
+                    <Grid Grid.Column="1" Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Border Grid.Row="0" Background="White" CornerRadius="12" Margin="0,0,0,15" Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" Background="{StaticResource NightBlue}" CornerRadius="12,12,0,0" Padding="15,0">
+                                    <TextBlock Text="💳 Historique Paiements" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </Border>
+                                <DataGrid x:Name="PaiementsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" MinHeight="150" BorderThickness="0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Date" Binding="{Binding DatePaiement, StringFormat='g'}" Width="*"/>
+                                        <DataGridTextColumn Header="Montant" Binding="{Binding Montant, StringFormat=C}" Width="*"/>
+                                        <DataGridTextColumn Header="Méthode" Binding="{Binding MethodePaiement}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                        
+                        <Border x:Name="FormPaiement" Grid.Row="1" Background="White" CornerRadius="12" Effect="{StaticResource CardShadow}" IsEnabled="False">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" Background="{StaticResource GoldColor}" CornerRadius="12,12,0,0" Padding="15,0">
+                                    <TextBlock Text="➕ Nouveau Paiement" Foreground="White" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="15">
+                                    <TextBlock Text="Montant (€):" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtPaiementMontant" Margin="0,5,0,10"/>
+                                    <TextBlock Text="Méthode:" FontWeight="SemiBold"/>
+                                    <ComboBox x:Name="cmbMethodePaiement" Margin="0,5,0,15">
+                                        <ComboBoxItem Content="Carte Bancaire" IsSelected="True"/>
+                                        <ComboBoxItem Content="Espèces"/>
+                                        <ComboBoxItem Content="Virement"/>
+                                        <ComboBoxItem Content="Chèque"/>
+                                    </ComboBox>
+                                    <Button Content="💰 Enregistrer" Margin="0,5" Click="btnAjouterPaiement_Click" Background="#059669"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Grid>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
+        </Grid>
     </Grid>
 </Window>

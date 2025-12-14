@@ -38,6 +38,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 // Email Verification Service
 builder.Services.AddScoped<IEmailVerificationService, EmailVerificationService>();
+// PDF Generation Service
+builder.Services.AddScoped<IPdfService, PdfService>();
 // 4. Ajouter les services standards
 builder.Services.AddControllersWithViews();
 // Ajout des Razor Pages (nécessaire pour les pages de connexion/inscription par défaut d'Identity)

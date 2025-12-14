@@ -1,59 +1,89 @@
 ﻿@model LocationVoiture.Core.Models.Location
 
 @{
-    ViewData["Title"] = "Demande de location reçue";
+    ViewData["Title"] = "Réservation Confirmée";
 }
 
-<!-- Fullscreen Background -->
-<div class="auth-root" style="background: url('/images/hero.png') center/cover no-repeat;">
-    <div class="auth-overlay"></div>
-    
-    <div class="auth-container">
-        <div class="auth-card p-5 text-center" style="max-width: 600px; margin: 0 auto;">
-            
-            <div class="mb-4">
-                <i class="fas fa-check-circle gold" style="font-size: 4rem;"></i>
+<!-- FULLSCREEN BACKGROUND -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;">
+    <div style="position: absolute; inset: 0; background: url('/images/hero.png') no-repeat center center/cover;"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10, 26, 47, 0.95) 0%, rgba(10, 26, 47, 0.9) 100%);"></div>
+</div>
+
+<div class="container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 60px;">
+    <div class="card-luxury text-center p-5" style="max-width: 650px; margin: 0 auto; background: rgba(19, 43, 74, 0.85); backdrop-filter: blur(20px); border-color: var(--border-gold);">
+        
+        <!-- SUCCESS ICON -->
+        <div class="mb-4">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.3)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; animation: pulse 2s infinite;">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: #22c55e;"></i>
             </div>
-
-            <h2 class="mb-3 hero-title" style="font-size: 2.5rem;">Merci, @Model.Client.Prenom !</h2>
-            <p class="text-muted mb-4">Votre demande de location a bien été enregistrée.</p>
-
-            <div class="p-4 mb-4 rounded text-start shadow-sm" style="background: var(--input-bg); border: 1px solid var(--card-border);">
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Référence</span>
-                    <span class="fw-bold detail-value">#@Model.LocationID</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Véhicule</span>
-                    <span class="fw-bold detail-value">@Model.Vehicule.Marque @Model.Vehicule.Modele</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Période</span>
-                    <span class="detail-value">@Model.DateDebut.ToShortDateString() au @Model.DateFin.ToShortDateString()</span>
-                </div>
-                <hr style="border-color: var(--card-border);">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted">Montant Total</span>
-                    <span class="gold fw-bold fs-4">@Model.MontantTotal.ToString("C")</span>
-                </div>
-            </div>
-
-            <p class="text-muted small mb-4">
-                Votre demande est en attente de validation par un administrateur. 
-                Vous recevrez une confirmation par email sous peu.
-            </p>
-
-            <a asp-action="Index" asp-controller="Home" class="btn btn-hero w-100">
-                Retour à l'accueil
-            </a>
-            
         </div>
+
+        <h2 class="text-white mb-2" style="font-size: 2rem;">Merci, @Model.Client.Prenom !</h2>
+        <p class="text-white-50 mb-4">Votre demande de location a été enregistrée avec succès.</p>
+
+        <!-- RESERVATION DETAILS -->
+        <div class="p-4 rounded mb-4" style="background: rgba(10, 26, 47, 0.5); border: 1px solid var(--border-gold);">
+            <div class="row text-start text-white">
+                <div class="col-6 mb-3">
+                    <small class="text-white-50 d-block">Référence</small>
+                    <span class="fw-bold gold">#@Model.LocationID</span>
+                </div>
+                <div class="col-6 mb-3">
+                    <small class="text-white-50 d-block">Statut</small>
+                    <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">
+                        <i class="fas fa-clock me-1"></i> En attente
+                    </span>
+                </div>
+                <div class="col-12 mb-3">
+                    <small class="text-white-50 d-block">Véhicule</small>
+                    <span class="fw-bold">@Model.Vehicule.Marque @Model.Vehicule.Modele</span>
+                </div>
+                <div class="col-6 mb-3">
+                    <small class="text-white-50 d-block">Date de début</small>
+                    <span>@Model.DateDebut.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="col-6 mb-3">
+                    <small class="text-white-50 d-block">Date de fin</small>
+                    <span>@Model.DateFin.ToString("dd/MM/yyyy")</span>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-gold); margin: 1rem 0;">
+            
+            <div class="d-flex justify-content-between align-items-center text-white">
+                <span class="fs-5">Montant Total</span>
+                <span class="gold fw-bold fs-3">@Model.MontantTotal.ToString("C")</span>
+            </div>
+        </div>
+
+        <!-- INFO MESSAGE -->
+        <div class="alert mb-4" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa;">
+            <i class="fas fa-info-circle me-2"></i>
+            Votre demande est en attente de validation. Vous recevrez une confirmation par email sous peu.
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a asp-action="DownloadPdf" asp-route-id="@Model.LocationID" class="btn btn-hero">
+                <i class="fas fa-file-pdf me-2"></i> Télécharger PDF
+            </a>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-outline" style="color: white; border-color: rgba(255,255,255,0.3);">
+                <i class="fas fa-home me-2"></i> Accueil
+            </a>
+        </div>
+
+        <!-- SUPPORT INFO -->
+        <p class="text-white-50 small mt-4 mb-0">
+            Des questions ? Contactez-nous au <a href="tel:+33123456789" class="gold">+33 1 23 45 67 89</a>
+        </p>
     </div>
 </div>
 
 <style>
-    /* Local Overrides for Detail Values */
-    .detail-value {
-        color: var(--text-light); /* Will be white in dark mode, dark in light mode */
+    @@keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
     }
 </style>
