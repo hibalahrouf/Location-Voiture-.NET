@@ -36,6 +36,9 @@ namespace LocationVoiture.BackOffice
                         options.UseSqlServer(connectionString)
                     );
 
+                    // Injecter le service Email
+                    services.AddSingleton<Services.BackOfficeEmailService>();
+
                     // Injecter notre fenêtre principale
                     services.AddSingleton<MainWindow>();
                 })

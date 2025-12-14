@@ -22,6 +22,9 @@ using System.Diagnostics;
 // --- AJOUTS POUR LE QR CODE ---
 using QRCoder;
 
+// --- EMAIL SERVICE ---
+using LocationVoiture.BackOffice.Services;
+
 namespace LocationVoiture.BackOffice
 {
     // Ajouter 'INotifyPropertyChanged' pour les graphiques
@@ -32,6 +35,7 @@ namespace LocationVoiture.BackOffice
         // ======================================================================
 
         private readonly ApplicationDbContext _context;
+        private readonly BackOfficeEmailService _emailService;
 
         // Variables pour les onglets
         private TypeVehicule? _selectedTypeVehicule = null;
@@ -64,10 +68,11 @@ namespace LocationVoiture.BackOffice
         // || CONSTRUCTEUR ET CHARGEMENT
         // ======================================================================
 
-        public MainWindow(ApplicationDbContext context)
+        public MainWindow(ApplicationDbContext context, BackOfficeEmailService emailService)
         {
             InitializeComponent();
             _context = context;
+            _emailService = emailService;
 
             QuestPDF.Settings.License = LicenseType.Community;
 
@@ -462,9 +467,25 @@ namespace LocationVoiture.BackOffice
                 txtModele.Text = _selectedVehicule.Modele;
                 txtAnnee.Text = _selectedVehicule.Annee.ToString();
                 txtImageURL.Text = _selectedVehicule.ImageURL;
-                chkDisponible.IsChecked = _selectedVehicule.Disponible;
+                txtQuantiteTotal.Text = _selectedVehicule.QuantiteTotal.ToString();
                 cmbTypeVehicule.SelectedValue = _selectedVehicule.TypeVehiculeID;
+                
+                // Load images for this vehicle
+                LoadVehiculeImages(_selectedVehicule.VehiculeID);
             }
+            else
+            {
+                lstVehiculeImages.ItemsSource = null;
+            }
+        }
+        
+        private void LoadVehiculeImages(int vehiculeId)
+        {
+            var images = _context.Set<VehiculeImage>()
+                .Where(i => i.VehiculeID == vehiculeId)
+                .AsNoTracking()
+                .ToList();
+            lstVehiculeImages.ItemsSource = images;
         }
         private void btnAjouterVehicule_Click(object sender, RoutedEventArgs e)
         {
@@ -478,7 +499,8 @@ namespace LocationVoiture.BackOffice
                     Modele = txtModele.Text,
                     Annee = int.Parse(txtAnnee.Text),
                     ImageURL = txtImageURL.Text,
-                    Disponible = chkDisponible.IsChecked ?? false,
+                    QuantiteTotal = int.TryParse(txtQuantiteTotal.Text, out int q) ? q : 1,
+                    QuantiteDisponible = int.TryParse(txtQuantiteTotal.Text, out int qd) ? qd : 1,
                     TypeVehiculeID = (int)cmbTypeVehicule.SelectedValue
                 };
                 _context.Vehicules.Add(newVehicule);
@@ -503,7 +525,14 @@ namespace LocationVoiture.BackOffice
                     vehiculeToUpdate.Modele = txtModele.Text;
                     vehiculeToUpdate.Annee = int.Parse(txtAnnee.Text);
                     vehiculeToUpdate.ImageURL = txtImageURL.Text;
-                    vehiculeToUpdate.Disponible = chkDisponible.IsChecked ?? false;
+                    
+                    if (int.TryParse(txtQuantiteTotal.Text, out int newTotal))
+                    {
+                         int diff = newTotal - vehiculeToUpdate.QuantiteTotal;
+                         vehiculeToUpdate.QuantiteTotal = newTotal;
+                         vehiculeToUpdate.QuantiteDisponible = Math.Max(0, vehiculeToUpdate.QuantiteDisponible + diff);
+                    }
+                    
                     vehiculeToUpdate.TypeVehiculeID = (int)cmbTypeVehicule.SelectedValue;
                     _context.SaveChanges();
                     LoadVehicules(); LoadDashboard();
@@ -530,7 +559,7 @@ namespace LocationVoiture.BackOffice
         {
             txtImmatriculation.Text = ""; txtMarque.Text = ""; txtModele.Text = "";
             txtAnnee.Text = ""; txtImageURL.Text = "";
-            chkDisponible.IsChecked = false;
+            txtQuantiteTotal.Text = "";
             cmbTypeVehicule.SelectedValue = null; _selectedVehicule = null;
             VehiculesGrid.SelectedItem = null;
         }
@@ -570,6 +599,91 @@ namespace LocationVoiture.BackOffice
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Erreur lors de la copie de l'image: {ex.Message}", "Erreur");
+                }
+            }
+        }
+
+        private void btnAjouterVehiculeImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedVehicule == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un véhicule d'abord.", "Attention");
+                return;
+            }
+
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Images (*.jpg;*.jpeg;*.png;*.gif;*.bmp)|*.jpg;*.jpeg;*.png;*.gif;*.bmp|All files (*.*)|*.*",
+                Title = "Ajouter une photo au véhicule",
+                Multiselect = true
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var frontOfficeImages = System.IO.Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "..", "..", "..", "..", "LocationVoiture.FrontOffice", "wwwroot", "images", "vehicules"
+                    );
+                    frontOfficeImages = System.IO.Path.GetFullPath(frontOfficeImages);
+
+                    if (!System.IO.Directory.Exists(frontOfficeImages))
+                    {
+                        System.IO.Directory.CreateDirectory(frontOfficeImages);
+                    }
+
+                    foreach (var filePath in openFileDialog.FileNames)
+                    {
+                        var fileName = $"{Guid.NewGuid()}{System.IO.Path.GetExtension(filePath)}";
+                        var destPath = System.IO.Path.Combine(frontOfficeImages, fileName);
+                        System.IO.File.Copy(filePath, destPath, true);
+
+                        var newImage = new VehiculeImage
+                        {
+                            ImagePath = $"/images/vehicules/{fileName}",
+                            VehiculeID = _selectedVehicule.VehiculeID,
+                            IsPrimary = false
+                        };
+                        _context.Set<VehiculeImage>().Add(newImage);
+                    }
+
+                    _context.SaveChanges();
+                    LoadVehiculeImages(_selectedVehicule.VehiculeID);
+                    MessageBox.Show($"{openFileDialog.FileNames.Length} image(s) ajoutée(s)!", "Succès");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur: {ex.Message}", "Erreur");
+                }
+            }
+        }
+
+        private void btnSupprimerVehiculeImage_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedImage = lstVehiculeImages.SelectedItem as VehiculeImage;
+            if (selectedImage == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une image à supprimer.", "Attention");
+                return;
+            }
+
+            if (MessageBox.Show("Supprimer cette image?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var imageToRemove = _context.Set<VehiculeImage>().Find(selectedImage.ImageID);
+                    if (imageToRemove != null)
+                    {
+                        _context.Set<VehiculeImage>().Remove(imageToRemove);
+                        _context.SaveChanges();
+                        LoadVehiculeImages(_selectedVehicule!.VehiculeID);
+                        MessageBox.Show("Image supprimée!", "Succès");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur: {ex.Message}", "Erreur");
                 }
             }
         }
@@ -908,7 +1022,7 @@ namespace LocationVoiture.BackOffice
                             worksheet.Cell(row, 4).Value = v.Modele;
                             worksheet.Cell(row, 5).Value = v.Annee;
                             worksheet.Cell(row, 6).Value = v.TypeVehicule?.Nom ?? "";
-                            worksheet.Cell(row, 7).Value = v.Disponible ? "Oui" : "Non";
+                            worksheet.Cell(row, 7).Value = v.QuantiteDisponible > 0 ? $"Oui ({v.QuantiteDisponible})" : "Non";
                             worksheet.Cell(row, 8).Value = v.PrixJournee;
                             row++;
                         }
@@ -971,7 +1085,8 @@ namespace LocationVoiture.BackOffice
                                 Marque = dict.ContainsKey("Marque") ? dict["Marque"]?.ToString() ?? "" : "",
                                 Modele = dict.ContainsKey("Modele") ? dict["Modele"]?.ToString() ?? "" : "",
                                 Annee = dict.ContainsKey("Annee") && int.TryParse(dict["Annee"]?.ToString(), out int annee) ? annee : DateTime.Now.Year,
-                                Disponible = true,
+                                QuantiteTotal = 1,
+                                QuantiteDisponible = 1,
                                 TypeVehiculeID = typeId
                             };
 
@@ -1042,7 +1157,8 @@ namespace LocationVoiture.BackOffice
                                     Marque = row.Cell(3).GetString(),  // Column C
                                     Modele = row.Cell(4).GetString(),  // Column D
                                     Annee = int.TryParse(row.Cell(5).GetString(), out int annee) ? annee : DateTime.Now.Year,
-                                    Disponible = true,
+                                    QuantiteTotal = 1,
+                                    QuantiteDisponible = 1,
                                     TypeVehiculeID = typeId
                                 };
 
@@ -1261,7 +1377,7 @@ namespace LocationVoiture.BackOffice
                 if (newStatut == LocationStatut.Annulee || newStatut == LocationStatut.Terminee)
                 {
                     var vehicule = _context.Vehicules.Find(locationToUpdate.VehiculeID);
-                    if (vehicule != null) { vehicule.Disponible = true; }
+                    if (vehicule != null) { vehicule.QuantiteDisponible = vehicule.QuantiteTotal; }
                 }
 
                 _context.SaveChanges();
@@ -1424,11 +1540,34 @@ namespace LocationVoiture.BackOffice
                 _context.Paiements.Add(newPaiement);
                 _context.SaveChanges();
                 LoadPaiementsForLocation(_selectedLocationForPaiement.LocationID);
+
+                // Send email notification (non-blocking)
+                var location = _context.Locations
+                    .Include(l => l.Client)
+                    .Include(l => l.Vehicule)
+                    .FirstOrDefault(l => l.LocationID == _selectedLocationForPaiement.LocationID);
+
+                if (location?.Client != null && !string.IsNullOrEmpty(location.Client.Email))
+                {
+                    var vehicleInfo = $"{location.Vehicule?.Marque} {location.Vehicule?.Modele}";
+                    Task.Run(() => _emailService.SendPaymentConfirmationAsync(
+                        location.Client.Email,
+                        $"{location.Client.Prenom} {location.Client.Nom}",
+                        vehicleInfo,
+                        newPaiement.Montant,
+                        newPaiement.MethodePaiement ?? "Non spécifié",
+                        newPaiement.DatePaiement
+                    ));
+                    Log.Information("Email de confirmation paiement envoyé à {Email}", location.Client.Email);
+                }
+
                 txtPaiementMontant.Text = "";
                 cmbMethodePaiement.SelectedIndex = 0;
+                MessageBox.Show("Paiement ajouté avec succès! Email de confirmation envoyé.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex) { MessageBox.Show($"Erreur : {ex.Message}", "Erreur"); }
         }
+
 
         // ======================================================================
         // || LOGIQUE DE L'ONGLET 9 : ENTRETIENS

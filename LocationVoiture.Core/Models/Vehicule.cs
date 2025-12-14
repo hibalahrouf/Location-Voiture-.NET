@@ -27,7 +27,13 @@ namespace LocationVoiture.Core.Models
 
         public string? ImageURL { get; set; } // Pour "Gestion des... images"
 
-        public bool Disponible { get; set; } = true; // Pour "Gestion de la disponibilité"
+        // Stock quantity management
+        public int QuantiteTotal { get; set; } = 1; // Total units of this vehicle model
+        public int QuantiteDisponible { get; set; } = 1; // Available units for rent
+
+        // Computed property - true if any units available
+        [NotMapped]
+        public bool Disponible => QuantiteDisponible > 0;
 
         // --- Relations ---
         public int TypeVehiculeID { get; set; } // Clé Étrangère

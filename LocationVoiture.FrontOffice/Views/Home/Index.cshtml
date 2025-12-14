@@ -10,7 +10,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="hero-content fade-in-up">
-                    <span class="badge mb-3" style="background: var(--c-gold); color: var(--c-night);">
+                    <span class="badge mb-3 float-anim" style="background: var(--c-gold); color: var(--c-night);">
                         <i class="fas fa-star me-1"></i> Service Premium
                     </span>
                     <h1 class="hero-title">L'Excellence<br>Automobile</h1>
@@ -92,7 +92,7 @@
                 @foreach (var car in Model.Take(6))
                 {
                     <div class="col-md-6 col-lg-4">
-                        <div class="car-card fade-in-up">
+                        <div class="car-card reveal">
                             <div class="car-img-wrapper">
                                 <img src="@(string.IsNullOrEmpty(car.ImageURL) ? "/images/car1.png" : car.ImageURL)" alt="@car.Modele">
                                 <span class="position-absolute top-0 end-0 m-3 badge" 
@@ -152,7 +152,7 @@
         
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="feature-card h-100">
+                <div class="feature-card h-100 reveal">
                     <div class="icon-circle">
                         <i class="fas fa-car"></i>
                     </div>
@@ -165,7 +165,7 @@
             </div>
             
             <div class="col-md-4">
-                <div class="feature-card h-100">
+                <div class="feature-card h-100 reveal" style="transition-delay: 0.1s;">
                     <div class="icon-circle">
                         <i class="fas fa-headset"></i>
                     </div>
@@ -178,7 +178,7 @@
             </div>
             
             <div class="col-md-4">
-                <div class="feature-card h-100">
+                <div class="feature-card h-100 reveal" style="transition-delay: 0.2s;">
                     <div class="icon-circle">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -234,3 +234,33 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reveal on Scroll Logic
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // observer.unobserve(entry.target); // Keep observing if you want re-trigger (optional)
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Staggered animation for cars dynamically
+            document.querySelectorAll('.car-card.reveal').forEach((el, index) => {
+                el.style.transitionDelay = (index % 3) * 0.1 + 's';
+            });
+        });
+    </script>
+}

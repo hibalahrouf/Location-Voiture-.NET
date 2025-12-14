@@ -40,12 +40,12 @@
   --glass-border: rgba(255, 255, 255, 0.3);
   --glass-blur: blur(20px);
 
-  /* --- Premium Shadows --- */
-  --shadow-soft: 0 10px 40px -10px rgba(10, 26, 47, 0.15);
-  --shadow-deep: 0 25px 60px -15px rgba(10, 26, 47, 0.25);
-  --shadow-gold: 0 10px 30px -8px rgba(201, 164, 76, 0.4);
-  --shadow-card: 0 8px 32px rgba(10, 26, 47, 0.12);
-  --shadow-card-hover: 0 20px 50px rgba(10, 26, 47, 0.2);
+  /* --- Premium Shadows (Enhanced for Light Mode) --- */
+  --shadow-soft: 0 10px 40px -10px rgba(10, 26, 47, 0.25);
+  --shadow-deep: 0 25px 60px -15px rgba(10, 26, 47, 0.40);
+  --shadow-gold: 0 10px 30px -8px rgba(201, 164, 76, 0.5);
+  --shadow-card: 0 8px 32px rgba(10, 26, 47, 0.20);
+  --shadow-card-hover: 0 20px 50px rgba(10, 26, 47, 0.30);
   --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
 
   /* --- Transitions --- */
@@ -1039,7 +1039,36 @@ h6 {
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px)
+  }
+
+  50% {
+    transform: translateY(-10px)
+  }
+
+  100% {
+    transform: translateY(0px)
+  }
+}
+
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Hover gold effect for links */
@@ -1099,8 +1128,23 @@ h6 {
   background: var(--bg-input);
 }
 
-/* Card borders and backgrounds */
---card-bg: var(--bg-card);
---card-border: var(--border-color);
---input-bg: var(--bg-input);
---input-border: var(--border-color);
+/* Card borders and backgrounds (Aliases) */
+:root {
+  --card-bg: var(--bg-card);
+  --card-border: var(--border-color);
+  --input-bg: var(--bg-input);
+  --input-border: var(--border-color);
+}
+
+/* Utility to force strong shadow */
+.shadow-strong {
+  box-shadow: var(--shadow-deep) !important;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.shadow-gold {
+  box-shadow: var(--shadow-gold) !important;
+}

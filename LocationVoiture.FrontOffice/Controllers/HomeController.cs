@@ -23,7 +23,7 @@ namespace LocationVoiture.FrontOffice.Controllers
             var featuredCars = await _context.Vehicules
                 .Include(v => v.TypeVehicule)
                 .ThenInclude(t => t.Tarifs)
-                .Where(v => v.Disponible == true)
+                .Where(v => v.QuantiteDisponible > 0)
                 .Take(3)
                 .ToListAsync();
 

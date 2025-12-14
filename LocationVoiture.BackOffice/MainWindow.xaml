@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Back-Office Premium - Location de Voitures" 
+        Title="LocationVoiture - Back-Office" 
         Height="750" Width="1200"
         MinHeight="600" MinWidth="900"
         Loaded="Window_Loaded"
@@ -248,7 +248,7 @@
                             <TextBlock Text="🚗" FontSize="18" Foreground="White"/>
                         </Border>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="LuxeCar" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0"/>
+                            <TextBlock Text="LocationVoiture" FontSize="16" FontWeight="Bold" Foreground="White" Margin="0"/>
                             <TextBlock Text="Back-Office" FontSize="10" Foreground="#94a3b8" Margin="0,-2,0,0"/>
                         </StackPanel>
                     </StackPanel>
@@ -691,7 +691,7 @@
                                     <DataGridTextColumn Header="Marque" Binding="{Binding Marque}" Width="*"/>
                                     <DataGridTextColumn Header="Modèle" Binding="{Binding Modele}" Width="*"/>
                                     <DataGridTextColumn Header="Type" Binding="{Binding TypeVehicule.Nom}" Width="*"/>
-                                    <DataGridCheckBoxColumn Header="Dispo" Binding="{Binding Disponible}" Width="50"/>
+                                    <DataGridTextColumn Header="Stock" Binding="{Binding QuantiteDisponible}" Width="50"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -728,12 +728,36 @@
                                     </Grid>
                                     <TextBlock Text="Type:" FontWeight="SemiBold"/>
                                     <ComboBox x:Name="cmbTypeVehicule" Margin="0,5,0,10" DisplayMemberPath="Nom" SelectedValuePath="TypeVehiculeID"/>
-                                    <CheckBox x:Name="chkDisponible" Content="Disponible" Foreground="{StaticResource TextDark}" Margin="0,5,0,15"/>
+                                    <TextBlock Text="Stock Total:" FontWeight="SemiBold"/>
+                                    <TextBox x:Name="txtQuantiteTotal" Margin="0,5,0,15"/>
                                     
                                     <Button Content="➕ Ajouter" Margin="0,5" Click="btnAjouterVehicule_Click"/>
                                     <Button Content="✏️ Modifier" Margin="0,5" Click="btnMettreAJourVehicule_Click" Background="{StaticResource NightBlue}"/>
                                     <Button Content="🗑️ Supprimer" Margin="0,5" Click="btnSupprimerVehicule_Click" Background="#dc2626"/>
                                     <Button Content="🔄 Effacer" Margin="0,5" Click="btnEffacerVehicule_Click" Background="#6b7280"/>
+                                    
+                                    <!-- IMAGE GALLERY SECTION -->
+                                    <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,15,0,10"/>
+                                    <TextBlock Text="📸 Galerie Photos" FontWeight="Bold" FontSize="12" Foreground="{StaticResource GoldColor}" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Sélectionnez un véhicule pour gérer ses images" FontSize="11" Foreground="{StaticResource TextMuted}" Margin="0,0,0,8"/>
+                                    
+                                    <!-- Image List -->
+                                    <ListBox x:Name="lstVehiculeImages" Height="100" Margin="0,0,0,10" SelectionMode="Single">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{Binding ImagePath}" Width="50" Height="35" Margin="0,0,8,0"/>
+                                                    <TextBlock Text="{Binding ImagePath}" VerticalAlignment="Center" FontSize="10" TextTrimming="CharacterEllipsis" Width="150"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    
+                                    <!-- Image Buttons -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                        <Button Content="➕ Ajouter Photo" Margin="0,0,5,0" Padding="8,5" FontSize="11" Background="#22c55e" Click="btnAjouterVehiculeImage_Click"/>
+                                        <Button Content="🗑️ Supprimer" Margin="0,0,5,0" Padding="8,5" FontSize="11" Background="#ef4444" Click="btnSupprimerVehiculeImage_Click"/>
+                                    </StackPanel>
                                     
                                     <Border BorderThickness="0,1,0,0" BorderBrush="#e5e7eb" Margin="0,15,0,10"/>
                                     <TextBlock Text="Import/Export" FontWeight="Bold" FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,0,0,8"/>

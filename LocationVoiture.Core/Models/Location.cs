@@ -27,6 +27,9 @@ namespace LocationVoiture.Core.Models
         [Required]
         public LocationStatut Statut { get; set; }
 
+        // Token for email confirmation of rental request
+        public string? ConfirmationToken { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")] // Pour l'argent
         public decimal MontantTotal { get; set; }
 
