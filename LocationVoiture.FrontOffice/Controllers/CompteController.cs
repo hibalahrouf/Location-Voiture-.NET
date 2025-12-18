@@ -24,21 +24,22 @@ namespace LocationVoiture.FrontOffice.Controllers
         // Elle affichera la liste des locations du client
         public async Task<IActionResult> Index()
         {
-            // 1. Trouver l'utilisateur connecté
-            var identityUser = await _userManager.GetUserAsync(User);
-            if (identityUser == null)
+            // 1. Trouver l'identifiant du client dans les claims (ClientID)
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int clientId))
             {
-                return Challenge(); // Force la reconnexion
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
 
-            // 2. Trouver le "Client" (de notre table) lié à cet utilisateur
+            // 2. Trouver le "Client" lié à cet identifiant
             var client = await _context.Clients
-                                       .FirstOrDefaultAsync(c => c.Email == identityUser.Email);
+                                       .FirstOrDefaultAsync(c => c.ClientID == clientId);
 
             if (client == null)
             {
                 ViewData["Error"] = "Impossible de trouver votre profil client.";
-                return View(new List<LocationVoiture.Core.Models.Location>()); // Retourne une liste vide
+                return View(new List<LocationVoiture.Core.Models.Location>());
             }
 
             ViewData["ClientName"] = client.Prenom + " " + client.Nom;

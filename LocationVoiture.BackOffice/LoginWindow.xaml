@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="LocationVoiture - Connexion" Height="600" Width="450"
+        Title="Connexion - BackOffice" Height="600" Width="450" MinHeight="500" MinWidth="400"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        ResizeMode="NoResize"
+        ResizeMode="CanResize"
         Background="Transparent"
         AllowsTransparency="True">
 
@@ -111,7 +111,7 @@
             <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="10" Opacity="0.5"/>
         </Border.Effect>
 
-        <Grid Margin="40">
+        <Grid Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/> <!-- Close Button -->
                 <RowDefinition Height="Auto"/> <!-- Header -->
@@ -123,7 +123,7 @@
             <Button Style="{StaticResource BtnClose}" HorizontalAlignment="Right" Click="BtnClose_Click"/>
 
             <!-- Header -->
-            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,20,0,40">
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,20">
                 <!-- Icon Placeholder -->
                 <Border Width="80" Height="80" CornerRadius="40" Background="#1e293b" Margin="0,0,0,20">
                     <Border.Effect>

@@ -1,5 +1,0 @@
-This file marks the active project folder where Antigravity is making changes.
-If you see this file, you are in the correct directory!
-
-Timestamp: 2025-12-12 19:30
-Theme applied: Night Blue & Gold
